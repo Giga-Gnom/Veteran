@@ -1,0 +1,19 @@
+.container{
+    width: 47vw;
+    height: 10vh;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+}
+
+.image{
+    height: 9.5vh;
+    aspect-ratio: auto;
+}
+
+.button{
+    font-size: 2.5vh;
+    width: 30vw;
+    height: 5vh;
+    background: white;
+}

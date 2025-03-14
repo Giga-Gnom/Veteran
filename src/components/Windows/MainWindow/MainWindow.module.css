@@ -1,0 +1,42 @@
+.mainWindowContainer {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .fullScreenVideo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 75vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  .mainWindowContainer_video{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 75vw;
+    height: 100vh;
+    z-index: 0;
+  }
+  
+  .mainWindowContainer_DropList{
+    position: absolute;
+    top: 0;
+    left: 75vw;
+    width: 25vw;
+    height: 100vh;
+  }
+
+  .NextButton{
+    z-index: 1;
+    margin: 5vh;
+    bottom: 0;
+    right: 26vw;
+    position: absolute;
+  }

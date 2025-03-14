@@ -1,0 +1,92 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.RoundButton{
+    height: 7vh;
+    width: 4vw;
+    border-radius: 70%;
+    background-color: rgb(87, 23, 23);
+    margin-right: 1rem;
+    font-size: 3vh;
+}
+
+.RoundButton_container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15%;
+    width: 30px;
+    height: 50px;
+}
+
+.RoundButton_containerInclude{
+    background-color: white;
+    width: 50px;
+    height: 8px;
+    border-radius: 3px;
+}
+
+.NextPageButton {
+    width: 7vw; /* Занимает всю ширину родительского контейнера */
+    height: 7vh; /* Занимает всю высоту родительского контейнера */
+    background-color: rgba(255, 255, 255, 0); /* Цвет кнопки */
+    cursor: pointer;
+    background-image: url("./srcUI/right.png");
+    background-size: contain; /* Чтобы изображение покрывало всю кнопку */
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 1vw;
+    padding: 0;
+
+}
+
+.BeforePageButton {
+    width: 7vw; /* Занимает всю ширину родительского контейнера */
+    height: 7vh; /* Занимает всю высоту родительского контейнера */
+    background-color: rgba(255, 255, 255, 0); /* Цвет кнопки */
+    cursor: pointer;
+    background-image: url("./srcUI/left.png");
+    background-size: contain; /* Чтобы изображение покрывало всю кнопку */
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 1vw;
+    padding: 0;
+
+}
+
+.ToMainButton {
+    width: 7vw; /* Занимает всю ширину родительского контейнера */
+    height: 7vh; /* Занимает всю высоту родительского контейнера */
+    background-color: rgba(255, 255, 255, 0); /* Цвет кнопки */
+    cursor: pointer;
+    background-image: url("./srcUI/top.png");
+    background-size: contain; /* Чтобы изображение покрывало всю кнопку */
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 1vw;
+    padding: 0;
+}
+
+.readMore{
+    width: 30vw;
+    height: 5vh;
+    background: rgb(198, 41, 41);
+    text-align: center; /* выравнивание текста */
+    font-size: 1vh; /* размер шрифта */
+    cursor: pointer;
+}
+
+.dropMenu{
+    width: 7vw; /* Занимает всю ширину родительского контейнера */
+    height: 7vh; /* Занимает всю высоту родительского контейнера */
+    background-color: rgba(255, 255, 255, 0); /* Цвет кнопки */
+    cursor: pointer;
+    background-image: url("./srcUI/dropMenu.png");
+    background-size: contain; /* Чтобы изображение покрывало всю кнопку */
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 1vw;
+    padding: 0;
+}

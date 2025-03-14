@@ -1,0 +1,20 @@
+.container{
+    display: flex;
+    flex-direction: row;
+    width: 95vw;
+    height: 12vh;
+    align-items: center;
+    justify-content: left;
+    margin: 2vh;
+    font-size: 3vh;
+}
+
+.container_image{
+    height: 10vh;
+    aspect-ratio: auto;
+}
+
+.container_text{
+    overflow: hidden;;
+
+}

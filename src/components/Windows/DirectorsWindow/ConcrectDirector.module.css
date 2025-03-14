@@ -1,0 +1,31 @@
+.container{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container_head{
+    height: 15vh;
+}
+
+.container_bottom{
+    height: 15vh;
+}
+.container_content{
+    flex: 1; 
+    display: flex;
+    flex-direction: row; 
+    max-height: 70vh;
+    
+}
+
+.container_content_image{
+    width: 40vw;
+    aspect-ratio: auto;
+    min-width: 40vw;
+}
+
+.container_content_text{
+    overflow: auto;
+    font-size: 3vh;
+}

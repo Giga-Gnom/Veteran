@@ -1,0 +1,34 @@
+.container{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container_head{
+    height: 15vh;
+}
+
+.container_bottom{
+    height: 15vh;
+}
+.container_content{
+    flex: 1; /* Занимает оставшееся пространство */
+    display: flex;
+    flex-direction: column; /*  Добавляем это */
+    overflow: auto;
+    max-height: 70vh;
+    
+}
+
+.container_content_text{
+    height: 100%;
+    z-index: 0;
+    font-size: xx-large;
+}
+
+.container_content_text_img{
+    width: 30vw;
+    height: 30vh;
+    float: left;
+    margin: 1vh 3vh;
+}

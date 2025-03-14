@@ -1,0 +1,29 @@
+.container{
+    width: 47vw;
+    max-height: 32vh;
+    margin: 1vh 0;
+    display: flex;
+    height: 100%;
+    flex-direction: row;
+}
+
+h1{
+    font-size: 3vh;
+}
+
+.content_text{
+    max-height: 35vh;
+}
+
+.content_text_main{
+    overflow: hidden;
+    font-size: 2vh;
+    max-height: 25vh;
+}
+
+.paint{
+    width: 15vw;
+    object-fit: cover;
+    height: 100%;
+    margin: 0 1vw;
+}
