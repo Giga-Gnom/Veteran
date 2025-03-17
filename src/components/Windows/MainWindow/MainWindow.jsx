@@ -3,6 +3,7 @@ import video from "./src_mainwindow/AIvideo1.mp4"
 import styles from "./MainWindow.module.css"
 import DropList from "../../DropList/DropList";
 import NextPageButton from "../../UI/MyButtons/NextPageButton";
+import { handleNextPage } from "../../../app/utils";
 
 const MainWindow = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -33,7 +34,7 @@ const MainWindow = () => {
           </video>
           </div>
           <div className={styles.NextButton}>
-            <NextPageButton></NextPageButton>
+            <NextPageButton onClick={handleNextPage}></NextPageButton>
           </div>
           <div className={styles.mainWindowContainer_DropList}>
             <DropList></DropList>

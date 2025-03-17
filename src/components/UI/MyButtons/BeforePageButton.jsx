@@ -1,9 +1,9 @@
 import React from "react";
 import styles from "./stylesUI.module.css"
 
-const BeforePageButton = () => {
+const BeforePageButton = ({onClick}) => {
     return(
-        <button className={styles.BeforePageButton}></button>
+        <button className={styles.BeforePageButton} onClick={onClick}></button>
     )
 }
 

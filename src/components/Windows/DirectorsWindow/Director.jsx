@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./Director.module.css"
 import image from "../DirectorsWindow/srcDirectors/Akchurin.jpg"
 import ReadMoreButton from "../../UI/MyButtons/ReadMoreButton";
+import { Link } from "react-router-dom";
 
 const Director = ({person}) => {
     return(
@@ -12,7 +13,10 @@ const Director = ({person}) => {
                     <h1>{person.name}</h1>
                     <p>{person.text}</p>
                 </div>
-                <ReadMoreButton></ReadMoreButton>
+                <Link to={person.path}>
+                    <ReadMoreButton/>
+                </Link>
+                
             </div>
         </div>
     )

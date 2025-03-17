@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import DropDownButton from "../UI/MyButtons/DropDownButton";
 import styles from "./MyHat.module.css"
-import lentochka from "./srcHat/lentochka.png"
+import lentochka from "./srcHat/logo.png"
 import DropList from "../DropList/DropList";
 
 const MyHat = (props) => {

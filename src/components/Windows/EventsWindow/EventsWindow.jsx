@@ -12,7 +12,7 @@ const EventsWindow = () => {
                 <MyHat heading="Наши Мероприятия"/>
             </div>
             <div className={styles.container_content}>
-                {eventsArray.map((event) => <EventBlock event={event}></EventBlock>)}
+                {eventsArray.map((event, index) => <EventBlock key={index} event={event}></EventBlock>)}
             </div>
             <div className={styles.container_head}>            
             <BottomPanel/>

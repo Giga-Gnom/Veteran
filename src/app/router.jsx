@@ -10,6 +10,10 @@ import AwardsWindow from "../components/Windows/AwardsWindow/AwardsWindow";
 import NewspaperWindow from "../components/Windows/NewspaperWindow/NewspaperWindow";
 import PartnersWindow from "../components/Windows/PartnersWindow/PartnersWindow";
 import StandartDocumentsWindow from "../components/Windows/StandartDocumentsWindow/StandartDocumentsWindow";
+import Akchurin from "../components/Windows/DirectorsWindow/Akchurin";
+import Aksenov from "../components/Windows/DirectorsWindow/Aksenov";
+import Pashkov from "../components/Windows/DirectorsWindow/Pashkov";
+import Miscovec from "../components/Windows/DirectorsWindow/Miscovec";
 
 
 
@@ -34,6 +38,22 @@ export const router = createBrowserRouter([
     {
         path: "/directors",
         element: <DirectorsWindow/>
+    },
+    {
+        path: "/akchurin",
+        element: <Akchurin/>
+    },
+    {
+        path: "/aksenov",
+        element: <Aksenov/>
+    },
+    {
+        path: "/miscovec",
+        element: <Miscovec/>
+    },
+    {
+        path: "/pashkov",
+        element: <Pashkov/>
     },
     {
         path: "/regions",
