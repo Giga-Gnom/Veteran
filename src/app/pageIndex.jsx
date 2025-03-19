@@ -20,6 +20,10 @@ export const pageIndex = [
         route:"/directors"
     },
     {
+        id: 15,
+        route:"/struct"
+    },
+    {
         id:6,
         route:"/regions"
     },

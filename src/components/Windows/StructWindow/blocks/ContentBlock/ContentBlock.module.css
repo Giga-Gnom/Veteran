@@ -1,0 +1,17 @@
+.container{
+    width: 15vw;
+    height: auto;
+    background-color: lightskyblue;
+    border-radius: 1.5vh;
+    margin: 1vh 0;
+    min-height: 5vh;
+    padding: 1vh;
+}
+
+.container_text{
+    font-size: 2vh;
+    font-weight: 400;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    text-indent: 0;
+}
