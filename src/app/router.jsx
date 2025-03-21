@@ -15,6 +15,7 @@ import Aksenov from "../components/Windows/DirectorsWindow/Aksenov";
 import Pashkov from "../components/Windows/DirectorsWindow/Pashkov";
 import Miscovec from "../components/Windows/DirectorsWindow/Miscovec";
 import StructWindow from "../components/Windows/StructWindow/StructWindow";
+import StatisticWindow from "../components/Windows/StatisticWindow/StatisticWindow";
 
 
 
@@ -59,6 +60,10 @@ export const router = createBrowserRouter([
     {
         path: "/struct",
         element: <StructWindow/>
+    },
+    {
+        path: "/statistic",
+        element: <StatisticWindow/>
     },
     {
         path: "/regions",
