@@ -6,6 +6,7 @@ import { options } from "./options";
 import { datas } from "./datas";
 import MyHat from "../../Hat/MyHat";
 import BottomPanel from "../../BottomPanel/BottomPanel";
+import GraphWithLegend from "./GraphWithLegend";
 
 ChartJS.register(
   CategoryScale,
@@ -23,9 +24,7 @@ const StatisticWindow = () => {
         <MyHat heading="Нормативные Документы"/>
       </div>
       <div className={styles.container_content}>
-        <div className={styles.container_content_graph}>
-          {datas.map((data, index) => <Bar key={index} data={data} options={options} />)}
-        </div>
+        <GraphWithLegend/> 
       </div>
       <div className={styles.container_head}>            
         <BottomPanel/>

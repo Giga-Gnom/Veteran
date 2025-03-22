@@ -1,0 +1,52 @@
+.container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.container_text{
+    height: 20%;
+    min-width: 100%;
+    font-size: 2vh;
+    max-height: 6vh;
+    overflow: hidden;
+    text-align: center;
+}
+
+.container_region{
+    display: flex;
+    flex-direction: column;
+    height: 50vh;
+    padding: 6vh 1vh;
+    align-items: flex-end;
+}
+
+.region_item {
+    text-align: right; /* Выравниваем текст по правому краю */
+    width: 100%;
+}
+
+.dataset_container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: center; /* Прижимаем текст к правому краю */
+    min-width: 120px; /* Минимальная ширина для колонки данных */
+}
+
+.container_stats{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.container_stats_data{
+    width: 100%;
+    display: flex;
+    justify-content: left;
+}
+
+.container_reverse{
+    display: flex;
+    flex-direction: row-reverse;
+}

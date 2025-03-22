@@ -1,0 +1,25 @@
+.container{
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-x: hidden;
+}
+
+.container_graph{
+    width: 57vw;
+    margin-right: 1vw;
+}
+
+.container_legend{
+    width: 39vw;
+    margin-right: 1vw;
+}
+
+.container_graph_block{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    min-height: 50vh;
+}
+
