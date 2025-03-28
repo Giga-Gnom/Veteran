@@ -1,7 +1,7 @@
 import pashkov from "./srcDirectors/Pashkov.webp";
 import aksen from "./srcDirectors/aksenov1_2.jpg";
 import mis from "./srcDirectors/Мисковец_2.jpg";
-import akch from "./srcDirectors/Akchurin_2.jpg";
+import akch from "./srcDirectors/Akchurin.jpg";
 
 export const personsArray = [
     {

@@ -1,11 +1,14 @@
 import React from "react";
 import styles from "./ContentBlock.module.css";
+import { Link } from "react-router-dom";
 
-const ContentBlock = ({name}) => {
+const ContentBlock = ({content}) => {
     return(
-        <div className={styles.container}>
-            <p className={styles.container_text}>{name}</p>
-        </div>
+        <Link to={content.path}>
+            <div className={styles.container} >
+                <p className={styles.container_text}>{content.name}</p>
+            </div>
+        </Link>
     )
 }
 

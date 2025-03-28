@@ -1,9 +1,9 @@
 import React from "react";
 import styles from "./stylesUI.module.css"
 
-const ToMainButton = () => {
+const ToMainButton = ({onClick}) => {
     return(
-        <button className={styles.ToMainButton}></button>
+        <button className={styles.ToMainButton} onClick={onClick}></button>
     )
 }
 

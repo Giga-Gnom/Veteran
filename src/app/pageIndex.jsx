@@ -20,31 +20,39 @@ export const pageIndex = [
         route:"/directors"
     },
     {
-        id: 15,
+        id: 6,
         route:"/struct"
     },
     {
-        id:6,
-        route:"/regions"
+        id: 7,
+        route:"/map"
     },
     {
-        id:7,
-        route:"/events"
-    },
-    {
-        id:8,
-        route:"/awards"
+        id: 8,
+        route:"/statistic"
     },
     {
         id:9,
-        route:"/newspapers"
+        route:"/regions"
     },
     {
         id:10,
-        route:"/partners"
+        route:"/events"
     },
     {
         id:11,
+        route:"/awards"
+    },
+    {
+        id:12,
+        route:"/partners"
+    },
+    {
+        id:13,
+        route:"/newspapers"
+    },
+    {
+        id:14,
         route:"/standarts"
     },
 ]

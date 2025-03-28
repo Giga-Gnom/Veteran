@@ -1,6 +1,6 @@
 import image from "./srcStandarts/standartImage.png"
 import fz_5 from "./srcStandarts/FZ_5.pdf";
-import vsv from "./srcStandarts/Устав ВСВ.pdf";
+import vsv from "./srcStandarts/Устав2.pdf";
 
 export const standartsArray = [
     {

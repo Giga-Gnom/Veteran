@@ -21,7 +21,7 @@ const StatisticWindow = () => {
   return (
     <div className={styles.container}>
       <div className={styles.container_head}>            
-        <MyHat heading="Нормативные Документы"/>
+        <MyHat heading="Статистика"/>
       </div>
       <div className={styles.container_content}>
         <GraphWithLegend/> 

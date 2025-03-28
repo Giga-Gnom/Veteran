@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import video from "./src_mainwindow/AIvideo1.mp4"
+import video from "./src_mainwindow/zastavka0326.mp4"
 import styles from "./MainWindow.module.css"
 import DropList from "../../DropList/DropList";
 import NextPageButton from "../../UI/MyButtons/NextPageButton";

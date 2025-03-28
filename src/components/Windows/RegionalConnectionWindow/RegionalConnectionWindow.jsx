@@ -10,7 +10,9 @@ const RegionalConnectionWindow = () => {
     const [currentDocument, setCurrentDocument] = useState(null);
 
     const handleShowDocument = (path) => {
-        setCurrentDocument(path);
+        if(path!="#"){
+            setCurrentDocument(path);
+        }
     };
 
     const handleCloseDocument = () => {

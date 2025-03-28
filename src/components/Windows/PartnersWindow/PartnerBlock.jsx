@@ -1,9 +1,9 @@
 import React from "react";
 import styles from "./PartnerBlock.module.css"
 
-const PartnerBlock = ({partner}) => {
+const PartnerBlock = ({partner, onClick}) => {
     return(
-        <div className={styles.container} >
+        <div className={styles.container} onClick={onClick} >
             <div className={styles.container_image}>
                 <img className={styles.container_image_image} src={partner.image} alt="" />
             </div>

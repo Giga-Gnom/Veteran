@@ -27,7 +27,7 @@
 }
 
 .container_content_text_img{
-    width: 30vw;
+    aspect-ratio: auto;
     height: 30vh;
     float: left;
     margin: 1vh 3vh;

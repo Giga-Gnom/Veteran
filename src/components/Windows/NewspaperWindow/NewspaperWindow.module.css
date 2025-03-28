@@ -32,4 +32,12 @@
 
 .container_content_text_h1{
     font-size: 4vh;
+    padding-left: 3vw;
+}
+
+.container_content_text_image{
+    width: 15vw;
+    aspect-ratio: auto;
+    float: left;
+    margin: 1vh 3vw;
 }

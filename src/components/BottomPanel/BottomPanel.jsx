@@ -4,7 +4,7 @@ import BeforePageButton from "../UI/MyButtons/BeforePageButton";
 import ToMainButton from "../UI/MyButtons/ToMainButton";
 import styles from "./BottomPanel.module.css"
 import { pageIndex } from "../../app/pageIndex";
-import { handeleBeforPage, handleNextPage } from "../../app/utils";
+import { handeleBeforPage, handelToMainPage, handleNextPage } from "../../app/utils";
 
 const BottomPanel = () =>{
     
@@ -17,7 +17,7 @@ const BottomPanel = () =>{
                     <BeforePageButton onClick={handeleBeforPage}/>
                 </div>
                 <div className={styles.Buttons}>
-                    <ToMainButton />
+                    <ToMainButton onClick={handelToMainPage}/>
                 </div>
                 <div className={styles.Buttons}>
                     <NextPageButton onClick={handleNextPage}/>

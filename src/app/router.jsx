@@ -16,6 +16,13 @@ import Pashkov from "../components/Windows/DirectorsWindow/Pashkov";
 import Miscovec from "../components/Windows/DirectorsWindow/Miscovec";
 import StructWindow from "../components/Windows/StructWindow/StructWindow";
 import StatisticWindow from "../components/Windows/StatisticWindow/StatisticWindow";
+import MoscoMapWindow from "../components/Windows/MapWindow/MoscowMapWindow";
+import MGSVWindow from "../components/Windows/StructWindow/DependenceWindows/MgsvWindow/MGSVWindow";
+import PrezidiumWindow from "../components/Windows/StructWindow/DependenceWindows/Prezidium/PrezidiumWindow";
+import OrganizationWindow from "../components/Windows/StructWindow/DependenceWindows/OrganizationWindow/OrganizationWindow";
+import SocDefWindow from "../components/Windows/StructWindow/DependenceWindows/SocDefWindow/SocDefWindow";
+import YoungPeopleWindow from "../components/Windows/StructWindow/DependenceWindows/YoungPeopleWindow/YoungPeopleWindow";
+import InformationOtdelWindow from "../components/Windows/StructWindow/DependenceWindows/InformationOtdelWindow/InformationOtdelWindow";
 
 
 
@@ -62,6 +69,10 @@ export const router = createBrowserRouter([
         element: <StructWindow/>
     },
     {
+        path: "/map",
+        element: <MoscoMapWindow/>
+    },
+    {
         path: "/statistic",
         element: <StatisticWindow/>
     },
@@ -88,6 +99,30 @@ export const router = createBrowserRouter([
     {
         path: "/standarts",
         element: <StandartDocumentsWindow/>
+    },
+    {
+        path: "/mgsv",
+        element: <MGSVWindow/>
+    },
+    {
+        path: "/prezidium",
+        element: <PrezidiumWindow/>
+    },
+    {
+        path: "/organization",
+        element: <OrganizationWindow/>
+    },
+    {
+        path: "/socdef",
+        element: <SocDefWindow/>
+    },
+    {
+        path: "/youngpeoples",
+        element: <YoungPeopleWindow/>
+    },
+    {
+        path: "/otdelinfo",
+        element: <InformationOtdelWindow/>
     },
     {
         path: "*",

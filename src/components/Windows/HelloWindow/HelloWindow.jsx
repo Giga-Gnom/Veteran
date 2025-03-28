@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import styles from "./HelloWindow.module.css";
 import MyHat from "../../Hat/MyHat";
 import BottomPanel from "../../BottomPanel/BottomPanel";
-import video from "../MainWindow/src_mainwindow/AIvideo1.mp4";
+import image from "../DirectorsWindow/srcDirectors/Pashkov.jpg"
 
 const HelloWindow = () =>{
       const [isPlaying, setIsPlaying] = useState(false);
@@ -23,16 +23,7 @@ const HelloWindow = () =>{
                 <MyHat heading="Приветствие"/>
             </div>
             <div className={styles.container_content}>
-                <div className={styles.container_content_video}>
-                    <video
-                    ref={videoRef}
-                    className={styles.hellovideo}
-                    loop
-                    autoPlay = {isPlaying}
-                    onClick={handleVideoClick}
-                    muted={false}
-                    ><source src={video} type="video/mp4"/></video>
-                </div>
+                    <img src={image} alt="" className={styles.container_content_image}/>
                 <div className={styles.container_content_text}>
                     <h1 className={styles.container_content_text_h1}>Здравствуйте, друзья!</h1>
                     <p>Мы приветствуем вас в Московском городском совете ветеранов войны и труда. 

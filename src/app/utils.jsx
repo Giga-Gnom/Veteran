@@ -11,8 +11,11 @@ export function getCurrentUrlIndex(){
     return pageIndex.findIndex(item => item.route===currentUrl);
 }
 
+export function handelToMainPage(){
+    window.location.href="/";
+}
+
 export function handeleBeforPage(){
-    console.log("asdfg");
     const currentIndex = getCurrentUrlIndex();
     const beforePage = pageIndex[currentIndex-1];
     window.location.href=beforePage.route;

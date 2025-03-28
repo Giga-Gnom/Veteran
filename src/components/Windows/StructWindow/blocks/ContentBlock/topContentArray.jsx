@@ -1,11 +1,14 @@
 export const topContentArray = [
     {
-        name:"Городская конференция"
+        name:"Городская конференция",
+        path:"#"
     },
     {
-        name: "МГСВ"
+        name: "МГСВ",
+        path: "/mgsv"
     },
     {
-        name: "Президиум"
+        name: "Президиум",
+        path:"/prezidium"
     },
 ]

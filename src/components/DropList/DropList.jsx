@@ -11,7 +11,7 @@ const DropList = () => {
             <Link className={styles.dropListContainer_link} to="/placehistory">История места</Link>
             <Link className={styles.dropListContainer_link} to="/directors">Руководство</Link>
             <Link className={styles.dropListContainer_link} to="/struct">Структура МГСВ</Link>
-            <Link className={styles.dropListContainer_link} to="/">Интерактивная карта москвы</Link>
+            <Link className={styles.dropListContainer_link} to="/map">Интерактивная карта москвы</Link>
             <Link className={styles.dropListContainer_link} to="/statistic">Статистика</Link>
             <Link className={styles.dropListContainer_link} to="/regions">Региональные связи</Link>
             <Link className={styles.dropListContainer_link} to="/events">Наши мероприятия</Link>

@@ -9,11 +9,13 @@
 .image{
     height: 9.5vh;
     aspect-ratio: auto;
+    margin: 0 1.5vw;
 }
 
 .button{
     font-size: 2.5vh;
-    width: 30vw;
+    flex: 1;
+    padding: 0.5vh;
     height: 5vh;
-    background: white;
+    background: transparent;
 }

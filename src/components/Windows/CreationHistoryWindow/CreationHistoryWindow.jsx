@@ -5,7 +5,8 @@ import BottomPanel from "../../BottomPanel/BottomPanel";
 import page1 from "./srcCreationHistory/creationhistorypage1.jpeg";
 import borodin from "./srcCreationHistory/Бородин_2.png";
 import schov from "./srcCreationHistory/Сычев_НЯ.jpg";
-import belarev from "./srcCreationHistory/Беларев.png"
+import belarev from "./srcCreationHistory/Беларев.png";
+import dolgih from "./srcCreationHistory/Dolgih.jpg";
 
 
 const CreationHistoryWindow = () => {
@@ -56,7 +57,7 @@ const CreationHistoryWindow = () => {
                         <p>В 1991-2002 гг. председателем МГСВ был <span>Беларёв Валентин Алексеевич</span>, который в советское время почти 25 лет руководил Комитетом народного контроля Москвы.</p>
                     </div>
                     <div className={styles.person_container}>
-                        <img className={styles.person_container_img} src={belarev} alt="" />
+                        <img className={styles.person_container_img} src={dolgih} alt="" />
                         <p>С 2002 по 2020 гг. Московский городской совет возглавлял Владимир Иванович Долгих (05.12.1924-08.10.2020), советский и российский государственный и общественный деятель, выдающийся организатор промышленности, доктор технических наук, дважды Герой социалистического труда, профессор, Почетный гражданин города Москвы, города Норильска и Красноярского края.</p>
                     </div>
                 </div>

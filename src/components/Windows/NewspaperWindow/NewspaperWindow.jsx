@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./NewspaperWindow.module.css"
-import page1 from "../AwardsWindow/srcAwards/image.png"
+import page1 from "./srcNewspapers/image.png"
 import MyHat from "../../Hat/MyHat";
 import BottomPanel from "../../BottomPanel/BottomPanel";
 
@@ -12,7 +12,7 @@ const NewspaperWindow = () => {
             </div>
             <div className={styles.container_content}>
                 <div className={styles.container_content_text}>
-                    <img src={page1} alt="" style={{width:'30vw', height:'30vh', margin:'2vh', float:'left'}}/>
+                    <img src={page1} alt="" className={styles.container_content_text_image}/>
                     <h1 className={styles.container_content_text_h1}>Газета «Московский ветеран»</h1>
                     <p >Газета выходит с  октября 1994 года. В разные годы газета выходила на 4-х полосах 2 раза в месяц и 8-ми полосах 3 раза в месяц. Тираж газеты варьировался от 1 000 экз., до 10 тыс. экз. Сегодня газета выходит на 8-ми полосах 3 раза в месяц общим тиражом 7 тыс.экз.</p>
 <p>Ранее газета печаталась в типографии г. Подольска на газетной бумаге (более низкое качество, но соответственно более низкая цена). Это позволяло издавать тираж 10 тыс.экз. Но нарекания к качеству газеты были постоянны. В связи с чем была проведена работа по выбору другой типографии и выбору более качественной бумаги. Согласно указанию руководства МГСВ редакция остановилась на типографии «Красная Звезда». На сегодняшний день сокращено количество тиража до 7 тыс.экз. При этом значительно повысилось качество издания. </p>
