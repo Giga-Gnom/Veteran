@@ -17,7 +17,7 @@ export const otdelContentArray = [
     },
     {
         name: "Бухгалтерия",
-        path: "#"
+        path: "/buhgalteria"
     },
     {
         name: "Хозяйственный отдел",

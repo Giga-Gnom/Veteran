@@ -23,6 +23,7 @@ import OrganizationWindow from "../components/Windows/StructWindow/DependenceWin
 import SocDefWindow from "../components/Windows/StructWindow/DependenceWindows/SocDefWindow/SocDefWindow";
 import YoungPeopleWindow from "../components/Windows/StructWindow/DependenceWindows/YoungPeopleWindow/YoungPeopleWindow";
 import InformationOtdelWindow from "../components/Windows/StructWindow/DependenceWindows/InformationOtdelWindow/InformationOtdelWindow";
+import BuhgalteriaWindow from "../components/Windows/StructWindow/DependenceWindows/BuhgalteriaWindow/BuhgalteriaWindow";
 
 
 
@@ -123,6 +124,10 @@ export const router = createBrowserRouter([
     {
         path: "/otdelinfo",
         element: <InformationOtdelWindow/>
+    },
+    {
+        path: "/buhgalteria",
+        element: <BuhgalteriaWindow/>
     },
     {
         path: "*",
