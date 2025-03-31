@@ -24,6 +24,7 @@ import SocDefWindow from "../components/Windows/StructWindow/DependenceWindows/S
 import YoungPeopleWindow from "../components/Windows/StructWindow/DependenceWindows/YoungPeopleWindow/YoungPeopleWindow";
 import InformationOtdelWindow from "../components/Windows/StructWindow/DependenceWindows/InformationOtdelWindow/InformationOtdelWindow";
 import BuhgalteriaWindow from "../components/Windows/StructWindow/DependenceWindows/BuhgalteriaWindow/BuhgalteriaWindow";
+import LawyerWindow from "../components/Windows/StructWindow/DependenceWindows/LawyerWindow/LawyerWindow";
 
 
 
@@ -128,6 +129,10 @@ export const router = createBrowserRouter([
     {
         path: "/buhgalteria",
         element: <BuhgalteriaWindow/>
+    },
+    {
+        path: "/lawyer",
+        element: <LawyerWindow/>
     },
     {
         path: "*",
