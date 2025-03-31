@@ -29,6 +29,6 @@ export const otdelContentArray = [
     },
     {
         name: "Секретариат",
-        path: "#"
+        path: "/secretary"
     },
 ]
