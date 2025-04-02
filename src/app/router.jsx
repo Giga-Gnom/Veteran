@@ -26,6 +26,7 @@ import InformationOtdelWindow from "../components/Windows/StructWindow/Dependenc
 import BuhgalteriaWindow from "../components/Windows/StructWindow/DependenceWindows/BuhgalteriaWindow/BuhgalteriaWindow";
 import LawyerWindow from "../components/Windows/StructWindow/DependenceWindows/LawyerWindow/LawyerWindow";
 import SecretaryWindow from "../components/Windows/StructWindow/DependenceWindows/SecretaryWindow/SecretaryWindow";
+import SocialCommissions from "../components/Windows/StructWindow/DependenceWindows/SocialCommissions/SocialCommissions";
 
 
 
@@ -138,6 +139,10 @@ export const router = createBrowserRouter([
     {
         path: "/secretary",
         element: <SecretaryWindow/>
+    },
+    {
+        path: "/commissions/:id",
+        element: <SocialCommissions/>
     },
     {
         path: "*",

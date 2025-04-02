@@ -10,7 +10,7 @@ const SecretaryWindow = () => {
             <div className={styles.container_head}>
                 <MyHat heading="Секретариат"/>
             </div>
-            <div className={styles.container_content}>
+            <div className={styles.container_content}>              
                 <div className={styles.container_content_header}>
                     <h2>ПРИЕМНАЯ РУКОВОДИТЕЛЯ МГСВ</h2>
                     <div className={styles.container_content_header_text}>
