@@ -9,7 +9,6 @@ const MyHat = (props) => {
 
     const handleToggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
-        console.log("ok")
     };
 
     const handleOutsideClick = (event) => {

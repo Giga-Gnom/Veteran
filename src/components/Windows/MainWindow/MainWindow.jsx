@@ -27,7 +27,7 @@ const MainWindow = () => {
             autoPlay={isPlaying}
             onClick={handleVideoClick}
             loop
-            muted={false} // Установите в false, чтобы включить звук
+            muted={false}
             className={styles.fullScreenVideo}
           >
             <source src={video} type="video/mp4" />

@@ -5,18 +5,6 @@ import BottomPanel from "../../BottomPanel/BottomPanel";
 import image from "../DirectorsWindow/srcDirectors/Pashkov.jpg"
 
 const HelloWindow = () =>{
-      const [isPlaying, setIsPlaying] = useState(false);
-      const videoRef=useRef(null);
-    
-      const handleVideoClick = () => {
-        if(isPlaying){
-          videoRef.current.pause();
-        }
-        else{
-          videoRef.current.play();
-        }
-        setIsPlaying(!isPlaying);
-      }
     return(
         <div className={styles.container}>
             <div className={styles.container_head}>            

@@ -16,6 +16,7 @@
 .container_region{
     display: flex;
     flex-direction: column;
+    font-size: 2vh;
     height: 50vh;
     padding: 6vh 1vh;
     align-items: flex-end;
@@ -37,7 +38,7 @@
 .container_stats{
     display: flex;
     flex-direction: column;
-
+    font-size: 2vh;
 }
 
 .container_stats_data{
