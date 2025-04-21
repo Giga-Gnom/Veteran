@@ -6,22 +6,21 @@ import styles from "./BottomPanel.module.css"
 import { pageIndex } from "../../app/pageIndex";
 import { handeleBeforPage, handelToMainPage, handleNextPage } from "../../app/utils";
 
-const BottomPanel = () =>{
-    
-    // TODO url после +слеша, по массиву имя, id объекта, на кнопки изменеие id, ищет новый объект и редиректится на 
+import { usePageNavigation } from "../../app/utils";
 
-    return(
-        <div>
-            <div className={styles.haedContainer}>
-                <div className={styles.Buttons}>
-                    <BeforePageButton onClick={handeleBeforPage}/>
-                </div>
-                <div className={styles.Buttons}>
-                    <ToMainButton onClick={handelToMainPage}/>
-                </div>
-                <div className={styles.Buttons}>
-                    <NextPageButton onClick={handleNextPage}/>
-                </div>
+const BottomPanel = () => {
+    const { handelToMainPage, handeleBeforPage, handleNextPage } = usePageNavigation();
+    
+    return (
+        <div className={styles.haedContainer}>
+            <div className={styles.Buttons}>
+                <BeforePageButton onClick={handeleBeforPage}/>
+            </div>
+            <div className={styles.Buttons}>
+                <ToMainButton onClick={handelToMainPage}/>
+            </div>
+            <div className={styles.Buttons}>
+                <NextPageButton onClick={handleNextPage}/>
             </div>
         </div>
     )

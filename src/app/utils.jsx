@@ -1,35 +1,52 @@
+import { useNavigate } from 'react-router-dom';
 import { pageIndex } from "./pageIndex";
 
+// Вспомогательные функции (не требуют хуков)
 export function getLastUrl() {
     const currentUrl = window.location.pathname;
-    const segment = currentUrl.split('/')
-    return segment.length>0 ? '/'+segment.pop() : 'фывап';
+    const segments = currentUrl.split('/');
+    return segments.length > 1 ? '/' + segments.pop() : '/';
 }
 
-export function getCurrentUrlIndex(){
+export function getCurrentUrlIndex() {
     const currentUrl = getLastUrl();
-    return pageIndex.findIndex(item => item.route===currentUrl);
+    return pageIndex.findIndex(item => item.route === currentUrl);
 }
 
-export function handelToMainPage(){
-    window.location.href="/";
-}
-
-export function handeleBeforPage(){
+// Основные экспорты (старый вариант для совместимости)
+export function handleNextPage() {
     const currentIndex = getCurrentUrlIndex();
-    const beforePage = pageIndex[currentIndex-1];
-    window.location.href=beforePage.route;
+    const nextIndex = currentIndex === pageIndex.length - 1 ? 0 : currentIndex + 1;
+    window.location.href = pageIndex[nextIndex].route;
 }
 
-export function handleNextPage(){
+export function handeleBeforPage() {
     const currentIndex = getCurrentUrlIndex();
-    let nextPage
-    if(currentIndex===pageIndex.length-1){
-        nextPage = pageIndex[0]
+    if (currentIndex > 0) {
+        window.location.href = pageIndex[currentIndex - 1].route;
     }
-    else{
-        nextPage=pageIndex[currentIndex+1]
-    }
-    window.location.href=nextPage.route;
-    
+}
+
+export function handelToMainPage() {
+    window.location.href = "/";
+}
+
+// Новый вариант с useNavigate (по желанию)
+export function usePageNavigation() {
+    const navigate = useNavigate();
+
+    return {
+        handelToMainPage: () => navigate("/"),
+        handeleBeforPage: () => {
+            const currentIndex = getCurrentUrlIndex();
+            if (currentIndex > 0) {
+                navigate(pageIndex[currentIndex - 1].route);
+            }
+        },
+        handleNextPage: () => {
+            const currentIndex = getCurrentUrlIndex();
+            const nextIndex = currentIndex === pageIndex.length - 1 ? 0 : currentIndex + 1;
+            navigate(pageIndex[nextIndex].route);
+        }
+    };
 }
