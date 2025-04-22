@@ -16,14 +16,13 @@ const MoscowMapSVG = ({ onDistrictClick, activeDistrict }) => {
       const handleClick = (e) => {
         const districtId = e.target.dataset.id;
         const district = districtsData.find(d => d.id === districtId);
-        console.log(district)
         onDistrictClick(district);
       };
     return(
         <svg viewBox="0 0 1000 800" className={styles.map}>
-            {districtsData.map((district) => (
+            {districtsData.map((district,index) => (
         <path
-          key={district.id}
+          key={index}
           d={district.path}
           data-id={district.id}
           className={styles.district}

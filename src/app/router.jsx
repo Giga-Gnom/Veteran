@@ -27,6 +27,7 @@ import BuhgalteriaWindow from "../components/Windows/StructWindow/DependenceWind
 import LawyerWindow from "../components/Windows/StructWindow/DependenceWindows/LawyerWindow/LawyerWindow";
 import SecretaryWindow from "../components/Windows/StructWindow/DependenceWindows/SecretaryWindow/SecretaryWindow";
 import SocialCommissions from "../components/Windows/StructWindow/DependenceWindows/SocialCommissions/SocialCommissions";
+import MapTwoWindow from "../components/Windows/MapWindow/MapTwoWindow";
 
 
 
@@ -143,6 +144,10 @@ export const router = createBrowserRouter([
     {
         path: "/commissions/:id",
         element: <SocialCommissions/>
+    },
+    {
+        path: "/district/:id",
+        element: <MapTwoWindow/>
     },
     {
         path: "*",
