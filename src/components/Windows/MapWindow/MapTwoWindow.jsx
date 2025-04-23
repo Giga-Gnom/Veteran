@@ -13,18 +13,30 @@ const MapTwoWindow = () => {
         return <div>Район не найден</div>;
     }
 
+    const handleMouseEnter = (e) => {
+        e.target.style.fill = '#ffcc00';
+      };
+    
+      const handleMouseLeave = (e) => {
+        if (activeDistrict !== e.target.dataset.id) {
+          e.target.style.fill = '#ddff55';
+        }
+      };
+
     return (
         <div className={styles.container}>
             <div className={styles.container_head}>
                 <MyHat heading={district.title} /> {/* Исправлено с commission.title на district.title */}
             </div>
-            <div className={styles.container_content}>
-                <svg viewBox="0 0 1000 800" className={styles.detailedMap}>
+            <div className={styles.mapContainer}>
+                <svg viewBox="0 0 800 600" className={styles.detailedMap}>
                     {district.area?.map((area) => ( // Добавлен optional chaining на случай отсутствия areas
                         <path
                             key={area.id}
                             d={area.path}
                             className={styles.area}
+                            onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMouseLeave}
                         />
                     ))}
                 </svg>
