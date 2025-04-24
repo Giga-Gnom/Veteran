@@ -1,7 +1,9 @@
+import _895 from "./srcNewspapers/16__2025__1_895.pdf"
+
 export const newspapersArray = [
     {
         title: "Газета Московский ветеран от 16 января 2025 г. 1 (895)",
-        ref: "https://www.mgsv.moscow/images/2025/01_kvartal_2025/gazeta-16-01-2025-g-1-895/16__2025__1_895.pdf"
+        ref: _895
       },
       {
         title: "Газета Московский ветеран от 22 января 2025 г. 2 (896)",

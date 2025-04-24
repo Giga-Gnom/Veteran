@@ -1,5 +1,6 @@
 export const districtsArray = [
     {
+        //to do 1 добавить газеты 2025 2 сделать все пкти районы
         id:'TroAO',
         name:"Троицкий",
         path:"/districts/0",

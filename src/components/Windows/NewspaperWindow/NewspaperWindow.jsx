@@ -20,9 +20,11 @@ const NewspaperWindow = () => {
 
     return(
         <div className={styles.container}>
-            <div className={styles.container_head}>            
-                <MyHat heading="Газета МГСВ"/>
-            </div>
+            {!currentDocument && ( // Показываем шапку только когда документ закрыт
+                <div className={styles.container_head}>            
+                    <MyHat heading="Газета МГСВ"/>
+                </div>
+            )}
             <div className={styles.container_content}>
                 <div className={styles.container_content_text}>
                     <img src={page1} alt="" className={styles.container_content_text_image}/>
@@ -48,11 +50,10 @@ const NewspaperWindow = () => {
                     <br />
 
                     <div className={styles.container_content_text}>
-                        {currentDocument 
-                        ?
-                        <NewspapersDoc path={currentDocument} onClose={handleCloseDocument}></NewspapersDoc>
+                        {currentDocument ?
+                        (<NewspapersDoc style={{zIndex: 2000}} path={currentDocument} onClose={handleCloseDocument}></NewspapersDoc>)
                         :
-                        newspapersArray.map((newspaper,index) => <RefBlock title={newspaper.title} onClick={handleShowDocument}></RefBlock>)
+                        (newspapersArray.map((newspaper,index) => (<RefBlock style={styles.container_content_text_ref}  key={index} title={newspaper.title} onClick={()=>handleShowDocument(newspaper.ref)}/>)))
                         }
                     </div>
                     <br />
@@ -62,9 +63,11 @@ const NewspaperWindow = () => {
                     Адрес редакции: 127006, Москва, ул. Малая Дмитровка, д.2</p>
                 </div>
             </div>
-            <div className={styles.container_head}>            
-                <BottomPanel/>
-            </div>
+            { !currentDocument && (
+                <div className={styles.container_head}>            
+                    <BottomPanel/>
+                </div>
+            )}
         </div>
     )
 }

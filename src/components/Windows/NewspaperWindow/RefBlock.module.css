@@ -1,0 +1,7 @@
+.container{
+    font-weight: 600;
+    text-indent: none;
+    border: 0.5vh ridge rgb(78, 75, 75);
+    background-color: rgba(208, 214, 219, 0.422);
+    margin-bottom: 2vh;
+}
