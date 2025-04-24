@@ -12,7 +12,7 @@
     flex: 1;
     display: flex;
     position: relative;
-    width: 80%;
+    width: 100%;
     border: 1px solid red;
     overflow:auto;
   }
@@ -38,3 +38,7 @@
     fill: #ff9900;
     stroke-width: 3;
   }
+
+.detailedMap{
+  width: 50vw;
+}

@@ -26,20 +26,22 @@ const MapTwoWindow = () => {
     return (
         <div className={styles.container}>
             <div className={styles.container_head}>
-                <MyHat heading={district.title} /> {/* Исправлено с commission.title на district.title */}
+                <MyHat heading={district.title} />
             </div>
             <div className={styles.mapContainer}>
-                <svg viewBox="0 0 800 600" className={styles.detailedMap}>
-                    {district.area?.map((area) => ( // Добавлен optional chaining на случай отсутствия areas
-                        <path
-                            key={area.id}
-                            d={area.path}
-                            className={styles.area}
-                            onMouseEnter={handleMouseEnter}
-                            onMouseLeave={handleMouseLeave}
-                        />
-                    ))}
-                </svg>
+                <div className={styles.mapContainer_map}>
+                    <svg viewBox="0 0 600 600" className={styles.detailedMap}>
+                        {district.area?.map((area) => ( 
+                            <path
+                                key={area.id}
+                                d={area.path}
+                                className={styles.area}
+                                onMouseEnter={handleMouseEnter}
+                                onMouseLeave={handleMouseLeave}
+                            />
+                        ))}
+                    </svg>
+                </div>
             </div>
             <div className={styles.container_button}>
                 <Link to="/map">
