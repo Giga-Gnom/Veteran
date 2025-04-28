@@ -28,6 +28,10 @@ import LawyerWindow from "../components/Windows/StructWindow/DependenceWindows/L
 import SecretaryWindow from "../components/Windows/StructWindow/DependenceWindows/SecretaryWindow/SecretaryWindow";
 import SocialCommissions from "../components/Windows/StructWindow/DependenceWindows/SocialCommissions/SocialCommissions";
 import MapTwoWindow from "../components/Windows/MapWindow/MapTwoWindow";
+import TroAOWindow from "../components/Windows/MapWindow/DistrictWindows/TroAOWindow/TroAOWindow";
+import NovAOWindow from "../components/Windows/MapWindow/DistrictWindows/NovAOWindow/NovAOWindow";
+import ZelAOWindow from "../components/Windows/MapWindow/DistrictWindows/ZelAOWindow/ZelAOWindow";
+import UZAOWindow from "../components/Windows/MapWindow/DistrictWindows/UZAOWindow/UZAOWindow";
 
 
 
@@ -146,8 +150,20 @@ export const router = createBrowserRouter([
         element: <SocialCommissions/>
     },
     {
-        path: "/district/:id",
-        element: <MapTwoWindow/>
+      path: "/district/troitskiy",
+      element: <TroAOWindow />
+    },
+    {
+      path: "/district/novomoskovsky",
+      element: <NovAOWindow />
+    },
+    {
+      path: "/district/zelenograd",
+      element: <ZelAOWindow />
+    },
+    {
+        path: "/district/southwest",
+        element: <UZAOWindow />
     },
     {
         path: "*",

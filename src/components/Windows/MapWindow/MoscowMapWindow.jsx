@@ -12,9 +12,15 @@ const MoscoMapWindow = () => {
 
     const handleDistrictClick = (district) => {
         setActiveDistrict(district.id);
-        // Здесь можно добавить дополнительную логику при клике на район
-        console.log("Selected district:", district);
-        navigate(`/district/${district.id}`);
+        const districtRoutes = {
+            'TroAO': '/district/troitskiy',
+            'NovAO': '/district/novomoskovsky',
+            'ZelAO': '/district/zelenograd',
+            'UZAO': '/district/southwest'
+            // ... другие районы
+          };
+          
+          navigate(districtRoutes[district.id] || '/map');
     };
     return(
         <div className={styles.container}>
