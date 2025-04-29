@@ -16,8 +16,9 @@ const MoscoMapWindow = () => {
             'TroAO': '/district/troitskiy',
             'NovAO': '/district/novomoskovsky',
             'ZelAO': '/district/zelenograd',
-            'UZAO': '/district/southwest'
-            // ... другие районы
+            'UZAO': '/district/southwest',
+            'UAO': '/district/south',
+            'CAO': '/district/central',
           };
           
           navigate(districtRoutes[district.id] || '/map');
