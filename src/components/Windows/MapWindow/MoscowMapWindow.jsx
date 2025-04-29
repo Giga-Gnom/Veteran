@@ -19,7 +19,11 @@ const MoscoMapWindow = () => {
             'UZAO': '/district/southwest',
             'UAO': '/district/south',
             'CAO': '/district/central',
-          };
+            'UVAO': '/district/southeast',
+            'VAO': '/district/east',
+            'SVAO': '/district/northeast',
+            'SAO': '/district/north',
+        };
           
           navigate(districtRoutes[district.id] || '/map');
     };

@@ -34,6 +34,10 @@ import ZelAOWindow from "../components/Windows/MapWindow/DistrictWindows/ZelAOWi
 import UZAOWindow from "../components/Windows/MapWindow/DistrictWindows/UZAOWindow/UZAOWindow";
 import UAOWindow from "../components/Windows/MapWindow/DistrictWindows/UAOWindow/UAOWindow";
 import CAOWindow from "../components/Windows/MapWindow/DistrictWindows/CAOWindow/CAOWindow";
+import UVAOWindow from "../components/Windows/MapWindow/DistrictWindows/UVAOWindow/UVAOWindow";
+import VAOWindow from "../components/Windows/MapWindow/DistrictWindows/VAOWindow/VAOWindow";
+import SVAOWindow from "../components/Windows/MapWindow/DistrictWindows/SVAOWindow/SVAOWindow";
+import SAOWindow from "../components/Windows/MapWindow/DistrictWindows/SAOWindow/SAOWindow";
 
 
 
@@ -168,12 +172,28 @@ export const router = createBrowserRouter([
         element: <UZAOWindow />
     },
     {
+        path: "/district/southeast",
+        element: <UVAOWindow />
+    },
+    {
         path: "/district/south",
         element: <UAOWindow />
     },
     {
         path: "/district/central",
         element: <CAOWindow />
+    },
+    {
+        path: "/district/east",
+        element: <VAOWindow />
+    },
+    {
+        path: "/district/northeast",
+        element: <SVAOWindow />
+    },
+    {
+        path: "/district/north",
+        element: <SAOWindow />
     },
     {
         path: "*",
