@@ -3,16 +3,7 @@ import React from "react"
 import { districtsData } from './districtsData';
 
 const MoscowMapSVG = ({ onDistrictClick, activeDistrict }) => {
-    const handleMouseEnter = (e) => {
-        e.target.style.fill = '#ffcc00';
-      };
-    
-      const handleMouseLeave = (e) => {
-        if (activeDistrict !== e.target.dataset.id) {
-          e.target.style.fill = '#ddff55';
-        }
-      };
-    
+  
       const handleClick = (e) => {
         const districtId = e.target.dataset.id;
         const district = districtsData.find(d => d.id === districtId);
@@ -27,8 +18,6 @@ const MoscowMapSVG = ({ onDistrictClick, activeDistrict }) => {
           data-id={district.id}
           className={styles.district}
           onClick={handleClick}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
         />
       ))}
         </svg>

@@ -12,16 +12,6 @@ const SAOWindow = () => {
         return <div>Район не найден</div>;
     }
 
-    const handleMouseEnter = (e) => {
-        e.target.style.fill = '#ffcc00';
-      };
-    
-      const handleMouseLeave = (e) => {
-        if (activeDistrict !== e.target.dataset.id) {
-          e.target.style.fill = '#ddff55';
-        }
-      };
-
     return (
         <div className={styles.container}>
             <div className={styles.container_head}>
@@ -35,8 +25,6 @@ const SAOWindow = () => {
                                 key={area.id}
                                 d={area.path}
                                 className={styles.area}
-                                onMouseEnter={handleMouseEnter}
-                                onMouseLeave={handleMouseLeave}
                             />
                         ))}
                     </svg>
