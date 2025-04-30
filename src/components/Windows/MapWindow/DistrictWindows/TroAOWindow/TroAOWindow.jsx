@@ -6,7 +6,6 @@ import BeforePageButton from "../../../../UI/MyButtons/BeforePageButton";
 import { districtsArray } from "../../districtsArray";
 
 const TroAOWindow = () => {
-    const { id } = useParams();
     const district = districtsArray.find(item => item.id === 'TroAO');
 
     if (!district) {
@@ -26,7 +25,7 @@ const TroAOWindow = () => {
     return (
         <div className={styles.container}>
             <div className={styles.container_head}>
-                <MyHat heading={district.title} />
+                <MyHat heading={district.name} />
             </div>
             <div className={styles.mapContainer}>
                 <div className={styles.mapContainer_map}>
