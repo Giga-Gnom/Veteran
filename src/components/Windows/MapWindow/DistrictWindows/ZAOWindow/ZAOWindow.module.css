@@ -12,9 +12,8 @@
     flex: 1;
     display: flex;
     position: relative;
-    width: 100%;
-    border: 1px solid red;
-    overflow:auto;
+    width: 50vw;
+    overflow:hidden;
   }
   
   .map {

@@ -30,7 +30,7 @@ const NovAOWindow = () => {
             </div>
             <div className={styles.mapContainer}>
                 <div className={styles.mapContainer_map}>
-                    <svg viewBox="0 0 600 600" className={styles.detailedMap}>
+                    <svg viewBox="200 150 400 600" className={styles.detailedMap}>
                         {district.area?.map((area) => ( 
                             <path
                                 key={area.id}

@@ -30,7 +30,7 @@ const ZAOWindow = () => {
             </div>
             <div className={styles.mapContainer}>
                 <div className={styles.mapContainer_map}>
-                    <svg viewBox="0 0 1000 600" className={styles.detailedMap}>
+                    <svg viewBox="70 0 460 600" className={styles.detailedMap}>
                         {district.area?.map((area) => ( 
                             <path
                                 key={area.id}
