@@ -12,8 +12,18 @@
   flex: 1;
   display: flex;
   position: relative;
-  width: 50vw;
+  width: 100%;
   overflow:hidden;
+}
+
+.mapContainer_map{
+width: 50vw;
+}
+
+.mapContainer_legend{
+display: flex;
+flex-direction: column;
+width: 40vw;
 }
 
 .detailedMap{
@@ -30,4 +40,18 @@ transition: fill 0.3s ease;
 
 .area:hover{
 fill: #ffcc00;
+}
+
+.styles.mapContainer_legend_block{
+margin-bottom: 2vh;
+font-size: 5vh;
+}
+
+.area_label {
+font-family: Arial, sans-serif;
+font-size: 0.6vh;
+font-weight: bold;
+fill: #00000073;
+text-anchor: middle;
+pointer-events: none;
 }
