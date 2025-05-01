@@ -27,7 +27,6 @@ import BuhgalteriaWindow from "../components/Windows/StructWindow/DependenceWind
 import LawyerWindow from "../components/Windows/StructWindow/DependenceWindows/LawyerWindow/LawyerWindow";
 import SecretaryWindow from "../components/Windows/StructWindow/DependenceWindows/SecretaryWindow/SecretaryWindow";
 import SocialCommissions from "../components/Windows/StructWindow/DependenceWindows/SocialCommissions/SocialCommissions";
-import MapTwoWindow from "../components/Windows/MapWindow/MapTwoWindow";
 import TroAOWindow from "../components/Windows/MapWindow/DistrictWindows/TroAOWindow/TroAOWindow";
 import NovAOWindow from "../components/Windows/MapWindow/DistrictWindows/NovAOWindow/NovAOWindow";
 import ZelAOWindow from "../components/Windows/MapWindow/DistrictWindows/ZelAOWindow/ZelAOWindow";
@@ -40,6 +39,7 @@ import SVAOWindow from "../components/Windows/MapWindow/DistrictWindows/SVAOWind
 import SAOWindow from "../components/Windows/MapWindow/DistrictWindows/SAOWindow/SAOWindow";
 import SZAOWindow from "../components/Windows/MapWindow/DistrictWindows/SZAOWindow/SZAOWindow";
 import ZAOWindow from "../components/Windows/MapWindow/DistrictWindows/ZAOWindow/ZAOWindow";
+import CAOorganizations from "../components/Windows/MapWindow/DistrictWindows/CAOWindow/CAOorganizations/CAOorganizations";
 
 
 
@@ -184,6 +184,10 @@ export const router = createBrowserRouter([
     {
         path: "/district/central",
         element: <CAOWindow />
+    },
+    {
+        path: "/district/central/:areaID",
+        element: <CAOorganizations />
     },
     {
         path: "/district/east",
