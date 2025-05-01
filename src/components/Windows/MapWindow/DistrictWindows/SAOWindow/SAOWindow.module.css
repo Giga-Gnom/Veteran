@@ -24,6 +24,7 @@ width: 50vw;
 display: flex;
 flex-direction: column;
 width: 40vw;
+overflow: auto;
 }
 
 .detailedMap{
