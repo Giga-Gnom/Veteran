@@ -21,13 +21,30 @@ const ZelAOWindow = () => {
                 <div className={styles.mapContainer_map}>
                     <svg viewBox="230 -10 100 600" className={styles.detailedMap}>
                         {district.area?.map((area) => ( 
-                            <path
-                                key={area.id}
-                                d={area.path}
-                                className={styles.area}
-                            />
+                            <g>
+                                <path
+                                    key={area.id}
+                                    d={area.path}
+                                    className={styles.area}
+                                />
+                                <text x={area.center.x} y={area.center.y} className={styles.area_label}>
+                                    {area.id}
+                                </text>
+                            </g>
                         ))}
                     </svg>
+                </div>
+                <div className={styles.mapContainer_legend}>
+                    <div className={styles.mapContainer_legend_title}>
+                        <h2 className={styles.mapContainer_legend_title_h2}>
+                            {district.title}
+                        </h2> 
+                    </div>
+                    {district.area.map((area) => (
+                        <div className={styles.mapContainer_legend_block} key={area.id}>
+                            <p>{area.id}. {area.name}</p>
+                        </div>
+                    ))}
                 </div>
             </div>
             <div className={styles.container_button}>
