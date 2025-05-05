@@ -7,6 +7,7 @@ import borodin from "./srcCreationHistory/Бородин_2.png";
 import schov from "./srcCreationHistory/Сычев_НЯ.jpg";
 import belarev from "./srcCreationHistory/Беларев.png";
 import dolgih from "./srcCreationHistory/Dolgih.jpg";
+import { handleImgClick } from "../../../app/utils";
 
 
 const CreationHistoryWindow = () => {
@@ -17,7 +18,7 @@ const CreationHistoryWindow = () => {
             </div>
             <div className={styles.container_content}>
                 <div className={styles.container_content_text}>
-                    <img className={styles.container_content_text_img} src={page1} alt=""/>
+                    <img className={styles.container_content_text_img} src={page1} alt="" onClick={handleImgClick}/>
                     <p>
                     История создания ветеранских организаций нашей страны начинается с 1956 года, когда министр обороны, маршал 
                     Георгий Константинович Жуков внес предложение в ЦК КПСС о создании в СССР организации советских ветеранов войны.

@@ -3,6 +3,7 @@ import styles from "./PlaceHistoryWindow.module.css";
 import page1 from "./srcPlace/Building.jpg";
 import MyHat from "../../Hat/MyHat";
 import BottomPanel from "../../BottomPanel/BottomPanel";
+import { handleImgClick } from "../../../app/utils";
 
 const PlaceHistoryWindow = () => {
     return(
@@ -12,7 +13,7 @@ const PlaceHistoryWindow = () => {
             </div>
             <div className={styles.container_content}>
                 <div className={styles.container_content_text}>
-                    <img src={page1} alt="" className={styles.container_content_text_img}/>
+                    <img src={page1} alt="" className={styles.container_content_text_img} onClick={handleImgClick}/>
                     <h1>История нашего Дома</h1> <p>Малая Дмитровка 2 – Доходное владение начала XX века</p>
                     <p>Четырехэтажный доходный дом на углу улицы Малая Дмитровка и Большого Путинковского переулка возвели в 1911 году. Здание выделяется легкой угловой ротондой, нависающей над первым этажом. Проект владения выполнил архитектор Леонид Васильевич Стеженский.</p>
 

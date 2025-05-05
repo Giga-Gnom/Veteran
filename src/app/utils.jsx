@@ -50,3 +50,13 @@ export function usePageNavigation() {
         }
     };
 }
+
+export function handleImgClick(e){
+    const img = e.target;
+    if(document.fullscreenElement){
+        document.exitFullscreen();
+    }
+    else{
+        img.requestFullscreen().catch(console.error);
+    }
+}

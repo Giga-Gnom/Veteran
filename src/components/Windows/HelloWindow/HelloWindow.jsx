@@ -3,6 +3,7 @@ import styles from "./HelloWindow.module.css";
 import MyHat from "../../Hat/MyHat";
 import BottomPanel from "../../BottomPanel/BottomPanel";
 import image from "../DirectorsWindow/srcDirectors/Pashkov.jpg"
+import { handleImgClick } from "../../../app/utils";
 
 const HelloWindow = () =>{
     return(
@@ -11,7 +12,7 @@ const HelloWindow = () =>{
                 <MyHat heading="Приветствие"/>
             </div>
             <div className={styles.container_content}>
-                    <img src={image} alt="" className={styles.container_content_image}/>
+                    <img src={image} alt="" className={styles.container_content_image} onClick={handleImgClick}/>
                 <div className={styles.container_content_text}>
                     <h1 className={styles.container_content_text_h1}>Здравствуйте, друзья!</h1>
                     <p>Мы приветствуем вас в Московском городском совете ветеранов войны и труда. 
