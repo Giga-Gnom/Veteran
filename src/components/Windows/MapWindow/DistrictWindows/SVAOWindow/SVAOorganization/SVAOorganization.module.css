@@ -1,0 +1,20 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  .container_head, .container_footer {
+    flex: 0 0 auto;
+    height: 15vh;
+  }
+
+  .container_content{
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    overflow: auto;
+  }
+  

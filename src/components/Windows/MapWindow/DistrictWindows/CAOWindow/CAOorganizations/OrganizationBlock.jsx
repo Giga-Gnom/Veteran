@@ -10,9 +10,8 @@ const OrganizationBlock = ({ name, address, reception, chairman }) => {
             <span><strong>Прием:</strong> {reception}</span>
             <h4>Председатель:</h4>
             <span>{chairman.name}</span >
-            <span><strong>Дата рождения:</strong> {chairman.birthDate}</span>
             <span><strong>Телефон:</strong> {chairman.phone}</span>
-            <span><strong>Мобильный теелфон:</strong> {chairman.mobile}</span>
+            <span><strong>Мобильный телефон:</strong> {chairman.mobile}</span>
         </div>
     );
 }

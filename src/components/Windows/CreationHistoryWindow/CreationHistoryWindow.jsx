@@ -7,7 +7,7 @@ import borodin from "./srcCreationHistory/Бородин_2.png";
 import schov from "./srcCreationHistory/Сычев_НЯ.jpg";
 import belarev from "./srcCreationHistory/Беларев.png";
 import dolgih from "./srcCreationHistory/Dolgih.jpg";
-import { handleImgClick } from "../../../app/utils";
+import { handeleBeforPage, handleImgClick } from "../../../app/utils";
 
 
 const CreationHistoryWindow = () => {
@@ -45,20 +45,20 @@ const CreationHistoryWindow = () => {
                     <p>Сегодня Московский городской совет ветеранов объединяет более миллиона человек. Среди них  -  около тысячи участников  Великой отечественной войны. Наша гордость, наш Золотой Фонд. Их почтенный возраст, их самочувствие —  повседневная забота и тревога ветеранского актива Москвы, который ставит во главу угла в повседневной работе внимание к участниками войны и патриотическое воспитание молодежи.
                     </p>
                     <div className={styles.person_container}>
-                        <img className={styles.person_container_img} src={borodin} alt="" />
+                        <img className={styles.person_container_img} src={borodin} alt="" onClick={handleImgClick}/>
                         <p>Первый председатель Совета - Бородин Павел Дмитриевич (30.06.1911-11.03.1998). Он возглавлял МГСВ  с 1987 по 1990 год.Директор завода ЗИЛ, Герой социалистического труда, дважды лауреат Государственной премии СССР в области науки и техники.
                         </p>
                     </div>
                     <div className={styles.person_container}>
-                        <img className={styles.person_container_img} src={schov} alt="" />
+                        <img className={styles.person_container_img} src={schov} alt="" onClick={handleImgClick}/>
                         <p>С 1990 по 1991 год МГСВ возглавлял Сычев Николай Яковлевич (10.06.1926-12.02.2015), советский хозяйственный, государственный и политический деятель, бывший заведующий отделом пропаганды Московского горкома КПСС.   </p>
                                          </div>
                     <div className={styles.person_container}>
-                        <img className={styles.person_container_img} src={belarev} alt="" />
+                        <img className={styles.person_container_img} src={belarev} alt="" onClick={handleImgClick}/>
                         <p>В 1991-2002 гг. председателем МГСВ был <span>Беларёв Валентин Алексеевич</span>, который в советское время почти 25 лет руководил Комитетом народного контроля Москвы.</p>
                     </div>
                     <div className={styles.person_container}>
-                        <img className={styles.person_container_img} src={dolgih} alt="" />
+                        <img className={styles.person_container_img} src={dolgih} alt="" onClick={handleImgClick}/>
                         <p>С 2002 по 2020 гг. Московский городской совет возглавлял Владимир Иванович Долгих (05.12.1924-08.10.2020), советский и российский государственный и общественный деятель, выдающийся организатор промышленности, доктор технических наук, дважды Герой социалистического труда, профессор, Почетный гражданин города Москвы, города Норильска и Красноярского края.</p>
                     </div>
                 </div>
