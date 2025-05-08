@@ -1,6 +1,6 @@
 export const SVAOArray = [
   {
-    id: 1,
+    id: 14,
     name: "Алексеевский район",
     organizations: [
       {
@@ -86,7 +86,7 @@ export const SVAOArray = [
     ]
   },
   {
-    id: 2,
+    id: 3,
     name: "Алтуфьевский район",
     organizations: [
       {
@@ -132,7 +132,7 @@ export const SVAOArray = [
     ]
   },
   {
-    id: 3,
+    id: 15,
     name: "Бабушкинский район",
     organizations: [
       {
@@ -194,7 +194,7 @@ export const SVAOArray = [
     ]
   },
   {
-    id: 4,
+    id: 8,
     name: "Бибирево",
     organizations: [
       {
@@ -320,7 +320,7 @@ export const SVAOArray = [
     ]
   },
   {
-    id: 5,
+    id: 2,
     name: "Лианозово",
     organizations: [
       {
@@ -382,7 +382,7 @@ export const SVAOArray = [
     ]
   },
   {
-    id: 6,
+    id: 17,
     name: "Лосиноостровский район",
     organizations: [
       {
@@ -444,7 +444,7 @@ export const SVAOArray = [
     ]
   },
   {
-    id: 7,
+    id: 4,
     name: "Марфино",
     organizations: [
       {
@@ -474,7 +474,7 @@ export const SVAOArray = [
     ]
   },
   {
-    id: 8,
+    id: 9,
     name: "Марьина Роща",
     organizations: [
       {
@@ -512,7 +512,7 @@ export const SVAOArray = [
     ]
   },
   {
-    id: 9,
+    id: 7,
     name: "Останкинский район",
     organizations: [
       {
@@ -566,7 +566,7 @@ export const SVAOArray = [
     ]
   },
   {
-      id: 10,
+      id: 5,
       name: "Отрадное",
       organizations: [
         {
@@ -692,7 +692,7 @@ export const SVAOArray = [
       ]
     },
     {
-      id: 11,
+      id: 13,
       name: "Ростокино",
       organizations: [
         {
@@ -722,7 +722,7 @@ export const SVAOArray = [
       ]
     },
     {
-      id: 12,
+      id: 10,
       name: "Свиблово",
       organizations: [
         {
@@ -768,7 +768,7 @@ export const SVAOArray = [
       ]
     },
     {
-      id: 13,
+      id: 12,
       name: "Северное Медведково",
       organizations: [
         {
@@ -854,7 +854,7 @@ export const SVAOArray = [
       ]
     },
     {
-      id: 14,
+      id: 1,
       name: "Северный",
       organizations: [
         {
@@ -876,7 +876,7 @@ export const SVAOArray = [
       ]
     },
       {
-        id: 1,
+        id: 11,
         name: "Южное Медведково",
         organizations: [
           {
@@ -930,7 +930,7 @@ export const SVAOArray = [
         ]
       },
       {
-        id: 15,
+        id: 16,
         name: "Ярославский район",
         organizations: [
           {
