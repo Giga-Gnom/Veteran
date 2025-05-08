@@ -1,15 +1,20 @@
 import React from "react";
 import styles from "./SZAOWindow.module.css";
 import MyHat from "../../../../Hat/MyHat";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import BeforePageButton from "../../../../UI/MyButtons/BeforePageButton";
 import { districtsArray } from "../../districtsArray";
 
 const SZAOWindow = () => {
     const district = districtsArray.find(item => item.id === 'SZAO');
+    const navigate = useNavigate();
 
     if (!district) {
         return <div>Район не найден</div>;
+    }
+
+    const handleAreaClick = (areaID) => {
+        navigate(`/district/northwest/${areaID}`);
     }
 
     return (
@@ -25,6 +30,7 @@ const SZAOWindow = () => {
                                 <path
                                     d={area.path}
                                     className={styles.area}
+                                    onClick={()=>handleAreaClick(area.id)}
                                 />
                                 <text x={area.center.x} y={area.center.y} className={styles.area_label}>
                                     {area.id}

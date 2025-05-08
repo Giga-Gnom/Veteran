@@ -42,6 +42,7 @@ import ZAOWindow from "../components/Windows/MapWindow/DistrictWindows/ZAOWindow
 import CAOorganizations from "../components/Windows/MapWindow/DistrictWindows/CAOWindow/CAOorganizations/CAOorganizations";
 import SAOorganizations from "../components/Windows/MapWindow/DistrictWindows/SAOWindow/SAOorganization/SAOorganization";
 import SVAOorganization from "../components/Windows/MapWindow/DistrictWindows/SVAOWindow/SVAOorganization/SVAOorganization";
+import SZAOorganization from "../components/Windows/MapWindow/DistrictWindows/SZAOWindow/SZAOorganization/SZAOorganization";
 
 
 
@@ -214,6 +215,10 @@ export const router = createBrowserRouter([
     {
         path: "/district/northwest",
         element: <SZAOWindow />
+    },
+    {
+        path: "/district/northwest/:areaID",
+        element: <SZAOorganization />
     },
     {
         path: "/district/west",
