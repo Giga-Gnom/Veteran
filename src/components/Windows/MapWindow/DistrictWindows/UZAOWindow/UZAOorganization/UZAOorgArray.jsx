@@ -1,6 +1,6 @@
 export const UZAOorgArray = [
     {
-        id: 1,
+        id: 9,
         name: "Академический",
         organizations: [
           {
@@ -62,7 +62,7 @@ export const UZAOorgArray = [
         ]
       },
       {
-        id: 2,
+        id: 7,
         name: "Гагаринский",
         organizations: [
           {
@@ -132,7 +132,7 @@ export const UZAOorgArray = [
         ]
       },
       {
-        id: 3,
+        id: 10,
         name: "Зюзинский",
         organizations: [
           {
@@ -210,7 +210,7 @@ export const UZAOorgArray = [
         ]
       },
       {
-        id: 4,
+        id: 6,
         name: "Коньково",
         organizations: [
           {
@@ -320,7 +320,7 @@ export const UZAOorgArray = [
         ]
       },
       {
-        id: 5,
+        id: 11,
         name: "Котловка",
         organizations: [
           {
@@ -374,7 +374,7 @@ export const UZAOorgArray = [
         ]
       },
       {
-        id: 6,
+        id: 1,
         name: "Ломоносовский",
         organizations: [
           {
@@ -452,7 +452,7 @@ export const UZAOorgArray = [
         ]
       },
       {
-        id: 7,
+        id: 3,
         name: "Обручевский",
         organizations: [
           {
@@ -568,7 +568,7 @@ export const UZAOorgArray = [
         ]
       },
       {
-        id: 9,
+        id: 0,
         name: "Теплый Стан",
         organizations: [
           {
@@ -662,7 +662,7 @@ export const UZAOorgArray = [
         ]
       },
       {
-        id: 10,
+        id: 2,
         name: "Черемушки",
         organizations: [
           {
@@ -748,7 +748,7 @@ export const UZAOorgArray = [
         ]
       },
       {
-        id: 11,
+        id: 4,
         name: "Южное Бутово",
         organizations: [
           {
@@ -794,7 +794,7 @@ export const UZAOorgArray = [
         ]
       },
       {
-        id: 12,
+        id: 5,
         name: "Ясенево",
         organizations: [
           {
