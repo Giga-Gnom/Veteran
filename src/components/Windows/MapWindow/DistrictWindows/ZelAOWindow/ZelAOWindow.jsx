@@ -1,15 +1,20 @@
 import React from "react";
 import styles from "./ZelAOWindow.module.css";
 import MyHat from "../../../../Hat/MyHat";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import BeforePageButton from "../../../../UI/MyButtons/BeforePageButton";
 import { districtsArray } from "../../districtsArray";
 
 const ZelAOWindow = () => {
     const district = districtsArray.find(item => item.id === 'ZelAO');
+    const navigate = useNavigate();
 
     if (!district) {
         return <div>Район не найден</div>;
+    }
+
+    const handleAreaClick = (areaID) => {
+        navigate(`/district/zelenograd/${areaID}`);
     }
 
     return (
@@ -26,9 +31,10 @@ const ZelAOWindow = () => {
                                     key={area.id}
                                     d={area.path}
                                     className={styles.area}
+                                    onClick={()=>handleAreaClick(area.id)}
                                 />
                                 <text x={area.center.x} y={area.center.y} className={styles.area_label}>
-                                    {area.id}
+                                    {area.id+1}
                                 </text>
                             </g>
                         ))}
@@ -42,7 +48,7 @@ const ZelAOWindow = () => {
                     </div>
                     {district.area.map((area) => (
                         <div className={styles.mapContainer_legend_block} key={area.id}>
-                            <p>{area.id}. {area.name}</p>
+                            <p>{area.id+1}. {area.name}</p>
                         </div>
                     ))}
                 </div>

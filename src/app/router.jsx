@@ -47,6 +47,7 @@ import UAOorganization from "../components/Windows/MapWindow/DistrictWindows/UAO
 import UVAOorganization from "../components/Windows/MapWindow/DistrictWindows/UVAOWindow/UVAOorganization/UVAOrganization";
 import UZAOorganization from "../components/Windows/MapWindow/DistrictWindows/UZAOWindow/UZAOorganization/UZAOorganization";
 import VAOorganization from "../components/Windows/MapWindow/DistrictWindows/VAOWindow/VAOorganization/VAOorganization";
+import ZelAOorganization from "../components/Windows/MapWindow/DistrictWindows/ZelAOWindow/ZelAOorganization/ZelAOorganization";
 
 
 
@@ -175,6 +176,10 @@ export const router = createBrowserRouter([
     {
       path: "/district/zelenograd",
       element: <ZelAOWindow />
+    },
+        {
+      path: "/district/zelenograd/:areaID",
+      element: <ZelAOorganization />
     },
     {
         path: "/district/southwest",
