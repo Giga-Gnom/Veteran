@@ -1,0 +1,30 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  .container_head, .container_footer {
+    flex: 0 0 auto;
+    height: 15vh;
+  }
+
+  .container_content{
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    overflow: auto;
+  }
+
+  .noInfo {
+    color: #000000da;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    font-size: 5vh;
+    height: 100%;
+}
+
+  

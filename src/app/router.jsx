@@ -44,6 +44,7 @@ import SAOorganizations from "../components/Windows/MapWindow/DistrictWindows/SA
 import SVAOorganization from "../components/Windows/MapWindow/DistrictWindows/SVAOWindow/SVAOorganization/SVAOorganization";
 import SZAOorganization from "../components/Windows/MapWindow/DistrictWindows/SZAOWindow/SZAOorganization/SZAOorganization";
 import UAOorganization from "../components/Windows/MapWindow/DistrictWindows/UAOWindow/UAOorganization/UAOorganization";
+import UVAOorganization from "../components/Windows/MapWindow/DistrictWindows/UVAOWindow/UVAOorganization/UVAOrganization";
 
 
 
@@ -180,6 +181,10 @@ export const router = createBrowserRouter([
     {
         path: "/district/southeast",
         element: <UVAOWindow />
+    },
+        {
+        path: "/district/southeast/:areaID",
+        element: <UVAOorganization />
     },
     {
         path: "/district/south",
