@@ -1,7 +1,7 @@
 export const VAOorgArray = 
 [
     {
-      id: 1,
+      id: 2,
       name: "Богородский район",
       organizations: [
         {
@@ -87,7 +87,7 @@ export const VAOorgArray =
       ]
     },
     {
-      id: 2,
+      id: 4,
       name: "Вешняки",
       organizations: [
         {
@@ -165,7 +165,7 @@ export const VAOorgArray =
       ]
     },
     {
-      id: 3,
+      id: 11,
       name: "Восточный район",
       organizations: [
         {
@@ -187,7 +187,7 @@ export const VAOorgArray =
       ]
     },
     {
-      id: 4,
+      id: 12,
       name: "Восточное Измайлово",
       organizations: [
         {
@@ -249,7 +249,7 @@ export const VAOorgArray =
       ]
     },
     {
-      id: 5,
+      id: 9,
       name: "Гольяново",
       organizations: [
         {
@@ -351,7 +351,7 @@ export const VAOorgArray =
       ]
     },
     {
-      id: 6,
+      id: 13,
       name: "Ивановское",
       organizations: [
         {
@@ -587,7 +587,7 @@ export const VAOorgArray =
       ]
     },
     {
-      id: 8,
+      id: 14,
       name: "Косино-Ухтомский",
       organizations: [
         {
@@ -641,7 +641,7 @@ export const VAOorgArray =
       ]
     },
     {
-      id: 9,
+      id: 1,
       name: "Метрогородок",
       organizations: [
         {
@@ -671,7 +671,7 @@ export const VAOorgArray =
       ]
     },
     {
-      id: 10,
+      id: 15,
       name: "Новокосино",
       organizations: [
         {
@@ -733,7 +733,7 @@ export const VAOorgArray =
       ]
     },
     {
-      id: 11,
+      id: 8,
       name: "Новогиреево",
       organizations: [
         {
@@ -795,7 +795,7 @@ export const VAOorgArray =
       ]
     },
     {
-      id: 12,
+      id: 3,
       name: "Перово",
       organizations: [
         {
@@ -873,7 +873,7 @@ export const VAOorgArray =
       ]
     },
     {
-      id: 13,
+      id: 5,
       name: "Преображенское",
       organizations: [
         {
@@ -943,7 +943,7 @@ export const VAOorgArray =
       ]
     },
     {
-      id: 14,
+      id: 10,
       name: "Северное Измайлово",
       organizations: [
         {
@@ -1021,7 +1021,7 @@ export const VAOorgArray =
       ]
     },
     {
-      id: 15,
+      id: 6,
       name: "Соколиная Гора",
       organizations: [
         {
@@ -1091,7 +1091,7 @@ export const VAOorgArray =
       ]
     },
     {
-      id: 16,
+      id: 0,
       name: "Сокольники",
       organizations: [
         {
