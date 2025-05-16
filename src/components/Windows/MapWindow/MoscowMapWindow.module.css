@@ -38,3 +38,9 @@
   fill: #ff9900;
   stroke-width: 3;
 }
+
+.map_text{
+  font-size: 1.2vh;
+  fill: rgba(0, 0, 0, 0.648);
+  pointer-events: none;
+}
