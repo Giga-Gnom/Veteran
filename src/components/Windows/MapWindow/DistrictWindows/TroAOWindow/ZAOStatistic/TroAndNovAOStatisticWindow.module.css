@@ -1,0 +1,28 @@
+.container{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: none;
+}
+
+.container_head{
+    height: 15vh;
+}
+
+.container_bottom{
+    height: 15vh;
+}
+
+.container_content{
+    flex: 1; /* Занимает оставшееся пространство */
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+.container_content_graph{
+    width: 70vw;
+    overflow: visible;
+    padding: 20px;
+}

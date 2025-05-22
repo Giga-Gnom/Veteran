@@ -1,12 +1,17 @@
 import React from "react";
 import styles from "./TroAOWindow.module.css";
 import MyHat from "../../../../Hat/MyHat";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import BeforePageButton from "../../../../UI/MyButtons/BeforePageButton";
 import { districtsArray } from "../../districtsArray";
 
 const TroAOWindow = () => {
     const district = districtsArray.find(item => item.id === 'TroAO');
+    const navigate = useNavigate();
+
+    const handleAreaClick = () => {
+        return navigate(`/district/troitskiystatistic/true`)
+    }
 
     if (!district) {
         return <div>Район не найден</div>;
@@ -25,6 +30,7 @@ const TroAOWindow = () => {
                                 <path
                                     d={area.path}
                                     className={styles.area}
+                                    onClick={()=>handleAreaClick()}
                                 />
                                 <text x={area.center.x} y={area.center.y} className={styles.area_label}>
                                     {area.id}

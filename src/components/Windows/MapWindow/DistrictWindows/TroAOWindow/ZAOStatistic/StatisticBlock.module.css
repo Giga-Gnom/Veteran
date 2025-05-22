@@ -1,0 +1,14 @@
+.container{
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 70vh;
+}
+
+
+
+
+
+
+
