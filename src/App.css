@@ -14,19 +14,10 @@
 .content {
   flex-grow: 1;
   padding-top: 15vh; /* Отступ для фиксированной шапки */
-  background-color: #f0f0f0; /* Для наглядности */
+  background-color: transparent; /* Для наглядности */
 }
 
 html, body, #root {
   width: 100%;
   height: 100%;
-}
-
-p{
-  font-size: 3vh;
-  text-indent: 2vw;
-}
-
-h1{
-  font-size: 5vh;
 }

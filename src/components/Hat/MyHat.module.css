@@ -7,7 +7,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    background-color: white;
+    background-color: transparent;
     border: none;
     z-index: 1000;
     position: relative;
@@ -19,7 +19,8 @@
   }
 
   .header__text{
-    color: rgb(234, 79, 79);
+    color: rgb(168, 4, 4);
     font-size: 5vh;
+    font-family: 'Playfair Display', serif;
     text-align: center;
   }

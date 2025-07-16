@@ -9,13 +9,16 @@ const HelloWindow = () =>{
     return(
         <div className={styles.container}>
             <div className={styles.container_head}>            
-                <MyHat heading="Приветствие"/>
+                <MyHat heading="ПРИВЕТСТВИЕ РУКОВОДИТЕЛЯ"/>
             </div>
             <div className={styles.container_content}>
+                <div className={styles.container_img}>
                     <img src={image} alt="" className={styles.container_content_image} onClick={handleImgClick}/>
+                    <p>Приветствие председателя МГСВ Пашкова Георгия Ивановича</p>
+                </div>
                 <div className={styles.container_content_text}>
                     <h1 className={styles.container_content_text_h1}>Здравствуйте, друзья!</h1>
-                    <p>Мы приветствуем вас в Московском городском совете ветеранов войны и труда. 
+                    <p><span>М</span>ы приветствуем вас в Московском городском совете ветеранов войны и труда. 
                     Сегодня мы - самая крупная общественная организация Москвы и самая многочисленная ветеранская организация страны. 
                     МГСВ может смело назвать себя флагманом ветеранского движения как в Москве, так и в России. 
                     На сегодняшний день только  актив городского совета насчитывает более 6 000 человек. 
