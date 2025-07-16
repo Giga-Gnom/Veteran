@@ -11,7 +11,7 @@ const MGSVWindow = () => {
     return(
         <div className={styles.container}>
             <div className={styles.container_head}>
-                <MyHat heading="МГСВ"/>
+                <MyHat heading="ЧЛЕНЫ СОВЕТА "/>
             </div>
             <div className={styles.container_content}>
                 {mgsvArray.map((person, index) => <MgsvBlock key={index} person={person}/>)}
