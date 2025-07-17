@@ -39,7 +39,10 @@
     background-repeat: no-repeat;
     margin: 1vw;
     padding: 0;
+}
 
+.NextPageButton:focus{
+    transform: scale(1.4);
 }
 
 .BeforePageButton {
@@ -56,6 +59,10 @@
 
 }
 
+.BeforePageButton:focus{
+    transform: scale(1.4);
+}
+
 .ToMainButton {
     width: 7vw; /* Занимает всю ширину родительского контейнера */
     height: 7vh; /* Занимает всю высоту родительского контейнера */
@@ -67,6 +74,10 @@
     background-repeat: no-repeat;
     margin: 1vw;
     padding: 0;
+}
+
+.ToMainButton:focus{
+    transform: scale(1.4);
 }
 
 .readMore{
@@ -89,4 +100,8 @@
     background-repeat: no-repeat;
     margin: 1vw;
     padding: 0;
+}
+
+.dropMenu:focus{
+    transform: scale(1.4);
 }

@@ -58,14 +58,14 @@
 
 .container_content_text p{
     font-size: 3vh;
-    font-family: "Lobster", sans-serif;
+    font-family: 'Playfair Display', serif;
     color: black;
     text-indent: 2vw;
 }
 
 .container_content_text_h1{
     color: black;
-    font-family: "Lobster", sans-serif;
+    font-family: 'Playfair Display', serif;
     font-size: 4vh;
     display: block;
     text-align: center;

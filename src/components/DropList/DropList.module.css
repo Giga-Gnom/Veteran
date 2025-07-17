@@ -10,6 +10,8 @@
     background: rgba(189, 162, 117);
     z-index: 1001;
     top: 0;
+    border-left: 2vh ridge rgba(169, 35, 35, 0.84);
+    padding: 1vh;
 }
 
 .dropListContainer_link{
