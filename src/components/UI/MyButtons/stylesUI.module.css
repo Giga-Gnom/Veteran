@@ -83,7 +83,7 @@
     height: 7vh; /* Занимает всю высоту родительского контейнера */
     background-color: rgba(255, 255, 255, 0); /* Цвет кнопки */
     cursor: pointer;
-    background-image: url("./srcUI/dropMenu.png");
+    background-image: url("./srcUI/menu_2.png");
     background-size: contain; /* Чтобы изображение покрывало всю кнопку */
     background-position: center;
     background-repeat: no-repeat;
