@@ -4,6 +4,15 @@
     flex-direction: column;
 }
 
+.container::before{
+    background: url(./srcPlace/fon_3.jpg) center/cover no-repeat;
+    content: "";
+    z-index: 0;
+    opacity: 0.5;
+    position: absolute;
+    inset: 0;
+}
+
 .container_head{
     height: 15vh;
 }
@@ -14,16 +23,23 @@
 .container_content{
     flex: 1; /* Занимает оставшееся пространство */
     display: flex;
-    flex-direction: column; /*  Добавляем это */
-    overflow: auto;
-    max-height: 70vh;
-    
+    flex-direction: column;
 }
 
 .container_content_text{
     height: 100%;
+    max-height: 80vh;
+    overflow: auto;
     z-index: 0;
-    font-size: xx-large;
+    font-size: 3vh;
+    font-family: 'Playfair Display', serif;
+    color: black;
+    text-indent: 2vw;
+}
+
+.container_content_text h1{
+    font-family: "Lobster", serif;
+    text-align: center;
 }
 
 .container_content_text_img{
@@ -31,4 +47,5 @@
     height: 30vh;
     float: left;
     margin: 1vh 3vh;
+    border: 1vh ridge rgba(0, 0, 0, 0.84);
 }

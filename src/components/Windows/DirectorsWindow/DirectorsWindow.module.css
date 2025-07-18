@@ -2,6 +2,16 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
+    position: relative;
+}
+
+.container::before{
+    background: url(./srcDirectors/fon_4.png) center/cover no-repeat;
+    position: absolute;
+    inset: 0;
+    opacity: 0.5;
+    content: "";
+    z-index: 0;
 }
 
 .container_head{
@@ -13,6 +23,7 @@
 }
 .container_content{
     flex: 1; 
+    z-index: 1;
     display: flex;
     flex-direction: row; 
     max-height: 70vh;

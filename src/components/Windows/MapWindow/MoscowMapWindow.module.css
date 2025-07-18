@@ -4,6 +4,15 @@
   height: 100vh;
 }
 
+.container::before{
+    background: url(./srcMaps/fon_6.png) center/cover no-repeat;
+    position: absolute;
+    inset: 0;
+    opacity: 0.5;
+    content: "";
+    z-index: 0;
+}
+
 .container_head, .container_footer {
   flex: 0 0 auto;
 }

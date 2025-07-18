@@ -10,7 +10,7 @@ import { otdelContentArray } from "./blocks/ContentBlock/otdelContentArray";
 import { pokContentArray } from "./blocks/ContentBlock/pokContentArray";
 import { voaoContentArray } from "./blocks/ContentBlock/voaoContentArray";
 import { mgovContentArray } from "./blocks/ContentBlock/mgovContentArray";
-import newspaper from "./srcStruct/image.png"
+import newspaper from "./srcStruct/newspaper.png"
 
 
 const StructWindow = () => {
@@ -46,7 +46,7 @@ const StructWindow = () => {
                     </div>
                 </div>
             </div>
-            <div className={styles.container_head}>
+            <div className={styles.container_bottom}>
                 <BottomPanel />
             </div>
         </div>
