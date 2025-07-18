@@ -11,7 +11,7 @@
     z-index: 1001;
     top: 0;
     border-left: 2vh ridge rgba(169, 35, 35, 0.84);
-    padding: 1vh;
+    font-family: "Cormorant Garamond", serif;
 }
 
 .dropListContainer_link{

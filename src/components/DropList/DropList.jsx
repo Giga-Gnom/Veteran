@@ -5,8 +5,12 @@ import { Link } from "react-router-dom";
 const DropList = () => {
     return(
         <div className={styles.dropListContainer}>
-            <Link className={styles.dropListContainer_link} to="/">Главная</Link>
-            <Link className={styles.dropListContainer_link} to="/hello">Приветствие руководителя</Link>
+            <div className={styles.block_link}>
+                <Link className={styles.dropListContainer_link} to="/">Главная</Link>
+            </div>
+            <div className={styles.block_link}>
+                <Link className={styles.dropListContainer_link} to="/hello">Приветствие руководителя</Link>
+            </div>
             <Link className={styles.dropListContainer_link} to="/createhistory">История создания</Link>
             <Link className={styles.dropListContainer_link} to="/placehistory">История места</Link>
             <Link className={styles.dropListContainer_link} to="/directors">Руководство</Link>
