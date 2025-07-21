@@ -33,7 +33,7 @@ const RegionalConnectionWindow = () => {
                     ))
                 )}
             </div>
-            <div className={styles.container_head}>
+            <div className={styles.container_bottom}>
                 <BottomPanel />
             </div>
         </div>

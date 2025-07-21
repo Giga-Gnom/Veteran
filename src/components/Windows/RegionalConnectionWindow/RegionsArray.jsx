@@ -21,19 +21,19 @@ import chelI from "./imgRegion/chel (1).png";
 import dnrI from "./imgRegion/dnr (1).png";
 import sverdlI from "./imgRegion/sverd (1).png";
 import kievI from "./imgRegion/kiev (1).png";
-import lnrI from "./imgRegion/lnr (1).jpg";
+import lnrI from "./imgRegion/lnr (1).png";
 import mscI from "./imgRegion/msc (1).webp";
 import mosoblI from "./imgRegion/mosobl (1).png";
 import velnovI from "./imgRegion/Velnov (1).png";
 import permI from "./imgRegion/perm (1).png";
-import sevI from "./imgRegion/sev (1).jpg";
+import sevI from "./imgRegion/sev (1).png";
 import sloI from "./imgRegion/slo (1).png";
 import lenI from "./imgRegion/len (1).png";
-import yakI from "./imgRegion/yakut (1).jpg";
+import yakI from "./imgRegion/yakut.png";
 import volgogradI from "./imgRegion/volgograd (1).png";
-import tulaI from "./imgRegion/tula (1).jpg";
+import tulaI from "./imgRegion/tula (1).png";
 import yaroslavlI from "./imgRegion/yaroslavl (1).png";
-import minskI from "./imgRegion/minsk (1).webp";
+import minskI from "./imgRegion/minsk (1).png";
 import kalugaI from "./imgRegion/kaluga (1).png";
 
 export const regionsArray = [

@@ -21,4 +21,5 @@
 .Buttons{
     width: 5vw;
     height: 7vh;
+    z-index: 10;
 }
