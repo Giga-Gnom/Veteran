@@ -4,18 +4,32 @@
     flex-direction: column;
 }
 
+.container::before{
+    content: "";
+    background: url(fon_9.png) center/cover no-repeat;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.5;
+}
+
 .container_head{
     height: 15vh;
 }
 
 .container_bottom{
     height: 15vh;
+    position: fixed;
+    z-index: 2;
 }
 
 .container_content{
     flex: 1; /* Занимает оставшееся пространство */
     display: flex;
     flex-direction: row;
+    z-index: 1;
+    max-height: 80vh;
     overflow: auto;
     flex-wrap: wrap;
+    padding-bottom: 5vh;
 }

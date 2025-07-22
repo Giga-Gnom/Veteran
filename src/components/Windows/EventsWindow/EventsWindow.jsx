@@ -14,7 +14,7 @@ const EventsWindow = () => {
             <div className={styles.container_content}>
                 {eventsArray.map((event, index) => <EventBlock key={index} event={event}></EventBlock>)}
             </div>
-            <div className={styles.container_head}>            
+            <div className={styles.container_bottom}>            
             <BottomPanel/>
             </div>
         </div>

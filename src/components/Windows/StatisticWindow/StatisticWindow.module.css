@@ -20,6 +20,7 @@
 .container_bottom{
     height: 15vh;
     position: fixed;
+    z-index: 10;
 }
 
 .container_content{
