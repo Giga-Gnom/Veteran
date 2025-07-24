@@ -9,6 +9,7 @@
     background: url(./srcDirectors/fon_4.png) center/cover no-repeat;
     position: absolute;
     inset: 0;
+    filter: blur(0.6vh);
     opacity: 0.5;
     content: "";
     z-index: 0;

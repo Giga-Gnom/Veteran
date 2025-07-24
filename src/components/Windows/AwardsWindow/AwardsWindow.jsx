@@ -29,7 +29,7 @@ const AwardsWindow = () => {
                 ((awardsArray.map((award, index) => (<AwardBlock key={index} award={award} onClick={()=>{handleShowAwardDocument(award.path)}}></AwardBlock>))))
                 }
             </div>
-            <div className={styles.container_head}>            
+            <div className={styles.container_bottom}>            
                 <BottomPanel/>
             </div>
         </div>

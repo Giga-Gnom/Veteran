@@ -1,4 +1,3 @@
-import test_img from "../AwardsWindow/srcAwards/image.png"
 import domvet from "./srcParents/DomVeteranov.png";
 import socreab from "./srcParents/noroot.png";
 import panseonat from "./srcParents/panseonat.png";

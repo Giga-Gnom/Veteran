@@ -4,17 +4,31 @@
     flex-direction: column;
 }
 
+.container::before{
+    background: url(./srcStandarts/fon_14.png) center/cover no-repeat;
+    z-index: 0;
+    inset: 0;
+    position: absolute;
+    filter: blur(0.6vh);
+    opacity: 0.4;
+    content: "";
+}
+
 .container_head{
     height: 15vh;
 }
 
 .container_bottom{
     height: 15vh;
+    position: fixed;
+    z-index: 2;
 }
 
 .container_content{
     flex: 1; /* Занимает оставшееся пространство */
     display: flex;
     flex-direction: column;
+    max-height: 80vh;
+    z-index: 1;
     overflow: auto;
 }

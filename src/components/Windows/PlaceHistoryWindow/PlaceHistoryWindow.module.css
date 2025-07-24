@@ -10,6 +10,7 @@
     z-index: 0;
     opacity: 0.5;
     position: absolute;
+    filter: blur(0.4vh);
     inset: 0;
 }
 

@@ -1,4 +1,4 @@
-import image1 from "./srcAwards/image.png";
+import image1 from "./srcAwards/pochetVet.png";
 import doc1 from "./srcAwards/PochetVeteran.pdf";
 import patriot from "./srcAwards/Patriot.pdf";
 import book from "./srcAwards/Book.pdf";

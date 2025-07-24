@@ -12,6 +12,7 @@
     opacity: 0.5;
     content: "";
     z-index: 0;
+    filter: blur(0.6vh);
 }
 
 .container_head{

@@ -8,6 +8,7 @@
     content: "";
     background: url(./srcRegions/fon_8.jpg) center/cover no-repeat;
     position: absolute;
+    filter: blur(0.4vh);
     inset: 0;
     z-index: 0;
     opacity: 0.5;

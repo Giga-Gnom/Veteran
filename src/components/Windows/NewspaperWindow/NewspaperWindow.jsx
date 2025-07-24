@@ -64,7 +64,7 @@ const NewspaperWindow = () => {
                 </div>
             </div>
             { !currentDocument && (
-                <div className={styles.container_head}>            
+                <div className={styles.container_bottom}>            
                     <BottomPanel/>
                 </div>
             )}

@@ -20,7 +20,7 @@ const PartnersWindow = () => {
             <div className={styles.container_content}>
                 {partnersArray.map((partner, index) => (<PartnerBlock key={index} partner={partner} onClick={()=>handleOpenPartenrResourse(partner.path)}/>))}
             </div>
-            <div className={styles.container_head}>            
+            <div className={styles.container_bottom}>            
                 <BottomPanel/>
             </div>
         </div>

@@ -4,12 +4,24 @@
     flex-direction: column;
 }
 
+.container::before{
+    content: "";
+    background: url(./srcParents/fon_11.png) center/cover no-repeat;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.5;
+    filter: blur(0.8vh);
+}
+
 .container_head{
     height: 15vh;
 }
 
 .container_bottom{
     height: 15vh;
+    position: fixed;
+    z-index: 2;
 }
 
 .container_content{
@@ -17,6 +29,8 @@
     display: flex;
     flex-direction: row;
     overflow: auto;
+    z-index: 1;
+    max-height: 80vh;
     flex-wrap: wrap;
     justify-content: space-around;
 }
