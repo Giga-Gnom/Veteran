@@ -35,7 +35,11 @@
     font-size: 3vh;
     font-family: 'Playfair Display', serif;
     color: black;
-    text-indent: 2vw;
+}
+
+.indent_text{
+        text-indent: 2vw;
+
 }
 
 .container_content_text h1{
@@ -44,9 +48,20 @@
 }
 
 .container_content_text_img{
+    float: left;
+    text-align: right;
+    font-family: "Lobster", serif;
+    font-size: 2vh;
+    color: black;
+    margin: 0vh 2vw;
+}
+
+.container_content_text_img p{
+    padding-right: 1vw;
+}
+
+.container_content_text_img_img{
     aspect-ratio: auto;
     height: 30vh;
-    float: left;
-    margin: 1vh 3vh;
     border: 1vh ridge rgba(0, 0, 0, 0.84);
 }

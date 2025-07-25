@@ -12,7 +12,7 @@ const DirectorsWindow = () => {
     return(
         <div className={styles.container}>
         <div className={styles.container_head}>            
-            <MyHat heading="Руководство"/>
+            <MyHat heading="РУКОВОДСТВО"/>
         </div>
         <div className={styles.container_content}>
                 {personsArray.map((person, index) =>  <Director key={index} person={person}/>)}
