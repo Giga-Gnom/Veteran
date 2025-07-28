@@ -50,6 +50,7 @@ import VAOorganization from "../components/Windows/MapWindow/DistrictWindows/VAO
 import ZelAOorganization from "../components/Windows/MapWindow/DistrictWindows/ZelAOWindow/ZelAOorganization/ZelAOorganization";
 import ZAOStatisticWindow from "../components/Windows/MapWindow/DistrictWindows/ZAOWindow/ZAOStatistic/ZAOStatisticWindow";
 import TroAndNovAOStatisticWindow from "../components/Windows/MapWindow/DistrictWindows/TroAOWindow/ZAOStatistic/TroAndNovAOStatisticWindow";
+import Balysnikov from "../components/Windows/DirectorsWindow/Balysnikov";
 
 
 
@@ -90,6 +91,10 @@ export const router = createBrowserRouter([
     {
         path: "/pashkov",
         element: <Pashkov/>
+    },
+    {
+        path: "/balysnikov",
+        element: <Balysnikov/>
     },
     {
         path: "/struct",

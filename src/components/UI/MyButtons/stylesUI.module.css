@@ -81,12 +81,18 @@
 }
 
 .readMore{
-    width: 30vw;
+    width: 100%;
     height: 5vh;
-    background: rgb(198, 41, 41);
-    text-align: center; /* выравнивание текста */
-    font-size: 1vh; /* размер шрифта */
+    background: transparent;
+    font-family: 'Playfair Display', serif;
+    text-align: left; /* выравнивание текста */
+    font-size: 2vh; /* размер шрифта */
     cursor: pointer;
+}
+
+.readMore p:hover{
+    color: red;
+    text-decoration: underline;
 }
 
 .dropMenu{

@@ -1,11 +1,10 @@
 .container{
-    max-width: 23vw;
-    height: 70vh;
+    width: 50vw;
+    max-height: 45vh;
     margin: 1vh 0;
     display: flex;
     height: 100%;
-    flex-direction: column;
-    position: relative;
+    flex-direction: row;
 }
 
 h1{
@@ -19,15 +18,15 @@ h1{
 .content_text_main{
     overflow: hidden;
     font-size: 2vh;
-    max-height: 30vh;
+    max-height: 36vh;
     font-family: 'Playfair Display', serif;
 
 }
 
 .paint{
-    width: 100%;
-    border: 1vh ridge red;
-    object-fit: contain;
-    height: auto;
-    margin: 0;
+    width: 20vw;
+    object-fit: cover;
+    border: 1.5vh ridge red;
+    height: 100%;
+    margin: 0 1vw;
 }

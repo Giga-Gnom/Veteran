@@ -4,6 +4,7 @@ import MyHat from "../../Hat/MyHat";
 import BottomPanel from "../../BottomPanel/BottomPanel";
 import Director from "./Director";
 import { personsArray } from "./PersonsArray";
+import PashkovBlock from "./PashkovBlock";
 
 const DirectorsWindow = () => {
 
@@ -15,9 +16,15 @@ const DirectorsWindow = () => {
             <MyHat heading="РУКОВОДСТВО"/>
         </div>
         <div className={styles.container_content}>
-                {personsArray.map((person, index) =>  <Director key={index} person={person}/>)}
+            <div className={styles.horizontal_el_container}>
+                <PashkovBlock person={personsArray[0]} key={0}></PashkovBlock>
+            </div>
+            <div className={styles.vertical_el_container}>
+                {personsArray.slice(1).map((person, index) =>  <Director className={styles.vertical} key={index} person={person}/>)}
+            </div>
+            <br /><br /><br />
         </div>
-        <div className={styles.container_head}>            
+        <div className={styles.container_bottom}>            
             <BottomPanel/>
         </div>
     </div>
