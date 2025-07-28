@@ -30,16 +30,16 @@ const StructWindow = () => {
                 </div>
                 <div className={styles.container_content_bot}>
                     <div className={styles.container_content_bot_otdel}>
-                        {otdelContentArray.map((otdel, index) => <ContentBlock key={index} content={otdel} />)}
+                        {otdelContentArray.map((otdel, index) => <ContentBlock className={styles.container_content_bot_otdel_block} key={index} content={otdel} />)}
                     </div>
                     <div className={styles.container_content_bot_otdel}>
-                        {pokContentArray.map((pok, index) => <ContentBlock key={index} content={pok} />)}
+                        {pokContentArray.map((pok, index) => <ContentBlock className={styles.container_content_bot_otdel_block} key={index} content={pok} />)}
                     </div>
                     <div className={styles.container_content_bot_otdel}>
-                        {voaoContentArray.map((voao, index) => <ContentBlock key={index} content={voao} />)}
+                        {voaoContentArray.map((voao, index) => <ContentBlock className={styles.container_content_bot_otdel_block} key={index} content={voao} />)}
                     </div>
                     <div className={styles.container_content_bot_otdel}>
-                        {mgovContentArray.map((mgov, index) => <ContentBlock key={index} content={mgov} />)}
+                        {mgovContentArray.map((mgov, index) => <ContentBlock className={styles.container_content_bot_otdel_block} key={index} content={mgov} />)}
                     </div>
                     <div className={styles.container_content_bot_otdel}>
                         <img src={newspaper} style={{padding:"1vh 0"}} alt="" />

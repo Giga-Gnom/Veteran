@@ -1,6 +1,6 @@
 .container{
     width: 15vw;
-    height: 10vh;
+    min-height: 10vh;
     background-color: brown;
     border-radius: 2vh;
     padding: 1vh;
@@ -10,6 +10,8 @@
     font-size: 2vh;
     font-weight: 400;
     text-align: center;
+    justify-content: center;
     color: rgb(255, 255, 255);
+    font-family: 'Playfair Display', serif;
     text-indent: 0;
 }

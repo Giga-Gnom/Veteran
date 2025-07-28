@@ -4,7 +4,7 @@ export const topContentArray = [
         path:"#"
     },
     {
-        name: "МГСВ",
+        name: "Московский городской совет ветеранов",
         path: "/mgsv"
     },
     {
