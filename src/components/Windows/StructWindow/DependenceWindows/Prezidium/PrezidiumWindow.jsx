@@ -11,10 +11,11 @@ const PrezidiumWindow = () => {
     return(
         <div className={styles.container}>
             <div className={styles.container_head}>
-                <MyHat heading="МГСВ"/>
+                <MyHat heading="ПРЕЗИДИУМ"/>
             </div>
             <div className={styles.container_content}>
                 {prezidiumArray.map((person, index) => <PrezidiumBlock key={index} person={person}/>)}
+                <br /><br /><br /><br />
             </div>
             <div className={styles.container_button}>
                 <Link to="/struct">

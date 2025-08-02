@@ -4,6 +4,16 @@
     flex-direction: column;
 }
 
+.container::before{
+    background: url(/src/components/Windows/StructWindow/srcStruct/fon_5.png) center/cover no-repeat;
+    position: absolute;
+    inset: 0;
+    opacity: 0.5;
+    content: "";
+    z-index: 0;
+    filter: blur(0.6vh);
+}
+
 .container_head{
     height: 15vh;
 }
@@ -15,19 +25,33 @@
     flex: 1; 
     display: flex;
     flex-direction: column; 
-    max-height: 70vh;
+    max-height: 85vh;
+    z-index: 1;
     overflow: auto;
+    font-family: 'Playfair Display', serif;
+    color: black;
+    overflow-x: hidden;
 }
 
 .container_content_person{
     display: flex;
-    flex-direction: row;
-    width: 100vw;
+    flex-direction: column;
+    text-align: center;
+    width: 99vw;
     height: auto;
-    margin: 3vh 0;
+    border: 1vh double rgb(80,80,227);
+    padding: 2vh;
+    margin: 1vh;
 }
 
 .container_content_person_h5{
     padding: 0 2vw;
     font-size: 3vh;
+}
+
+.container_button{
+    position: fixed;
+    left: 5vw;
+    bottom: 2vh;
+    z-index: 2;
 }

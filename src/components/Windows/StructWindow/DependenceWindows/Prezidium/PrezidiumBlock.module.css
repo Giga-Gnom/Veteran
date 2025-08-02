@@ -3,5 +3,8 @@
     width: 100vw;
     height: auto;
     flex-direction: column;
-    margin-top: 3vh;
+    margin: 1vh;
+    padding: 2vh;
+    border: 1vh groove rgb(80, 80, 227);
+    text-align: center;
 }

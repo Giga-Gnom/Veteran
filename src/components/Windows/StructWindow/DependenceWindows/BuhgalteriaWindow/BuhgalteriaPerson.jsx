@@ -10,12 +10,12 @@ const BuhgalteriaPerson = ({person}) => {
                     <p>{person.role}</p>
                     <h2>{person.name}</h2>
                     <p>{person.phone}</p>
-                    <p>{person.text}</p>
+                    <p style={{padding: "1vw"}}>{person.text}</p>
+                    <div className={styles.container_functions}>
+                        <h2>Функциональные обязанности:</h2>
+                        {person.functions.map((fun, index) => <p key={index}>{fun}</p>)}
+                    </div>
                 </div>
-            </div>
-            <div className={styles.container_functions}>
-                <h2>Функциональные обязанности:</h2>
-                {person.functions.map((fun, index) => <p key={index}>{fun}</p>)}
             </div>
         </div>
     )

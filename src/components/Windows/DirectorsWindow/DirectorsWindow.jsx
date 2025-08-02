@@ -13,7 +13,7 @@ const DirectorsWindow = () => {
     return(
         <div className={styles.container}>
         <div className={styles.container_head}>            
-            <MyHat heading="РУКОВОДСТВО"/>
+            <MyHat heading="РУКОВОДСТВО МГСВ"/>
         </div>
         <div className={styles.container_content}>
             <div className={styles.horizontal_el_container}>

@@ -15,9 +15,6 @@ const YoungPeopleWindow = () => {
             <MyHat heading="Отдел по работе с молодежью"/>
         </div>
         <div className={styles.container_content}>
-            <div className={styles.container_content_header}>
-                <h2>ОТДЕЛ ПО РАБОТЕ С МОЛОДЕЖЬЮ МОСКОВСКОГО ГОРОДСКОГО СОВЕТА ВЕТЕРАНОВ</h2>
-            </div>
             <div className={styles.container_content_person}>
                 <img src={lobanov} alt="" style={{margin:"0 2vw"}} className={styles.container_content_person_image}/>
                 <div className={styles.container_content_pesron_text}>

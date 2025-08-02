@@ -10,12 +10,9 @@ const OrganizationWindow = () => {
     return(
         <div className={styles.container}>
         <div className={styles.container_head}>
-            <MyHat heading="Организационный отдел"/>
+            <MyHat heading="ОРГАНИЗАЦИОННЫЙ ОТДЕЛ"/>
         </div>
         <div className={styles.container_content}>
-            <div className={styles.container_content_header}>
-                <h2>ОРГАНИЗАЦИОННЫЙ ОТДЕЛ МОСКОВСКОГО ГОРОДСКОГО СОВЕТА ВЕТЕРАНОВ</h2>
-            </div>
             <div className={styles.container_content_person}>
                 <img src={neshina} alt="" style={{margin:"0 2vw"}} className={styles.container_content_person_image}/>
                 <div className={styles.container_content_pesron_text}>
@@ -44,6 +41,7 @@ const OrganizationWindow = () => {
                     <p>Почетный работник образования и науки.</p>
                 </div>
             </div>
+            <br /><br /><br /><br />
         </div>
         <div className={styles.container_button}>
             <Link to="/struct">

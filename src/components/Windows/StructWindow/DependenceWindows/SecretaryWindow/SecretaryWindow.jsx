@@ -8,7 +8,7 @@ const SecretaryWindow = () => {
     return(
         <div className={styles.container}>
             <div className={styles.container_head}>
-                <MyHat heading="Секретариат"/>
+                <MyHat heading="СЕКРЕТАРИАТ"/>
             </div>
             <div className={styles.container_content}>              
                 <div className={styles.container_content_header}>

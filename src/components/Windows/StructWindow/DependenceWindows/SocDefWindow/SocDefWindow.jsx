@@ -5,17 +5,15 @@ import { Link } from "react-router-dom";
 import BeforePageButton from "../../../../UI/MyButtons/BeforePageButton";
 import babich from "./srcSocDef/Babich.jpg"
 import mitina from "./srcSocDef/Лена.jpg"
+import klepikov from "./srcSocDef/Клепиков.jpg"
 
 const SocDefWindow = () => {
     return(
         <div className={styles.container}>
         <div className={styles.container_head}>
-            <MyHat heading="Отдел социальной защиты"/>
+            <MyHat heading="ОТДЕЛ СОЦИАЛЬНОЙ ЗАЩИТЫ"/>
         </div>
         <div className={styles.container_content}>
-            <div className={styles.container_content_header}>
-                <h2 style={{marginBottom:"7vh"}}>Отдел социальной защиты МГСВ</h2>
-            </div>
             <div className={styles.container_content_person}>
                 <img src={babich} alt="" style={{margin:"0 2vw"}} className={styles.container_content_person_image}/>
                 <div className={styles.container_content_pesron_text}>
@@ -26,6 +24,7 @@ const SocDefWindow = () => {
                 </div>
             </div>
             <div className={styles.container_content_person}>
+                <img src={klepikov} alt="" style={{margin:"0 2vw"}} className={styles.container_content_person_image}/>
                 <div className={styles.container_content_pesron_text}>
                     <p>Заместитель заведующей отделом</p>
                     <h2>КЛЕПИКОВ Александр Николаевич</h2>
@@ -50,6 +49,7 @@ const SocDefWindow = () => {
                 <p>-    взаимодействие с органами местного самоуправления, федеральными и городскими органами государственной власти по вопросам, входящим в  компетенцию отдела;</p>
                 <p>-    осуществление иных полномочий, направленных на улучшение работы по вопросам социальной защиты пенсионеров и ветеранов.</p>
             </div>
+            <br /><br /><br /><br />
         </div>
         <div className={styles.container_button}>
             <Link to="/struct">

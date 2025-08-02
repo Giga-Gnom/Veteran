@@ -4,6 +4,16 @@
     flex-direction: column;
 }
 
+.container::before{
+    background: url(/src/components/Windows/StructWindow/srcStruct/fon_5.png) center/cover no-repeat;
+    position: absolute;
+    inset: 0;
+    opacity: 0.5;
+    content: "";
+    z-index: 0;
+    filter: blur(0.6vh);
+}
+
 .container_head{
     height: 15vh;
 }
@@ -15,8 +25,11 @@
     flex: 1; 
     display: flex;
     flex-direction: column; 
-    max-height: 70vh;
+    max-height: 85vh;
+    z-index: 1;
     overflow: auto;
+    font-family: 'Playfair Display', serif;
+    color: black;
 }
 
 .container_content_header{
@@ -31,6 +44,8 @@
     display: flex;
     flex-direction: row;
     margin-bottom: 3vh;
+    padding-bottom: 2vh;
+    border-bottom: 0.5vh solid black;
 }
 
 .container_content_pesron_text{
@@ -45,6 +60,8 @@
     height: auto;
     min-width: 20vw;
     max-width: 20vw;
+    margin: 1vw;
+    border: 1vh ridge rgb(80, 80, 227);
 }
 
 h2{
@@ -54,8 +71,17 @@ h2{
     text-align: center;
 }
 
+.container_content_zadachi{
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    padding: 2vh;
+    border: 1vh double rgb(80, 80, 227);
+}
+
 .container_button{
     position: fixed;
     left: 5vw;
     bottom: 2vh;
+    z-index: 2;
 }

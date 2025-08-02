@@ -4,6 +4,16 @@
     flex-direction: column;
 }
 
+.container::before{
+    background: url(/src/components/Windows/StructWindow/srcStruct/fon_5.png) center/cover no-repeat;
+    position: absolute;
+    inset: 0;
+    opacity: 0.5;
+    content: "";
+    z-index: 0;
+    filter: blur(0.6vh);
+}
+
 .container_head{
     height: 15vh;
 }
@@ -15,13 +25,17 @@
     flex: 1; 
     display: flex;
     flex-direction: row; 
-    max-height: 70vh;
+    max-height: 85vh;
     flex-wrap: wrap;
     overflow: auto;
+    z-index: 1;
+    font-family: 'Playfair Display', serif;
+    color: black;
 }
 
 .container_button{
     position: fixed;
     left: 5vw;
     bottom: 2vh;
+    z-index: 2;
 }

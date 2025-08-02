@@ -4,6 +4,9 @@
     flex-direction: column;
     text-align: center;
     width: 100%;
+    font-family: 'Playfair Display', serif;
+    color: black;
+
 }
 
 .column_container{
@@ -13,14 +16,19 @@
 
 .container_img{
     height: auto;
+    max-height: 55vh;
     min-width: 20vw;
     max-width: 20vw;
+    margin: 0 1vw;
+    border:1vh ridge rgb(80, 80, 227);
 }
 
 .container{
     display: flex;
     flex-direction: row;
     margin-bottom: 3vh;
+    padding-bottom: 1.5vh;
+    border-bottom: 0.5vh solid black;
 }
 
 .container_functions{

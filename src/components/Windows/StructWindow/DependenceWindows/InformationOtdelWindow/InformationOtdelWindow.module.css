@@ -4,6 +4,16 @@
     flex-direction: column;
 }
 
+.container::before{
+    background: url(/src/components/Windows/StructWindow/srcStruct/fon_5.png) center/cover no-repeat;
+    position: absolute;
+    inset: 0;
+    opacity: 0.5;
+    content: "";
+    z-index: 0;
+    filter: blur(0.6vh);
+}
+
 .container_head{
     height: 15vh;
 }
@@ -15,7 +25,10 @@
     flex: 1; 
     display: flex;
     flex-direction: column; 
-    max-height: 70vh;
+    font-family: 'Playfair Display', serif;
+    color:black;
+    max-height: 85vh;
+    z-index: 1;
     overflow: auto;
 }
 
@@ -55,6 +68,7 @@ h2{
 
 .container_button{
     position: fixed;
+    z-index: 2;
     left: 5vw;
     bottom: 2vh;
 }

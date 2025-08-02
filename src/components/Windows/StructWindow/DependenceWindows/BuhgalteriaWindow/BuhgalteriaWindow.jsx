@@ -10,15 +10,16 @@ const BuhgalteriaWindow = () => {
     return(
         <div className={styles.container}>
             <div className={styles.container_head}>
-                <MyHat heading="Отдел бухгалтерии"/>
+                <MyHat heading="ОТДЕЛ БУХГАЛТЕРИИ"/>
             </div>
             <div className={styles.container_content}>
-                <div className={styles.container_content_header}>
+                {/* <div className={styles.container_content_header}>
                     <h2>Сотрудники бухгалтерии МГСВ</h2>
-                </div>
+                </div> */}
                 <div className={styles.container_content_persons}>
                     {buhgalteriaArray.map((person, index) => <BuhgalteriaPerson key={index} person={person}/>)}
                 </div>
+                <br /><br /><br />
             </div>
             <div className={styles.container_button}>
             <Link to="/struct">
