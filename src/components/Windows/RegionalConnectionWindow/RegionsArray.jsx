@@ -38,69 +38,14 @@ import kalugaI from "./imgRegion/kaluga (1).png";
 
 export const regionsArray = [
     {
-        image: kzh_img,
-        path: kaz,
-        name: "Республика Казахстан"
-    },
-    {
-        image: amurI,
-        path: amur,
-        name: "Амурская область"
-    },
-    {
-        image: chelI,
-        path: chelab,
-        name: "Челябинская область"
-    },
-    {
-        image: dnrI,
-        path: dnr,
-        name: "Донецкая Народная Республика"
-    },
-    {
-        image: sverdlI,
-        path: sverdlovsk,
-        name: "Свердловская область"
-    },
-    {
-        image: lnrI,
-        path: lnr,
-        name: "Луганская Народная Республика"
-    },
-    {
-        image: mosoblI,
-        path: mscO,
-        name: "Московская область"
-    },
-    {
         image: velnovI,
         path: nvg,
         name: "Великий Новгород"
     },
     {
-        image: permI,
-        path: prm,
-        name: "Пермский край"
-    },
-    {
-        image: sevI,
-        path: sevst,
-        name: "Севастополь"
-    },
-    {
         image: lenI,
         path: spb,
         name: "Ленинградская область"
-    },
-    {
-        image: yakI,
-        path: yak,
-        name: "Республика Саха (Якутия)"
-    },
-    {
-        image: volgogradI,
-        path: vgr,
-        name: "Волгоград"
     },
     {
         image: minskI,
@@ -121,6 +66,61 @@ export const regionsArray = [
         image: yaroslavlI,
         path: "#",
         name: "Ярославль"
-    }
+    },
+    {
+        image: mosoblI,
+        path: mscO,
+        name: "Московская область"
+    },
+    {
+        image: lnrI,
+        path: lnr,
+        name: "Луганская Народная Республика"
+    },
+    {
+        image: dnrI,
+        path: dnr,
+        name: "Донецкая Народная Республика"
+    },
+    {
+        image: sevI,
+        path: sevst,
+        name: "Севастополь"
+    },
+    {
+        image: volgogradI,
+        path: vgr,
+        name: "Волгоград"
+    },
+    {
+        image: chelI,
+        path: chelab,
+        name: "Челябинская область"
+    },
+    {
+        image: sverdlI,
+        path: sverdlovsk,
+        name: "Свердловская область"
+    },
+    {
+        image: permI,
+        path: prm,
+        name: "Пермский край"
+    },
+    {
+        image: kzh_img,
+        path: kaz,
+        name: "Республика Казахстан"
+    },
+    {
+        image: amurI,
+        path: amur,
+        name: "Амурская область"
+    },
+    {
+        image: yakI,
+        path: yak,
+        name: "Республика Саха (Якутия)"
+    },
     
 ] 

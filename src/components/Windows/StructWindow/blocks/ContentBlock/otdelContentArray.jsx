@@ -12,6 +12,10 @@ export const otdelContentArray = [
         path: "/youngpeoples"
     },
     {
+        name: "Методический кабинет",
+        path: "/metodkabinet"
+    },
+    {
         name: "Информации и спецпроектов",
         path: "/otdelinfo"
     },

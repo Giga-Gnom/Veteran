@@ -51,6 +51,7 @@ import ZelAOorganization from "../components/Windows/MapWindow/DistrictWindows/Z
 import ZAOStatisticWindow from "../components/Windows/MapWindow/DistrictWindows/ZAOWindow/ZAOStatistic/ZAOStatisticWindow";
 import TroAndNovAOStatisticWindow from "../components/Windows/MapWindow/DistrictWindows/TroAOWindow/ZAOStatistic/TroAndNovAOStatisticWindow";
 import Balysnikov from "../components/Windows/DirectorsWindow/Balysnikov";
+import Metodkabinet from "../components/Windows/StructWindow/DependenceWindows/Metodkabinet/Metodkabinet";
 
 
 
@@ -151,6 +152,10 @@ export const router = createBrowserRouter([
     {
         path: "/youngpeoples",
         element: <YoungPeopleWindow/>
+    },
+    {
+        path: "/metodkabinet",
+        element: <Metodkabinet/>
     },
     {
         path: "/otdelinfo",

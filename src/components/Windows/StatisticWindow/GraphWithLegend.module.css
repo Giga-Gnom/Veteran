@@ -21,5 +21,7 @@
     flex-direction: row;
     justify-content: space-between;
     min-height: 50vh;
+    margin-bottom: 7vh;
+    border-bottom: 0.5vh dotted rgb(80, 80, 227);
 }
 
