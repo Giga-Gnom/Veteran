@@ -28,7 +28,7 @@
     max-height: 85vh;
     z-index: 1;
     overflow: auto;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Roboto', serif;
     color: black;
     overflow-x: hidden;
 }
@@ -39,7 +39,7 @@
     text-align: center;
     width: 99vw;
     height: auto;
-    border: 1vh double rgb(80,80,227);
+    border: 1vh double rgb(66, 102, 145);
     padding: 2vh;
     margin: 1vh;
 }

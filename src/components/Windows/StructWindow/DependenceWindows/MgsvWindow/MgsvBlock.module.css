@@ -5,7 +5,7 @@
     flex-direction: column;
     text-align: center;
     margin-top: 3vh;
-    border: 1vh groove rgb(80, 80, 227);
+    border: 1vh groove rgba(66, 102, 145, 0.8);
     padding: 2vh;
     margin: 1vw;
 }

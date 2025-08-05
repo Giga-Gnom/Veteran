@@ -32,15 +32,15 @@
 }
 
 .district {
-  fill: #ddff55;
-  stroke: #ccc0a3;
+  fill: #36754d;
+  stroke: #7eb761;
   stroke-width: 2;
   cursor: pointer;
   transition: fill 0.3s ease;
 }
 
 .district:hover {
-  fill: #ffcc00;
+  fill: #022615;
 }
 
 .district.active {
@@ -50,6 +50,7 @@
 
 .map_text{
   font-size: 1.2vh;
-  fill: rgba(0, 0, 0, 0.648);
+  fill: white;
+  font-family: 'Roboto', serif;
   pointer-events: none;
 }

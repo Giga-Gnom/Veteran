@@ -33,8 +33,12 @@
     overflow: auto;
     z-index: 0;
     font-size: 3vh;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Roboto', serif;
     color: black;
+}
+
+.h1_header{
+    font-size: 4.5vh;
 }
 
 .indent_text{
@@ -43,7 +47,7 @@
 }
 
 .container_content_text h1{
-    font-family: "Lobster", serif;
+    font-family: "Roboto", serif;
     text-align: center;
 }
 

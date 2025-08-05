@@ -20,13 +20,13 @@ h1{
     overflow: hidden;
     font-size: 2vh;
     max-height: 30vh;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Roboto', serif;
 
 }
 
 .paint{
     width: 100%;
-    border: 1vh ridge red;
+    border: 1vh ridge rgb(168, 4, 4);
     object-fit: contain;
     height: auto;
     margin: 0;

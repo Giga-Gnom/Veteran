@@ -19,12 +19,15 @@ const GraphWithLegend = () =>{
     return(
         <div className={styles.container}>
             {datas.map((data, index) => (
-                <div key={index} className={styles.container_graph_block}>
-                    <div className={styles.container_graph}>
-                        <Bar data={data} options={options}/>
-                    </div>
-                    <div className={styles.container_legend}>
-                        <LegendBlock datasets={data.datasets}/>
+                <div key={index} className={styles.container_graph_block_first}>
+                    <h1>{data.chartName}</h1>
+                    <div className={styles.container_graph_block}>
+                        <div className={styles.container_graph}>
+                            <Bar data={data} options={options}/>
+                        </div>
+                        <div className={styles.container_legend}>
+                            <LegendBlock datasets={data.datasets}/>
+                        </div>
                     </div>
                 </div>
             ))}

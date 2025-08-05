@@ -9,7 +9,7 @@ const PlaceHistoryWindow = () => {
     return(
         <div className={styles.container}>
             <div className={styles.container_head}>            
-                <MyHat heading="ИСТОРИЯ НАШЕГО ДОМА. МАЛАЯ ДМИТРОВКА Д. 2, СТР. 1"/>
+                <MyHat heading="ИСТОРИЯ НАШЕГО ДОМА. МАЛАЯ ДМИТРОВКА Д. 2, СТР. 1" customClass={styles.h1_header}/>
             </div>
             <div className={styles.container_content}>
                 <div className={styles.container_content_text}>

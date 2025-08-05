@@ -25,3 +25,14 @@
     border-bottom: 0.5vh dotted rgb(80, 80, 227);
 }
 
+.container_graph_block_first{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-family: 'Roboto', serif;
+}
+
+.container_graph_block_first h1{
+    text-transform: uppercase;
+}
+

@@ -32,7 +32,7 @@ const SVAOWindow = () => {
                                     className={styles.area}
                                     onClick={()=>handleAreaClick(area.id)}
                                 />
-                                <text x={area.center.x} y={area.center.y} className={styles.area_label}>{area.id+1}</text>     
+                                <text x={area.center.x} y={area.center.y} className={styles.area_label}>{area.id}</text>     
                             </g>
                         ))}
                     </svg>
@@ -45,7 +45,7 @@ const SVAOWindow = () => {
                     </div>
                         {district.area.map((area) => (
                     <div className={styles.mapContainer_legend_block} key={area.id}>
-                        <p>{area.id+1}. {area.name}</p>
+                        <p>{area.id}. {area.name}</p>
                     </div>
                 ))}
             </div>

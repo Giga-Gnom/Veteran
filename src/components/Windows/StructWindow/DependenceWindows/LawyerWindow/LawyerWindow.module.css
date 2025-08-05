@@ -28,7 +28,7 @@
     max-height: 80vh;
     z-index: 1;
     overflow: auto;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Roboto', serif;
     color: black;
 }
 
@@ -57,7 +57,7 @@
 }
 
 .container_content_person_image{
-    border: 2vh ridge rgba(80,80,227);
+    border: 2vh ridge rgba(66, 102, 145);
 }
 
 h2{

@@ -27,12 +27,12 @@
     flex-direction: row; 
     max-height: 85vh;
     z-index: 1;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Roboto', serif;
 }
 
 .container_content_image{
     max-height: 83vh;
-    border: 1.8vh ridge red;
+    border: 1.8vh ridge rgb(168, 4, 4);
     aspect-ratio: auto;
     margin: 2vh 2vw 2vh 1vw;
     min-width: 30vw;

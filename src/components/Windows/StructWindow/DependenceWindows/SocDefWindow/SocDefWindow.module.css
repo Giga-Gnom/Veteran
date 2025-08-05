@@ -28,7 +28,7 @@
     max-height: 85vh;
     z-index: 1;
     overflow: auto;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Roboto', serif;
     color: black;
 }
 
@@ -61,7 +61,7 @@
     min-width: 20vw;
     max-width: 20vw;
     margin: 1vw;
-    border: 1vh ridge rgb(80, 80, 227);
+    border: 1vh ridge rgb(66, 102, 145);
 }
 
 h2{
@@ -76,7 +76,8 @@ h2{
     text-align: center;
     flex-direction: column;
     padding: 2vh;
-    border: 1vh double rgb(80, 80, 227);
+    margin-inline: 2vw;
+    border: 1vh double rgb(66, 102, 145);
 }
 
 .container_button{

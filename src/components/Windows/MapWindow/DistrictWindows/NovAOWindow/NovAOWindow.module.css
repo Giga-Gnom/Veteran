@@ -4,8 +4,22 @@
   height: 100vh;
 }
 
+  .container::before{
+    background: url(/src/components/Windows/MapWindow/srcMaps/fon_6.png) center/cover no-repeat;
+    position: absolute;
+    inset: 0;
+    opacity: 0.5;
+    content: "";
+    filter: blur(0.6vh);
+    z-index: 0;
+}
+
 .container_head, .container_footer {
   flex: 0 0 auto;
+}
+
+.container_button{
+  z-index: 2;
 }
 
 .mapContainer {
@@ -32,27 +46,28 @@ width: 50vw;
 }
 
 .area{
-fill: #ddff55;
-stroke: #ccc0a3;
-stroke-width: 0.5;
-cursor: pointer;
-transition: fill 0.3s ease;
+  fill: #36754d;
+  stroke: #7eb761;
+  stroke-width: 0.5;
+  cursor: pointer;
+  transition: fill 0.3s ease;
 }
 
 .area:hover{
-fill: #ffcc00;
+fill: #022615;
 }
 
-.styles.mapContainer_legend_block{
-margin-bottom: 2vh;
-font-size: 5vh;
+.mapContainer_legend_block{
+margin-bottom: 1vh;
+font-size: 3vh;
+font-family: 'Roboto', serif;
 }
 
 .area_label {
-font-family: Arial, sans-serif;
+font-family: 'Robot', serif;
 font-size: 1vh;
 font-weight: bold;
-fill: #00000073;
+fill: white;
 text-anchor: middle;
 pointer-events: none;
 }

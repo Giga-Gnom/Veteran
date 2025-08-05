@@ -29,6 +29,8 @@
     z-index: 1;
     flex-wrap: wrap;
     overflow: auto;
+    font-family: 'Roboto', serif;
+    color: black;
 }
 
 .container_button{

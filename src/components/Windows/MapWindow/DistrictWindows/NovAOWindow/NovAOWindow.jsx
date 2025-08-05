@@ -32,7 +32,7 @@ const NovAOWindow = () => {
                                     className={styles.area}
                                     onClick={() => handleAreaClick()}
                                 />
-                                <text x={area.center.x} y={area.center.y} className={styles.area_label}>{area.id}</text>
+                                <text x={area.center.x} y={area.center.y} className={styles.area_label}>{area.id+1}</text>
                             </g>
                         ))}
                     </svg>
@@ -45,7 +45,7 @@ const NovAOWindow = () => {
                     </div>
                     {district.area.map((area) => (
                         <div className={styles.mapContainer_legend_block} key={area.id}>
-                            <p>{area.id}. {area.name}</p>
+                            <p>{area.id+1}. {area.name}</p>
                         </div>
                     ))}
                 </div>

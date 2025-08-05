@@ -21,7 +21,7 @@ const MyHat = (props) => {
         <div>
             <div className={styles.haedContainer}>
                 <img className={styles.images} src={lentochka}></img>
-                <h1 className={styles.header__text}>{props.heading}</h1>
+                <h1 className={`${styles.header__text} ${props.customClass}`}>{props.heading}</h1>
                 <DropDownButton onClick={handleToggleDropdown}></DropDownButton>
                 {isDropdownOpen && (                    <div style={{
                         position: 'fixed',
