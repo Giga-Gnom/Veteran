@@ -16,5 +16,6 @@
 
 .container_text{
     overflow: hidden;;
-
+    font-family: 'Roboto', serif;
+    color: black;
 }

@@ -6,14 +6,14 @@ export const datas = [
             {
                 label: "Численность ветеранов",
                 data: [63002, 51781, 139097, 72633, 95474, 145171, 84321, 57581, 31757, 30588, 36821],
-                backgroundColor: "rgba(38, 81, 221, 0.6)",
+                backgroundColor: "rgba(0, 60, 255, 0.6)",
                 borderColor: "rgba(75, 192, 192, 1)",
                 borderWidth: 1,
             },
             {
                 label: "Численность пенсионеров",
                 data: [183176, 298416, 331587, 347175, 367689, 349373, 386813, 218079, 216000, 68498, 149257],
-                backgroundColor: "rgba(153, 102, 255, 0.6)",
+                backgroundColor: "rgba(95, 31, 222, 0.6)",
                 borderColor: "rgba(153, 102, 255, 1)",
                 borderWidth: 1,
             },
@@ -26,14 +26,14 @@ export const datas = [
             {
                 label: "Население округа, чел.",
                 data: [765919, 1164897, 1465120, 1509702, 1505836, 1754922, 1432679, 1261480, 1032775, 253698, 670034],
-                backgroundColor: "rgba(75, 192, 192, 0.6)",
+                backgroundColor: "rgba(0, 60, 255, 0.6)",
                 borderColor: "rgba(75, 192, 192, 1)",
                 borderWidth: 1,
             },
             {
                 label: "Численность пенсионеров и ветеранов, состоящих на учете в ветеранской организации",
                 data: [63002, 51781, 139097, 72633, 95474, 145171, 84321, 57581, 31757, 30588, 36821],
-                backgroundColor: "rgba(255, 159, 64, 0.6)",
+                backgroundColor: "rgba(255, 128, 0, 0.6)",
                 borderColor: "rgba(255, 159, 64, 1)",
                 borderWidth: 1,
             },
@@ -46,7 +46,7 @@ export const datas = [
             {
                 label: "Численность пенсионеров и ветеранов в округе, чел.",
                 data: [183176, 298416, 331587, 347175, 367689, 349373, 386813, 218079, 216000, 68498, 149257],
-                backgroundColor: "rgba(153, 102, 255, 0.6)",
+                backgroundColor: "rgba(0, 60, 255, 0.6)",
                 borderColor: "rgba(153, 102, 255, 1)",
                 borderWidth: 1,
             },
@@ -60,7 +60,7 @@ export const datas = [
             {
                 label: "Численность пенсионеров и ветеранов, состоящих на учете в ветеранской организации",
                 data: [63002, 51781, 139097, 72633, 95474, 145171, 84321, 57581, 31757, 30588, 36821],
-                backgroundColor: "rgba(255, 159, 64, 0.6)",
+                backgroundColor: "rgba(255, 128, 0, 0.6)",
                 borderColor: "rgba(255, 159, 64, 1)",
                 borderWidth: 1,
             },
@@ -74,7 +74,7 @@ export const datas = [
             {
                 label: "Численность ветеранов, принятых на учет в 2023 году",
                 data: [786, 1905, 1697, 1942, 2345, 0, 1053, 1154, 348, 581, 491],
-                backgroundColor: "rgba(255, 99, 132, 0.6)",
+                backgroundColor: "rgba(255, 143, 99, 0.6)",
                 borderColor: "rgba(255, 99, 132, 1)",
                 borderWidth: 1,
             },
@@ -102,7 +102,7 @@ export const datas = [
             {
                 label: "Ветераны ВОВ (всего)",
                 data: [1409, 2207, 1616, 2797, 2579, 2982, 2290, 2723, 1826, 637, 723],
-                backgroundColor: "rgba(255, 206, 86, 0.6)",
+                backgroundColor: "rgba(190, 139, 7, 0.8)",
                 borderColor: "rgba(255, 206, 86, 1)",
                 borderWidth: 1,
             },
@@ -116,7 +116,7 @@ export const datas = [
             {
                 label: "Ветераны боевых действий, в т.ч. инвалиды",
                 data: [136, 700, 2509, 1007, 703, 1819, 3330, 554, 1004, 521, 3967],
-                backgroundColor: "rgba(75, 192, 192, 0.6)",
+                backgroundColor: "rgba(0, 152, 64, 0.6)",
                 borderColor: "rgba(75, 192, 192, 1)",
                 borderWidth: 1,
             },
@@ -130,7 +130,7 @@ export const datas = [
             {
                 label: "Ветераны военной службы",
                 data: [663, 1467, 3886, 616, 730, 2345, 1765, 1275, 742, 1086, 2264],
-                backgroundColor: "rgba(153, 102, 255, 0.6)",
+                backgroundColor: "rgba(86, 4, 251, 0.6)",
                 borderColor: "rgba(153, 102, 255, 1)",
                 borderWidth: 1,
             },
@@ -144,7 +144,7 @@ export const datas = [
             {
                 label: "Ветераны труда",
                 data: [24024, 22855, 56825, 30950, 34363, 56559, 27472, 28248, 15952, 11824, 15226],
-                backgroundColor: "rgba(255, 159, 64, 0.6)",
+                backgroundColor: "rgba(255, 128, 0, 0.6)",
                 borderColor: "rgba(255, 159, 64, 1)",
                 borderWidth: 1,
             },
@@ -158,8 +158,8 @@ export const datas = [
             {
                 label: "Пенсионеры, не вошедшие в отмеченные выше категории",
                 data: [26244, 15641, 65463, 23962, 43726, 71420, 28554, 17138, 13859, 13020, 14641],
-                backgroundColor: "rgba(255, 99, 132, 0.6)",
-                borderColor: "rgba(255, 99, 132, 1)",
+                backgroundColor: "rgba(255, 77, 0, 0.6)",
+                borderColor: "rgba(253, 3, 57, 1)",
                 borderWidth: 1,
             },
         
@@ -172,7 +172,7 @@ export const datas = [
             {
                 label: "Герои Советского Союза",
                 data: [1, 1, 1, 0, 2, 2, 2, 5, 0, 0, 2],
-                backgroundColor: "rgba(54, 162, 235, 0.6)",
+                backgroundColor: "rgba(8, 0, 255, 0.6)",
                 borderColor: "rgba(54, 162, 235, 1)",
                 borderWidth: 1,
             },
@@ -186,7 +186,7 @@ export const datas = [
             {
                 label: "Герои Российской Федерации",
                 data: [17, 2, 1, 1, 27, 6, 24, 4, 18, 1, 3],
-                backgroundColor: "rgba(255, 206, 86, 0.6)",
+                backgroundColor: "rgba(253, 181, 0, 0.6)",
                 borderColor: "rgba(255, 206, 86, 1)",
                 borderWidth: 1,
             },
@@ -200,7 +200,7 @@ export const datas = [
             {
                 label: "Герои Социалистического Труда",
                 data: [7, 1, 2, 3, 2, 5, 10, 1, 5, 3, 0],
-                backgroundColor: "rgba(75, 192, 192, 0.6)",
+                backgroundColor: "rgba(0, 143, 17, 0.6)",
                 borderColor: "rgba(75, 192, 192, 1)",
                 borderWidth: 1,
             },
@@ -214,7 +214,7 @@ export const datas = [
             {
                 label: "Кавалеры ордена Трудовой Славы",
                 data: [7, 2, 0, 5, 0, 4, 2, 8, 0, 0, 4],
-                backgroundColor: "rgba(153, 102, 255, 0.6)",
+                backgroundColor: "rgba(55, 0, 255, 0.6)",
                 borderColor: "rgba(153, 102, 255, 1)",
                 borderWidth: 1,
             },
@@ -228,7 +228,7 @@ export const datas = [
             {
                 label: "Герои Труда Российской Федерации",
                 data: [1, 5, 0, 0, 0, 0, 2, 0, 0, 0, 0],
-                backgroundColor: "rgba(255, 159, 64, 0.6)",
+                backgroundColor: "rgba(255, 145, 0, 0.6)",
                 borderColor: "rgba(255, 159, 64, 1)",
                 borderWidth: 1,
             },
@@ -242,7 +242,7 @@ export const datas = [
             {
                 label: "Участники Парада 24 июня 1945 г.",
                 data: [2, 1, 0, 3, 1, 2, 3, 1, 0, 0, 0],
-                backgroundColor: "rgba(255, 99, 132, 0.6)",
+                backgroundColor: "rgba(255, 0, 0, 0.6)",
                 borderColor: "rgba(255, 99, 132, 1)",
                 borderWidth: 1,
             },
@@ -256,7 +256,7 @@ export const datas = [
             {
                 label: "Вдовы погибших и умерших участников Великой Отечественной войны",
                 data: [699, 630, 962, 763, 174, 938, 697, 792, 648, 197, 166],
-                backgroundColor: "rgba(54, 162, 235, 0.6)",
+                backgroundColor: "rgba(0, 0, 255, 0.6)",
                 borderColor: "rgba(54, 162, 235, 1)",
                 borderWidth: 1,
             },
@@ -270,7 +270,7 @@ export const datas = [
             {
                 label: "Одиноко проживающие ветераны",
                 data: [2414, 1500, 2209, 1344, 0, 3309, 0, 4842, 0, 2069, 127],
-                backgroundColor: "rgba(255, 206, 86, 0.6)",
+                backgroundColor: "rgba(219, 158, 4, 0.6)",
                 borderColor: "rgba(255, 206, 86, 1)",
                 borderWidth: 1,
             },
@@ -284,7 +284,7 @@ export const datas = [
             {
                 label: "Одиноко проживающие пары (не имеющие детей)",
                 data: [353, 358, 361, 337, 0, 1364, 0, 452, 0, 56, 10],
-                backgroundColor: "rgba(75, 192, 192, 0.6)",
+                backgroundColor: "rgba(0, 42, 255, 0.6)",
                 borderColor: "rgba(75, 192, 192, 1)",
                 borderWidth: 1,
             },
@@ -298,7 +298,7 @@ export const datas = [
             {
                 label: "Пенсионеры и ветераны до 80 лет",
                 data: [33844, 22591, 89849, 35089, 48473, 91332, 38665, 25677, 16254, 16614, 29791],
-                backgroundColor: "rgba(153, 102, 255, 0.6)",
+                backgroundColor: "rgba(82, 5, 235, 0.6)",
                 borderColor: "rgba(153, 102, 255, 1)",
                 borderWidth: 1,
             },
@@ -312,7 +312,7 @@ export const datas = [
             {
                 label: "Пенсионеры и ветераны от 80 до 85 лет",
                 data: [8320, 15816, 26753, 11967, 13476, 22302, 10864, 10686, 5151, 6985, 6263],
-                backgroundColor: "rgba(255, 159, 64, 0.6)",
+                backgroundColor: "rgba(252, 126, 0, 0.6)",
                 borderColor: "rgba(255, 159, 64, 1)",
                 borderWidth: 1,
             },
@@ -340,7 +340,7 @@ export const datas = [
             {
                 label: "Пенсионеры и ветераны от 90 до 99 лет",
                 data: [3555, 3847, 985, 5119, 8115, 6685, 5604, 5509, 5160, 944, 4],
-                backgroundColor: "rgba(54, 162, 235, 0.6)",
+                backgroundColor: "rgba(0, 166, 255, 0.6)",
                 borderColor: "rgba(54, 162, 235, 1)",
                 borderWidth: 1,
             },
@@ -354,7 +354,7 @@ export const datas = [
             {
                 label: "Пенсионеры и ветераны - долгожители (100 лет и старше)",
                 data: [110, 116, 59, 193, 149, 94, 130, 132, 13, 12, 4],
-                backgroundColor: "rgba(255, 206, 86, 0.6)",
+                backgroundColor: "rgba(227, 163, 0, 0.6)",
                 borderColor: "rgba(255, 206, 86, 1)",
                 borderWidth: 1,
             },
@@ -368,7 +368,7 @@ export const datas = [
             {
                 label: "Дети войны (лица, родившиеся в период с 04 сентября 1927 года по 03 сентября 1945 года)",
                 data: [16729, 20160, 3023, 18076, 32742, 32261, 22277, 17361, 7538, 540, 6438],
-                backgroundColor: "rgba(75, 192, 192, 0.6)",
+                backgroundColor: "rgba(0, 33, 250, 0.6)",
                 borderColor: "rgba(75, 192, 192, 1)",
                 borderWidth: 1,
             },
@@ -382,7 +382,7 @@ export const datas = [
             {
                 label: "Бывшие несовершеннолетние узники концлагерей, гетто и других мест принудительного содержания, созданных фашистами в период Второй мировой войны (без ИВОВ и УВОВ)",
                 data: [110, 235, 306, 192, 333, 225, 295, 222, 98, 87, 134],
-                backgroundColor: "rgba(153, 102, 255, 0.6)",
+                backgroundColor: "rgba(93, 13, 254, 0.6)",
                 borderColor: "rgba(153, 102, 255, 1)",
                 borderWidth: 1,
             },
@@ -409,28 +409,28 @@ export const datas = [
             {
                 label: "Инвалиды ВОВ",
                 data: [24, 22, 27, 18, 30, 55, 20, 38, 23, 3, 18],
-                backgroundColor: "rgba(153, 102, 255, 0.6)",
+                backgroundColor: "rgba(85, 0, 255, 0.6)",
                 borderColor: "rgba(153, 102, 255, 1)",
                 borderWidth: 1,
             },
             {
                 label: "Участники ВОВ",
                 data: [123, 157, 109, 232, 116, 109, 176, 118, 151, 25, 39],
-                backgroundColor: "rgba(255, 159, 64, 0.6)",
-                borderColor: "rgba(255, 159, 64, 1)",
+                backgroundColor: "rgba(255, 128, 0, 0.6)",
+                borderColor: "rgba(230, 141, 53, 1)",
                 borderWidth: 1,
             },
             {
                 label: "Жители блокадного Ленинграда и осажденного Севастополя",
                 data: [172, 156, 195, 131, 109, 157, 216, 159, 128, 36, 24],
-                backgroundColor: "rgba(75, 192, 192, 0.6)",
+                backgroundColor: "rgba(0, 8, 255, 0.6)",
                 borderColor: "rgba(75, 192, 192, 1)",
                 borderWidth: 1,
             },
             {
                 label: "Труженики тыла",
                 data: [1090, 1872, 1285, 2416, 2324, 2661, 1878, 2408, 1524, 573, 642],
-                backgroundColor: "rgba(255, 99, 132, 0.6)",
+                backgroundColor: "rgba(255, 0, 55, 0.6)",
                 borderColor: "rgba(255, 99, 132, 1)",
                 borderWidth: 1,
             },
@@ -443,28 +443,28 @@ export const datas = [
             {
                 label: "На учете в первичных организациях, чел.",
                 data: [52476, 42870, 130299, 59332, 82101, 135125, 63411, 49938, 30808, 27088, 36821],
-                backgroundColor: "rgba(54, 162, 235, 0.6)",
+                backgroundColor: "rgba(54, 0, 250, 0.6)",
                 borderColor: "rgba(54, 162, 235, 1)",
                 borderWidth: 1,
             },
             {
                 label: "На учете в ветеранских организаций предприятий и учреждений, чел.",
                 data: [4725, 3500, 3854, 2134, 4337, 4211, 6016, 4275, 949, 560, 0],
-                backgroundColor: "rgba(255, 206, 86, 0.6)",
+                backgroundColor: "rgba(250, 182, 10, 0.6)",
                 borderColor: "rgba(255, 206, 86, 1)",
                 borderWidth: 1,
             },
             {
                 label: "На учете в ветеранских организациях высшей школы, чел.",
                 data: [3512, 2452, 2592, 1884, 1895, 1040, 1320, 720, 0, 740, 0],
-                backgroundColor: "rgba(75, 192, 192, 0.6)",
+                backgroundColor: "rgba(212, 0, 255, 0.6)",
                 borderColor: "rgba(75, 192, 192, 1)",
                 borderWidth: 1,
             },
             {
                 label: "На учете в ветеранских организациях коллективных членов, чел.",
                 data: [2289, 2959, 2352, 9283, 7141, 4795, 13574, 2648, 0, 2200, 0],
-                backgroundColor: "rgba(153, 102, 255, 0.6)",
+                backgroundColor: "rgba(0, 154, 46, 0.6)",
                 borderColor: "rgba(153, 102, 255, 1)",
                 borderWidth: 1,
             },
