@@ -34,13 +34,14 @@
     font-family: 'Roboto', serif;
     font-weight: 900;
     align-items: center; /* Прижимаем текст к правому краю */
-    min-width: 120px; /* Минимальная ширина для колонки данных */
+    min-width: 2vw; /* Минимальная ширина для колонки данных */
 }
 
 .container_stats{
     display: flex;
     flex-direction: column;
     font-size: 2vh;
+    min-height: 3vh;
 }
 
 .container_stats_data{

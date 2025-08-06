@@ -1,7 +1,7 @@
 import domvet from "./srcParents/DomVeteranov.png";
 import socreab from "./srcParents/noroot.png";
 import panseonat from "./srcParents/panseonat.png";
-import gosp_1 from "./srcParents/gospit1.jpg";
+import gosp_1 from "./srcParents/gospit1.png";
 import gosp_2 from "./srcParents/gosp2.png";
 import gosp_3 from "./srcParents/gospit3.png";
 import UZgen from "./srcParents/UZGent.png"; 
@@ -11,10 +11,46 @@ import zdorovie from "./srcParents/zdorovie.png";
 import vision from "./srcParents/vision.png";
 import edas from "./srcParents/edas.png";
 import medsi from "./srcParents/medsi.png";
-import bfs from "./srcParents/bfs.jpeg";
+import bfs from "./srcParents/bfs.png";
 import pravonazrenie from "./srcParents/pravoNaZrenie.png";
+import msc from "./srcParents/MSC.png"
 
 export const partnersArray = [
+    {
+        image: msc,
+        title: "Правительство Москвы",
+        path: "https://www.mos.ru"
+    },
+    {
+        image: msc,
+        title: "Московская городская Дума",
+        path: "https://duma.mos.ru/ru/"
+    },
+    {
+        image: msc,
+        title: "Департамент труда и социальной защиты населения города Москвы",
+        path: "https://dszn.ru/"
+    },
+    {
+        image: msc,
+        title: "Департамент образования и науки города Москвы ",
+        path: "https://www.mos.ru/donm/"
+    },
+    {
+        image: msc,
+        title: "Департамент культуры города Москвы",
+        path: "https://www.mos.ru/kultura/"
+    },
+    {
+        image: msc,
+        title: "Департамент здравоохранения Города Москвы",
+        path: "https://mosgorzdrav.ru/"
+    },
+    {
+        image: msc,
+        title: "комитет общественных связей и молодежной политики города москвы",
+        path: "https://www.mos.ru/kos/"
+    },
     {
         image: domvet,
         title: "Московский Дом ветеранов войн и Вооруженных Сил",

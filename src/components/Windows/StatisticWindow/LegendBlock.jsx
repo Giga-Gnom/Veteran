@@ -15,9 +15,9 @@ const LegendBlock = ({datasets}) => {
             </div>
             {datasets.map((dataset, index) => (
                 <div key={index} style={{color: dataset.backgroundColor}} className={styles.dataset_container}>
-                    <div className={styles.container_text}>
-                        {dataset.label}
-                    </div>
+                    {<div className={styles.container_text}>
+                        {/* {dataset.label} */}
+                    </div>}
                     <div className={styles.container_stats}>
                         {dataset.data.map((data, index) => (
                             <div key={index} className={styles.container_stats_data}>

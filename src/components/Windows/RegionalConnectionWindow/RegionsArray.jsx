@@ -35,6 +35,8 @@ import tulaI from "./imgRegion/tula (1).png";
 import yaroslavlI from "./imgRegion/yaroslavl (1).png";
 import minskI from "./imgRegion/minsk (1).png";
 import kalugaI from "./imgRegion/kaluga (1).png";
+import tver from "./srcRegions/Tver.pdf"
+import tverImg from "./imgRegion/tver.png"
 
 export const regionsArray = [
     {
@@ -122,5 +124,10 @@ export const regionsArray = [
         path: yak,
         name: "Республика Саха (Якутия)"
     },
+    {
+        image: tverImg,
+        path: tver,
+        name: "Тверская область"
+    }
     
 ] 
