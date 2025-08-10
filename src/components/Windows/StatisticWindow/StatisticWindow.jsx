@@ -25,6 +25,7 @@ const StatisticWindow = () => {
       </div>
       <div className={styles.container_content}>
         <GraphWithLegend/> 
+        <br /><br /><br />
       </div>
       <div className={styles.container_bottom}>            
         <BottomPanel/>

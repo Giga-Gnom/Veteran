@@ -19,20 +19,26 @@ const StandartDocumentsWindow = () => {
 
     return(
         <div className={styles.container}>
-            <div className={styles.container_head}>            
-                <MyHat heading="Нормативные Документы"/>
-            </div>
-            <div className={styles.container_content}>
-                {
-                    currentDocument ?
-                    (<StandartDoc path={currentDocument} onClose={handleCloseDocument}/>)
-                    :
-                    (standartsArray.map((standart, index)=>(<StandartDocumentBlock key={index} standart={standart} onClick={()=>handleShowDocument(standart.path)}/>)))
-                }
-            </div>
-            <div className={styles.container_head}>            
-                <BottomPanel/>
-            </div>
+            {currentDocument ?
+            (<StandartDoc path={currentDocument} onClose={handleCloseDocument}/>)
+            :
+            (
+                <>
+                    <div className={styles.container_head}>            
+                        <MyHat heading="Нормативные Документы"/>
+                    </div>
+                    <div className={styles.container_content}>
+                        {standartsArray.map((standart, index)=>(
+                            <StandartDocumentBlock 
+                            key={index} 
+                            standart={standart} 
+                            onClick={()=>handleShowDocument(standart.path)}/>))}
+                    </div>
+                    <div className={styles.container_head}>            
+                        <BottomPanel/>
+                    </div>
+                </>
+            )}
         </div>
     )
 }

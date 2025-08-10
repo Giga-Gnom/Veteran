@@ -21,22 +21,27 @@ const RegionalConnectionWindow = () => {
 
     return (
         <div className={styles.container}>
-            <div className={styles.container_head}>
-                <MyHat heading="Региональные связи" />
-            </div>
-            <div className={styles.container_content}>
-                {currentDocument ? (
+            {currentDocument ? (
                     <RegionDocument path={currentDocument} onClose={handleCloseDocument} />
                 ) : (
-                    regionsArray.map((region, index) => (
-                        <Region key={index} region={region} onShowDocument={handleShowDocument} />
-                    ))
+                    <>
+                        <div className={styles.container_head}>
+                            <MyHat heading="Региональные связи" />
+                        </div>
+                        <div className={styles.container_content}>
+                                {regionsArray.map((region, index) => (
+                                    <Region 
+                                    key={index} 
+                                    region={region} 
+                                    onShowDocument={handleShowDocument} />
+                                ))}
+                        </div>
+                        <div className={styles.container_bottom}>
+                            <BottomPanel />
+                        </div>
+                    </>
                 )}
             </div>
-            <div className={styles.container_bottom}>
-                <BottomPanel />
-            </div>
-        </div>
     );
 };
 

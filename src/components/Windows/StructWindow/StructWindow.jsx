@@ -45,6 +45,7 @@ const StructWindow = () => {
                         <img src={newspaper} style={{padding:"1vh 0"}} alt="" />
                     </div>
                 </div>
+                <br /><br /><br /><br />
             </div>
             <div className={styles.container_bottom}>
                 <BottomPanel />

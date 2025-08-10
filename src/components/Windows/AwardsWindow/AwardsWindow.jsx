@@ -7,8 +7,8 @@ import BottomPanel from "../../BottomPanel/BottomPanel";
 import AwardDocument from "./AwardDocument";
 
 const AwardsWindow = () => {
-
     const [currentDocument, setCurrentDocument] = useState(null);
+    
     const handleShowAwardDocument = (path) => {
         setCurrentDocument(path);
     };
@@ -17,23 +17,31 @@ const AwardsWindow = () => {
         setCurrentDocument(null);
     };
 
-    return(
+    return (
         <div className={styles.container}>
-            <div className={styles.container_head}>            
-                <MyHat heading="Награды МГСВ"/>
-            </div>
-            <div className={styles.container_content}>
-                { currentDocument ? 
-                (<AwardDocument path={currentDocument} onClose={handleCloseAwardDocument}></AwardDocument>)
-                :
-                ((awardsArray.map((award, index) => (<AwardBlock key={index} award={award} onClick={()=>{handleShowAwardDocument(award.path)}}></AwardBlock>))))
-                }
-            </div>
-            <div className={styles.container_bottom}>            
-                <BottomPanel/>
-            </div>
+            {currentDocument ? (
+                <AwardDocument path={currentDocument} onClose={handleCloseAwardDocument} />
+            ) : (
+                <>
+                    <div className={styles.container_head}>            
+                        <MyHat heading="Награды МГСВ"/>
+                    </div>
+                    <div className={styles.container_content}>
+                        {awardsArray.map((award, index) => (
+                            <AwardBlock 
+                                key={index} 
+                                award={award} 
+                                onClick={() => handleShowAwardDocument(award.path)}
+                            />
+                        ))}
+                    </div>
+                    <div className={styles.container_bottom}>            
+                        <BottomPanel/>
+                    </div>
+                </>
+            )}
         </div>
-    )
-}
+    );
+};
 
 export default AwardsWindow;

@@ -22,7 +22,7 @@ const DirectorsWindow = () => {
             <div className={styles.vertical_el_container}>
                 {personsArray.slice(1).map((person, index) =>  <Director className={styles.vertical} key={index} person={person}/>)}
             </div>
-            <br /><br /><br />
+            <br /><br /><br /><br />
         </div>
         <div className={styles.container_bottom}>            
             <BottomPanel/>
