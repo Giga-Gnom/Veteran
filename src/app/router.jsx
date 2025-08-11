@@ -52,6 +52,7 @@ import ZAOStatisticWindow from "../components/Windows/MapWindow/DistrictWindows/
 import TroAndNovAOStatisticWindow from "../components/Windows/MapWindow/DistrictWindows/TroAOWindow/ZAOStatistic/TroAndNovAOStatisticWindow";
 import Balysnikov from "../components/Windows/DirectorsWindow/Balysnikov";
 import Metodkabinet from "../components/Windows/StructWindow/DependenceWindows/Metodkabinet/Metodkabinet";
+import GalleryWindow from "../components/Windows/EventsWindow/GalleryWindow";
 
 
 
@@ -116,6 +117,10 @@ export const router = createBrowserRouter([
     {
         path: "/events",
         element: <EventsWindow/>
+    },
+    {
+        path: "/gallery/:folderName",
+        element: <GalleryWindow/>
     },
     {
         path: "/awards",
