@@ -8,6 +8,7 @@ import Carousel from "react-spring-3d-carousel";
 import { foldersArray } from "./foldersArray";
 import FolderBlock from "./folderblock";
 import { useNavigate } from "react-router-dom";
+import ImageSlider from "./ImageSlider";
 
 const EventsWindow = () => {
   const [goToSlide, setGoToSlide] = useState(0);
@@ -24,14 +25,19 @@ const EventsWindow = () => {
         <MyHat heading="Наши Мероприятия" />
       </div>
       <div className={styles.container_content}>
-        <Carousel
-          slides={slides}
-          goToSlide={goToSlide}
-          offsetRadius={2}
-          showNavigation={true}
-          animationConfig={{ tension: 120, friction: 14 }}
-          onChange={setGoToSlide}
-        />
+        <div className={styles.container_content_carousel}>
+          <Carousel
+            slides={slides}
+            goToSlide={goToSlide}
+            offsetRadius={2}
+            showNavigation={true}
+            animationConfig={{ tension: 120, friction: 14 }}
+            onChange={setGoToSlide}
+          />
+        </div>
+        <div className={styles.container_content_slider}>
+          <ImageSlider/>
+        </div>
       </div>
       <div className={styles.container_bottom}>
         <BottomPanel />

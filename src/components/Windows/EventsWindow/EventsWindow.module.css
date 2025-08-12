@@ -27,7 +27,6 @@
 .container_content{
     flex: 1; /* Занимает оставшееся пространство */
     display: flex;
-    width: 70vw;
     flex-direction: row;
     z-index: 1;
     max-height: 70vh;
@@ -35,4 +34,16 @@
     overflow-x: hidden;
     flex-wrap: wrap;
     padding-bottom: 5vh;
+}
+
+.container_content_carousel{
+    width: 50vw;
+
+}
+
+.container_content_slider{
+    width: 45vw;
+    margin: 1vw;
+    max-height: 65vh;
+    min-height: 65vh;
 }

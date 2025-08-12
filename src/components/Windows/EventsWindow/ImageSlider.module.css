@@ -1,0 +1,74 @@
+.container {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  background-color:transparent;
+  padding: 1vw;
+  box-sizing: border-box;
+  min-height: 68vh;
+  max-height: 68vh;
+}
+
+.container_images {
+  flex: 1;
+  height: 60vh; /* фиксируем высоту */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-height: 60vh;
+}
+
+.container_images img {
+  max-width: 100%;
+  max-height: 60vh;
+  border-radius: 2vh;
+  object-fit: contain;
+  user-select: none;
+}
+
+.container_images p {
+    margin-top: 1vh;
+    font-weight: 500;
+    color: rgb(169, 35, 35);
+    font-family: 'Lobster', serif;
+    font-size: 2.5vh;
+    word-wrap: break-word;
+    text-align: center;
+}
+
+.container_arrows {
+  margin-top: 2vh;
+  display: flex;
+  position: absolute;
+  bottom: 0.1vh;
+  justify-content: space-around;
+  gap: 1vh;
+}
+
+.container_arrows button {
+  background-color: transparent;
+    color: rgb(130, 28, 28);
+    font-family: 'Roboto', serif;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5vh 1.2vh;
+  font-size: 3vh;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  user-select: none;
+  outline: none; /* убирает обводку фокуса */
+  box-shadow: none; /* убирает тень, если она есть */
+  border: none;
+}
+
+.container_arrows button:hover {
+  background-color: #d3b7a154;
+}
+
+.container_arrows button:active {
+  background-color: #c38779;
+}
