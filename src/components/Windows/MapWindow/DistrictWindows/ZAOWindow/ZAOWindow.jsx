@@ -13,8 +13,8 @@ const ZAOWindow = () => {
         return <div>Район не найден</div>;
     }
 
-    const handleAreaClick = () => {
-        navigate(`/district/weststatistic`)
+    const handleAreaClick = (areaID) => {
+        navigate(`/district/west/${areaID}`)
     }
 
     return (
@@ -24,13 +24,13 @@ const ZAOWindow = () => {
             </div>
             <div className={styles.mapContainer}>
                 <div className={styles.mapContainer_map}>
-                    <svg viewBox="260 140 270 600" className={styles.detailedMap}>
+                    <svg viewBox="340 120 230 350" className={styles.detailedMap}>
                         {district.area?.map((area) => ( 
                             <g key={area.id}>
                                 <path
                                     d={area.path}
                                     className={styles.area}
-                                    onClick={()=>handleAreaClick()}
+                                    onClick={()=>handleAreaClick(area.id)}
                                 />
                                 <text x={area.center.x} y={area.center.y} className={styles.area_label}>
                                     {area.id+1}

@@ -1,14 +1,17 @@
 import React from "react";
-import styles from "./UAOorganization.module.css"
+import styles from "./ZAOorganization.module.css"
 import MyHat from "../../../../../Hat/MyHat";
 import BeforePageButton from "../../../../../UI/MyButtons/BeforePageButton";
 import { Link, useParams } from "react-router-dom";
-import { UAOorgArray } from "./UAOorgArray";
-import UAOorgBlock from "./UAOorgBlock";
+import ZAOorgBlock from "./ZAOorgBlock";
+import { ZAOorgArray } from "./ZAOorgArray";
 
-const UAOorganization = () => {
+const ZAOorganization = () => {
     const {areaID} = useParams();
-    const districtData = UAOorgArray.find(item => item.id.toString() === areaID)
+    const districtData = ZAOorgArray.find(item => item.id.toString() === areaID)
+    if (!districtData || !districtData.organizations || districtData.organizations.length === 0) {
+    return <div className={styles.noInfo}>Информация по данному району не найдена</div>;
+  }
     return(
         <div className={styles.container}>
             <div className={styles.container_head}>
@@ -27,7 +30,7 @@ const UAOorganization = () => {
                 </div>
             {districtData ?
                 (districtData.organizations.slice(1).map((org, index) => (
-                        <UAOorgBlock 
+                        <ZAOorgBlock 
                             key={index}
                             org={org}
                         />
@@ -37,7 +40,7 @@ const UAOorganization = () => {
             }
             </div>
             <div className={styles.container_footer}>
-                <Link to="/district/south">
+                <Link to="/district/west">
                     <BeforePageButton/>
                 </Link>
             </div>
@@ -45,4 +48,4 @@ const UAOorganization = () => {
     )
 }
 
-export default UAOorganization;
+export default ZAOorganization;

@@ -48,11 +48,12 @@ import UVAOorganization from "../components/Windows/MapWindow/DistrictWindows/UV
 import UZAOorganization from "../components/Windows/MapWindow/DistrictWindows/UZAOWindow/UZAOorganization/UZAOorganization";
 import VAOorganization from "../components/Windows/MapWindow/DistrictWindows/VAOWindow/VAOorganization/VAOorganization";
 import ZelAOorganization from "../components/Windows/MapWindow/DistrictWindows/ZelAOWindow/ZelAOorganization/ZelAOorganization";
-import ZAOStatisticWindow from "../components/Windows/MapWindow/DistrictWindows/ZAOWindow/ZAOStatistic/ZAOStatisticWindow";
-import TroAndNovAOStatisticWindow from "../components/Windows/MapWindow/DistrictWindows/TroAOWindow/ZAOStatistic/TroAndNovAOStatisticWindow";
 import Balysnikov from "../components/Windows/DirectorsWindow/Balysnikov";
 import Metodkabinet from "../components/Windows/StructWindow/DependenceWindows/Metodkabinet/Metodkabinet";
 import GalleryWindow from "../components/Windows/EventsWindow/GalleryWindow";
+import ZAOorganization from "../components/Windows/MapWindow/DistrictWindows/ZAOWindow/ZAOorganization/ZAOorganization";
+import NovAOorganization from "../components/Windows/MapWindow/DistrictWindows/NovAOWindow/NovAOorganization/NovAOorganization";
+import TrAOorganization from "../components/Windows/MapWindow/DistrictWindows/TroAOWindow/TrAOorganization/TrAOorganization";
 
 
 
@@ -187,12 +188,16 @@ export const router = createBrowserRouter([
       element: <TroAOWindow />
     },
     {
-      path: "/district/troitskiystatistic/:troick",
-      element: <TroAndNovAOStatisticWindow />
+      path: "/district/troitskiy/:areaID",
+      element: <TrAOorganization/>
     },
     {
       path: "/district/novomoskovsky",
       element: <NovAOWindow />
+    },
+    {
+      path: "/district/novomoskovsky/:areaID",
+      element: <NovAOorganization />
     },
     {
       path: "/district/zelenograd",
@@ -271,8 +276,8 @@ export const router = createBrowserRouter([
         element: <ZAOWindow />
     },
     {
-        path: "/district/weststatistic",
-        element: <ZAOStatisticWindow />
+        path: "/district/west/:areaID",
+        element: <ZAOorganization/>
     },
     {
         path: "*",

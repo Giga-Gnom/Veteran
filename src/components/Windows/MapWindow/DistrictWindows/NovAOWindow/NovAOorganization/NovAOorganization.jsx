@@ -1,14 +1,28 @@
 import React from "react";
-import styles from "./SAOorganization.module.css"
+import styles from "./NovAOorganization.module.css"
 import MyHat from "../../../../../Hat/MyHat";
 import BeforePageButton from "../../../../../UI/MyButtons/BeforePageButton";
 import { Link, useParams } from "react-router-dom";
-import { SAOArray } from "./SAOArray";
-import SAOorgBlock from "./SAOorgBlock";
+import NovAOorgBlock from "./NovAOorgBlock";
+import { NovAOorgArray } from "./NovAOorgArray";
 
-const SAOorganizations = () => {
+const NovAOorganization = () => {
     const {areaID} = useParams();
-    const districtData = SAOArray.find(item => item.id.toString() === areaID)
+    const districtData = NovAOorgArray.find(item => item.id.toString() === areaID)
+
+    if (!districtData || !districtData.organizations || districtData.organizations.length === 0) {
+    return (
+        <div>
+            <div className={styles.noInfo}>Информация по данному району не найдена</div>
+            <div style={{position: "fixed", bottom: "2vh"}}>
+                <Link to="/district/novomoskovsky">
+                    <BeforePageButton/>
+                </Link>
+            </div>
+        </div>
+    )
+  }
+
     return(
         <div className={styles.container}>
             <div className={styles.container_head}>
@@ -20,20 +34,18 @@ const SAOorganizations = () => {
                         <h3>{districtData.organizations[0].name}</h3>
                         <span><strong>Адрес:</strong> {districtData.organizations[0].address}</span>
                         <br />
+                        <span><strong>Прием:</strong> {districtData.organizations[0].reception}</span>
                         <h4>Председатель:</h4>
                         <span>{districtData.organizations[0].chairman.name}</span >
                         <span><strong>Телефон:</strong> {districtData.organizations[0].chairman.phone}</span>
                     </div>
                 </div>
-                    {districtData.organizations.slice(1).map((org, index) => (
-                            <SAOorgBlock
-                                key={index}
-                                org={org}
-                            />
-                        ))}
+            {districtData.organizations.slice(1).map((org, index) => (
+                <NovAOorgBlock org={org} key={index}/>
+                ))}
             </div>
             <div className={styles.container_footer}>
-                <Link to="/district/north">
+                <Link to="/district/novomoskovsky">
                     <BeforePageButton/>
                 </Link>
             </div>
@@ -41,4 +53,4 @@ const SAOorganizations = () => {
     )
 }
 
-export default SAOorganizations;
+export default NovAOorganization;

@@ -9,8 +9,8 @@ const TroAOWindow = () => {
     const district = districtsArray.find(item => item.id === 'TroAO');
     const navigate = useNavigate();
 
-    const handleAreaClick = () => {
-        return navigate(`/district/troitskiystatistic/true`)
+    const handleAreaClick = (areaID) => {
+        return navigate(`/district/troitskiy/${areaID}`)
     }
 
     if (!district) {
@@ -24,13 +24,13 @@ const TroAOWindow = () => {
             </div>
             <div className={styles.mapContainer}>
                 <div className={styles.mapContainer_map}>
-                    <svg viewBox="5 270 460 600" className={styles.detailedMap}>
+                    <svg viewBox="-100 3300 4200 4300" className={styles.detailedMap}>
                         {district.area?.map((area) => ( 
                             <g key={area.id}>
                                 <path
                                     d={area.path}
                                     className={styles.area}
-                                    onClick={()=>handleAreaClick()}
+                                    onClick={()=>handleAreaClick(area.id)}
                                 />
                                 <text x={area.center.x} y={area.center.y} className={styles.area_label}>
                                     {area.id+1}

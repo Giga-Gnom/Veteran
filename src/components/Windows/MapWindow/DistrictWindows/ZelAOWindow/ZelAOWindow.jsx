@@ -26,7 +26,7 @@ const ZelAOWindow = () => {
                 <div className={styles.mapContainer_map}>
                     <svg viewBox="230 -10 100 600" className={styles.detailedMap}>
                         {district.area?.map((area) => ( 
-                            <g>
+                            <g key={area.id}>
                                 <path
                                     key={area.id}
                                     d={area.path}

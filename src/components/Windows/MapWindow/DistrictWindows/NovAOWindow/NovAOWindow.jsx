@@ -9,8 +9,8 @@ const NovAOWindow = () => {
     const district = districtsArray.find(item => item.id === 'NovAO');
     const navigate = useNavigate();
 
-    const handleAreaClick = () => {
-        return navigate(`/district/troitskiystatistic/false`)
+    const handleAreaClick = (areaID) => {
+        return navigate(`/district/novomoskovsky/${areaID}`)
     }
 
     if (!district) {
@@ -24,13 +24,13 @@ const NovAOWindow = () => {
             </div>
             <div className={styles.mapContainer}>
                 <div className={styles.mapContainer_map}>
-                    <svg viewBox="200 150 400 600" className={styles.detailedMap}>
+                    <svg viewBox="1000 2350 2700 5000" className={styles.detailedMap}>
                         {district.area?.map((area) => ( 
                             <g key={area.id}>
                                 <path
                                     d={area.path}
                                     className={styles.area}
-                                    onClick={() => handleAreaClick()}
+                                    onClick={() => handleAreaClick(area.id)}
                                 />
                                 <text x={area.center.x} y={area.center.y} className={styles.area_label}>{area.id+1}</text>
                             </g>
