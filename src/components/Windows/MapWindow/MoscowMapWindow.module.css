@@ -22,9 +22,11 @@
   flex: 1;
   display: flex;
   position: relative;
-  width: 100%;
+  width: 65VW;
   overflow:auto;
 }
+
+.container_POtable
 
 .map {
   width: 100%;
@@ -53,4 +55,15 @@
   fill: white;
   font-family: 'Roboto', serif;
   pointer-events: none;
+}
+
+.container_content{
+  display: flex;
+  flex-direction: row;
+  height: 80vh;
+}
+
+.container_POtable{
+  width: 35vw;
+  z-index: 2;
 }

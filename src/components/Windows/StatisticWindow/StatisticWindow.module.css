@@ -37,3 +37,14 @@
     overflow: visible;
     padding: 20px;
 }
+
+.h1_teg{
+    flex-direction: row;
+    justify-content: flex-end;
+    display: flex;
+    height: 5vh;
+}
+
+.h1_teg h1{
+    margin-right: 6vw;
+}

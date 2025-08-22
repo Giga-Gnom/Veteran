@@ -38,6 +38,7 @@
 
 .container_content_carousel{
     width: 50vw;
+    height: 50vh;
 
 }
 
@@ -47,3 +48,4 @@
     max-height: 65vh;
     min-height: 65vh;
 }
+

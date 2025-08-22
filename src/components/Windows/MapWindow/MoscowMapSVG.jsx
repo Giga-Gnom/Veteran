@@ -10,7 +10,7 @@ const MoscowMapSVG = ({ onDistrictClick, activeDistrict }) => {
         onDistrictClick(district);
       };
     return(
-        <svg viewBox="0 0 1000 800" className={styles.map}>
+        <svg viewBox="-50 5 850 710" className={styles.map}>
           {districtsData.map((district,index) => (
             <g key={index}>
               <path

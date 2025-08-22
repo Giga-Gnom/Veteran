@@ -4,6 +4,7 @@ import MyHat from "../../Hat/MyHat";
 import BottomPanel from "../../BottomPanel/BottomPanel";
 import MoscowMapSVG from "./MoscowMapSVG";
 import { useNavigate } from "react-router-dom";
+import Table from "./Table";
 
 const MoscoMapWindow = () => {
 
@@ -34,15 +35,18 @@ const MoscoMapWindow = () => {
             <div className={styles.container_head}>            
                 <MyHat heading="Интерактивная карта Москвы"/>
             </div>
-
-            <div className={styles.mapContainer}>
-                <MoscowMapSVG 
-                onDistrictClick={handleDistrictClick}
-                activeDistrict={activeDistrict}
-                />
-        
+            <div className={styles.container_content}>
+                <div className={styles.mapContainer}>
+                    <MoscowMapSVG 
+                    onDistrictClick={handleDistrictClick}
+                    activeDistrict={activeDistrict}
+                    />
+            
+                </div>
+                <div className={styles.container_POtable}>
+                    <Table/>
+                </div>
             </div>
-
             <div className={styles.container_head}>            
             <BottomPanel/>
             </div>

@@ -1,0 +1,27 @@
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 1vh;
+    overflow: hidden;
+}
+
+.marginRight{
+    margin-right: 2vw;
+}
+.th {
+    background-color: #f5f5f5;
+    padding: 12px;
+    text-align: center;
+    font-weight: 600;
+    border-bottom: 2px solid #ddd;
+}
+
+.td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+.tr:nth-child(even) {
+    background-color: #f9f9f9;
+}

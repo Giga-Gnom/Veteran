@@ -4,6 +4,27 @@
   box-sizing: border-box;
 }
 
+*::-webkit-scrollbar {
+  width: 0.8vw;
+  background-color: transparent; /* Прозрачная подложка */
+}
+
+*::-webkit-scrollbar-track {
+  background-color: transparent; /* Прозрачный трек */
+  border-radius: 1vw;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3); /* Видимый ползунок */
+  border-radius: 1vw;
+  border: 0.3vw solid transparent; /* Отступ вокруг ползунка */
+  background-clip: content-box; /* Чтобы border не перекрывал background */
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.5); /* Темнее при наведении */
+}
+
 #root{
   display: flex;
   height: 100vh;

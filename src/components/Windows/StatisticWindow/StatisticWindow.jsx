@@ -23,6 +23,9 @@ const StatisticWindow = () => {
       <div className={styles.container_head}>            
         <MyHat heading="Статистика"/>
       </div>
+      <div className={styles.h1_teg}>
+        <h1 >Данные на январь 2025 года</h1>
+      </div>
       <div className={styles.container_content}>
         <GraphWithLegend/> 
         <br /><br /><br />

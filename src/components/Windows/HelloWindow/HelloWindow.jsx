@@ -9,12 +9,12 @@ const HelloWindow = () =>{
     return(
         <div className={styles.container}>
             <div className={styles.container_head}>            
-                <MyHat heading="ПРИВЕТСТВИЕ РУКОВОДИТЕЛЯ"/>
+                <MyHat heading="ПРИВЕТСТВИЕ ПРЕДСЕДАТЕЛЯ МГСВ"/>
             </div>
             <div className={styles.container_content}>
                 <div className={styles.container_img}>
                     <img src={image} alt="" className={styles.container_content_image} onClick={handleImgClick}/>
-                    <p>Приветствие председателя МГСВ Пашкова Георгия Ивановича</p>
+                    <p> Пашков Георгий Иванович</p>
                 </div>
                 <div className={styles.container_content_text}>
                     <h1 className={styles.container_content_text_h1}>Здравствуйте, друзья!</h1>
