@@ -5,6 +5,7 @@ import MyHat from "../../../../Hat/MyHat";
 import { Link } from "react-router-dom";
 import neshina from "./srcOrganization/image.png"
 import zinakova from "./srcOrganization/фото Зинакова С.Г..jpg"
+import serduk from "./srcOrganization/Serduk.jpg"
 
 const OrganizationWindow = () => {
     return(
@@ -25,6 +26,7 @@ const OrganizationWindow = () => {
                 </div>
             </div>
             <div className={styles.container_content_person}>
+                <img src={serduk} alt="" style={{margin:"0 2vw"}} className={styles.container_content_person_image}/>
                 <div className={styles.container_content_pesron_text}>
                     <p>Главный специалист</p>
                     <h2>СЕРДЮК ВЛАДИМИР ФИЛИППОВИЧ</h2>

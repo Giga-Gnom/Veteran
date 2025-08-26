@@ -25,7 +25,7 @@ const StandartDocumentsWindow = () => {
             (
                 <>
                     <div className={styles.container_head}>            
-                        <MyHat heading="Нормативные Документы"/>
+                        <MyHat heading="Нормативно-правовая база"/>
                     </div>
                     <div className={styles.container_content}>
                         {standartsArray.map((standart, index)=>(

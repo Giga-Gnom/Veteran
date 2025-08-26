@@ -72,3 +72,21 @@ h2{
     left: 5vw;
     bottom: 2vh;
 }
+
+.otdel_describe{
+    display: flex;
+    flex-direction: column;
+    margin-top: 3vh;
+}
+
+.otdel_describe_goals{
+    border: 1vh double black;
+    padding: 1vh 1.5vw;
+    margin: 1vh 1vw;
+}
+
+.otdel_describe_tasks{
+    border: 1vh double black;
+    padding: 1vh 1.5vw;
+    margin: 1vh 1vw;
+}
