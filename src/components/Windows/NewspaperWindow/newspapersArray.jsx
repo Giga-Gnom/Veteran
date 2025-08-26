@@ -1,4 +1,3 @@
-import _895 from "./srcNewspapers/16__2025__1_895.pdf"
 
 export const newspapersArray = [
       {
