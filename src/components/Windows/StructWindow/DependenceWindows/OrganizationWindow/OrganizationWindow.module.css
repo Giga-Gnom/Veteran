@@ -75,3 +75,17 @@ h2{
     bottom: 2vh;
     z-index: 2;
 }
+
+.container_content_paths{
+    display: flex;
+    flex-direction: column;
+    width: 95vw;
+    margin: 0 2.5vw;
+    border: 0.5vw double rgba(0, 0, 0, 0.8);
+    padding: 1vh;
+    justify-content: center;
+}
+
+.container_content_paths h1{
+    text-align: center;
+}
