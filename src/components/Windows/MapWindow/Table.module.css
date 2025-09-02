@@ -17,11 +17,15 @@
 }
 
 .td {
-    padding: 10px;
+    padding: 0.2vh;
     text-align: center;
     border-bottom: 1px solid #eee;
 }
 
 .tr:nth-child(even) {
     background-color: #f9f9f9;
+}
+
+.tr .th{
+    padding: 0.5vh 0;
 }

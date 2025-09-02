@@ -24,7 +24,7 @@ const UAOWindow = () => {
             </div>
             <div className={styles.mapContainer}>
                 <div className={styles.mapContainer_map}>
-                    <svg viewBox="525 200 150 600" className={styles.detailedMap}>
+                    <svg viewBox="510 200 180 600" className={styles.detailedMap}>
                         {district.area?.map((area) => (
                             <g>
                                 <path

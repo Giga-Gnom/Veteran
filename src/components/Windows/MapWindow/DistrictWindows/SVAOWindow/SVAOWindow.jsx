@@ -24,7 +24,7 @@ const SVAOWindow = () => {
             </div>
             <div className={styles.mapContainer}>
                 <div className={styles.mapContainer_map}>
-                    <svg viewBox="475 25 175 500" className={styles.detailedMap}>
+                    <svg viewBox="455 45 210 500" className={styles.detailedMap}>
                         {district.area?.map((area) => ( 
                             <g key={area.id}>
                                 <path

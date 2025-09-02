@@ -34,7 +34,7 @@ const ImageSlider = () => {
         <div className={styles.container}>
             <div className={styles.container_images}>
                 <img src={images[currentIndex].image} alt="" />
-                <p>{images[currentIndex].name}</p>
+                {/* <p>{images[currentIndex].name}</p> */}
             </div>
         </div>
     )

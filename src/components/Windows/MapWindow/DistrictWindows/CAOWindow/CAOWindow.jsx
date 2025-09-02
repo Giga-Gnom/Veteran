@@ -24,7 +24,7 @@ const CAOWindow = () => {
             </div>
             <div className={styles.mapContainer}>
                 <div className={styles.mapContainer_map}>
-                    <svg viewBox="450 100 200 300" className={styles.detailedMap}>
+                    <svg viewBox="450 120 200 300" className={styles.detailedMap}>
                         {district.area?.map((area) => ( 
                             <g key={area.id}>
                                 <path

@@ -24,7 +24,7 @@ const TroAOWindow = () => {
             </div>
             <div className={styles.mapContainer}>
                 <div className={styles.mapContainer_map}>
-                    <svg viewBox="-100 3300 4200 4300" className={styles.detailedMap}>
+                    <svg viewBox="-200 3400 4500 4300" className={styles.detailedMap}>
                         {district.area?.map((area) => ( 
                             <g key={area.id}>
                                 <path

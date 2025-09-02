@@ -24,7 +24,7 @@ const VAOWindow = () => {
             </div>
             <div className={styles.mapContainer}>
                 <div className={styles.mapContainer_map}>
-                    <svg viewBox="576 80 200 600" className={styles.detailedMap}>
+                    <svg viewBox="576 80 230 600" className={styles.detailedMap}>
                         {district.area?.map((area) => (
                             <g  key={area.id}>
                                 <path
