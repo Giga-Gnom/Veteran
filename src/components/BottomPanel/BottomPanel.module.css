@@ -16,9 +16,11 @@
     );
     border: none;
     z-index: 100;
+    pointer-events: none
 }
 
 .Buttons{
+    pointer-events: auto;
     width: 5vw;
     height: 7vh;
     z-index: 10;
