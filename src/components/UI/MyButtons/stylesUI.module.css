@@ -33,7 +33,7 @@
     height: 7vh; /* Занимает всю высоту родительского контейнера */
     background-color: rgba(255, 255, 255, 0); /* Цвет кнопки */
     cursor: pointer;
-    background-image: url("./srcUI/right_3.png");
+    background-image: url("./srcUI/right_my.png");
     background-size: contain; /* Чтобы изображение покрывало всю кнопку */
     background-position: center;
     background-repeat: no-repeat;
@@ -50,7 +50,7 @@
     height: 7vh; /* Занимает всю высоту родительского контейнера */
     background-color: rgba(255, 255, 255, 0); /* Цвет кнопки */
     cursor: pointer;
-    background-image: url("./srcUI/left_3.png");
+    background-image: url("./srcUI/left_my.png");
     background-size: contain; /* Чтобы изображение покрывало всю кнопку */
     background-position: center;
     background-repeat: no-repeat;
@@ -68,7 +68,7 @@
     height: 7vh; /* Занимает всю высоту родительского контейнера */
     background-color: rgba(255, 255, 255, 0); /* Цвет кнопки */
     cursor: pointer;
-    background-image: url("./srcUI/up_3.png");
+    background-image: url("./srcUI/top_my.png");
     background-size: contain;/* Чтобы изображение покрывало всю кнопку */
     background-position: center;
     background-repeat: no-repeat;

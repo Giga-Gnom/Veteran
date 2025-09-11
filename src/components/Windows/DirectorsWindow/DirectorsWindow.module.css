@@ -6,7 +6,7 @@
 }
 
 .container::before{
-    background: url(./srcDirectors/fon_4.png) center/cover no-repeat;
+    background: url(./srcDirectors/fon__4.png) center/cover no-repeat;
     position: absolute;
     inset: 0;
     filter: blur(0.6vh);
