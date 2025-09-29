@@ -26,7 +26,7 @@ const SocDefWindow = () => {
             <div className={styles.container_content_person}>
                 <img src={klepikov} alt="" style={{margin:"0 2vw"}} className={styles.container_content_person_image}/>
                 <div className={styles.container_content_pesron_text}>
-                    <p>Заместитель заведующей отделом</p>
+                    <p>Заместитель заведующего отделом</p>
                     <h2>КЛЕПИКОВ Александр Николаевич</h2>
                     <p>8 (495) 699-26-04</p>
                     <p>В МГСВ с 2022 года. Окончил ВПА им. В.И. Ленина.  Полковник в отставке. Заслуженный работник культуры РФ. Награжден орденом Почета. </p>

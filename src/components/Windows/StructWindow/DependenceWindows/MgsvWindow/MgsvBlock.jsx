@@ -5,7 +5,7 @@ const MgsvBlock = ({person}) => {
     return(
         <div className={styles.container}>
             <h1 style={{paddingLeft:"2vw"}}>{person.name}</h1>
-            <p>{person.description}</p>
+            <p>{person.position}</p>
         </div>
     )
 }

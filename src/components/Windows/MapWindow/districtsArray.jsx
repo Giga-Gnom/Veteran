@@ -4,7 +4,7 @@ export const districtsArray = [
         id:'TroAO',
         name:"Троицкий",
         path:"/districts/0",
-        title: "Троицкого административного округа",
+        title: "Районы Троицкого административного округа",
         area:[
             {
                 id:0,
@@ -68,7 +68,7 @@ export const districtsArray = [
         id:'ZelAO',
         name:"Зеленоград",
         path:"/districts/2",
-        title: "Зеленоградский административного округа",
+        title: "Районы Зеленоградского административного округа",
         area:[
             {
                 id:0,
@@ -106,7 +106,7 @@ export const districtsArray = [
         id:'UZAO',
         name:"Юго-западный",
         path:"/districts/3",
-        title: "Районы Юго-западного административного округа",
+        title: "Районы Юго-Западного административного округа",
         area:[
             {
                 id:0,
@@ -358,7 +358,7 @@ export const districtsArray = [
         id:'UVAO',
         name:"Юго-восточный",
         path:"/districts/6",
-        title: "Районы Юго-восточного административного округа",
+        title: "Районы Юго-Восточного административного округа",
         area:[
             {
                 id: 0,
@@ -542,7 +542,7 @@ export const districtsArray = [
         id:'SVAO',
         name:"Северо-восточный",
         path:"/districts/7",
-        title: "Районы Северо-восточного административного округа",
+        title: "Районы Северо-Восточного административного округа",
         area:[
             {
                 id: 1,
@@ -756,7 +756,7 @@ export const districtsArray = [
         id:'SZAO',
         name:"Северо-западный",
         path:"/districts/9",
-        title: "Районы Северо-западного административного округа",
+        title: "Районы Северо-Западного административного округа",
         area:[
             {
                 id: 0,

@@ -3,10 +3,10 @@ import styles from "./YoungPeopleWindow.module.css";
 import MyHat from "../../../../Hat/MyHat";
 import BeforePageButton from "../../../../UI/MyButtons/BeforePageButton";
 import { Link } from "react-router-dom";
-import lobanov from "./srcYoungPeople/lobanov.png";
-import aksutin from "./srcYoungPeople/aksutin.png";
-import kostuchenko from "./srcYoungPeople/kostuchenko.png";
-import dorofeeva from "./srcYoungPeople/dorofeeva.png";
+import lobanov from "./srcYoungPeople/lobanov_full.jpg";
+import aksutin from "./srcYoungPeople/aksutichev_full.jpg";
+import kostuchenko from "./srcYoungPeople/kostuchenko_full.jpg";
+import dorofeeva from "./srcYoungPeople/dorofeeva_full.jpg";
 
 const YoungPeopleWindow = () => {
     return(

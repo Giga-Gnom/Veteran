@@ -58,8 +58,10 @@
 
 .container_content_person_image{
     height: auto;
-    min-width: 20vw;
-    max-width: 20vw;
+    width: 25%;
+    height: 100%;
+    object-fit: cover;
+    border: 0.8vw ridge rgba(64, 163, 239, 0.568)
 }
 
 h2{
