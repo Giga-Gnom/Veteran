@@ -1,6 +1,6 @@
 export const pokContentArray = [
     {
-        name: "Ревизионная комиссия",
+        name: "Ревизионная комиссия МГОВ",
         path: "/commissions/0",
         id:0
     },

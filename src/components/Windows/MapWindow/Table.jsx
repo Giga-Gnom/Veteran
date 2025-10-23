@@ -8,7 +8,7 @@ const Table = () => {
                 <thead>
                     <tr>
                         <th className={styles.th}>Округ</th>
-                        <th className={styles.th}>Количество первичных организаций</th>
+                        <th className={styles.th}>Количество первичных ветеранских организаций</th>
                     </tr>
                 </thead>
                 <tbody>

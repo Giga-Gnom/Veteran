@@ -18,7 +18,8 @@
     flex: 1; /* Занимает оставшееся пространство */
     display: flex;
     flex-direction: row;
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
     flex-wrap: wrap;
     z-index: 1;
 }

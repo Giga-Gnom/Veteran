@@ -1,15 +1,16 @@
 .container{
-    width: 32vw;
-    height: 32vh;
+    width: 23vw;
+    height: 40vh;
     display: flex;
     align-items: center;
     flex-direction: column;
+    margin: 1vh;
 }
 
 .container_text{
     height: auto;
     font-size: 1.5vh;
-    width: 30vw;
+    width: 24vw;
     text-align: center;
     font-family: "Lobster", "sans-serif";
     color: rgb(169, 35, 35);
@@ -17,6 +18,8 @@
 }
 
 .container_image{
-    height: 70%;
+    min-height: 28vh;
+    width: auto;
+    max-width: 22vw;
     border: 1vh ridge rgba(169, 35, 35, 0.84);
 }

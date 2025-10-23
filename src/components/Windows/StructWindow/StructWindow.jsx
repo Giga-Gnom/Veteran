@@ -17,7 +17,7 @@ const StructWindow = () => {
     return(
         <div className={styles.container}>
             <div className={styles.container_head}>
-                <MyHat heading="Структура МГСВ" />
+                <MyHat heading="структура Московской городской организации ветеранов" />
             </div>
             <div className={styles.container_content}>
                 <div className={styles.container_content_newtop}>
