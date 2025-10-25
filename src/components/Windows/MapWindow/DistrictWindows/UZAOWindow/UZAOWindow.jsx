@@ -4,6 +4,7 @@ import MyHat from "../../../../Hat/MyHat";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import BeforePageButton from "../../../../UI/MyButtons/BeforePageButton";
 import { districtsArray } from "../../districtsArray";
+import vinidiktov from "./vinidiktov.png"
 
 const UZAOWindow = () => {
     const district = districtsArray.find(item => item.id === 'UZAO');
@@ -39,17 +40,28 @@ const UZAOWindow = () => {
                         ))}
                     </svg>
                 </div>
-                <div className={styles.mapContainer_legend}>
-                    <div className={styles.mapContainer_legend_title}>
-                        <h2 className={styles.mapContainer_legend_title_h2}>
-                            {district.title}
-                        </h2>    
-                    </div>
-                    {district.area.map((area) => (
-                        <div className={styles.mapContainer_legend_block} key={area.id}>
-                            <p>{area.id+1}. {area.name}</p>
+                <div className={styles.flex_column}>
+                    <div className={styles.area_director_block}>
+                        <img src={vinidiktov} alt="" className={styles.person_img}/>
+                        <div className={styles.flex_column}>
+                            <p><span style={{fontSize: "3vh"}}>Винидиктов Александр Николаевич</span></p>
+                            <p>Председатель Совета ветеранов Юго-Западного административного округа города Москвы</p>
+                            <p>Москва, Севастопольский пр-кт, д.61, стр.1, swaosv@mail.ru</p>
+                            <p>8-499-723-85-55; 8-499-789-42-20</p>
                         </div>
-                    ))}
+                    </div>
+                    <div className={styles.mapContainer_legend}>
+                        <div className={styles.mapContainer_legend_title}>
+                            <h2 className={styles.mapContainer_legend_title_h2}>
+                                {district.title}
+                            </h2>
+                        </div>
+                        {district.area.map((area) => (
+                            <div className={styles.mapContainer_legend_block} key={area.id}>
+                                <p>{area.id+1}. {area.name}</p>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
             <div className={styles.container_button}>

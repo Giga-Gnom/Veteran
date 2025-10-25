@@ -20,7 +20,6 @@ const CreationHistoryWindow = () => {
                 <div className={styles.container_content_text}>
                     <figure className={styles.container_content_text_img}>
                         <img src={page1} alt="" onClick={handleImgClick}/>
-                        <p>Фотография ветеранов</p>
                     </figure>
                     <div className={styles.container_content_text_text}>
                         <p>

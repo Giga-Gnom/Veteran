@@ -15,3 +15,8 @@
     font-family: 'Roboto', serif;
     padding: 1vh;
 }
+
+.green_border{
+    border: 0.5vh solid green;
+    border-radius: 1.5vh;
+}
