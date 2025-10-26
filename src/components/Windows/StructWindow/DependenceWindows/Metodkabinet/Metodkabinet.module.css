@@ -79,3 +79,14 @@ h2{
 .container_content_zadachi{
     padding: 1vw;
 }
+
+.flex_row{
+    display: flex;
+    flex-direction: row;
+    z-index: 1;
+}
+
+.image{
+    margin-inline: 1vw;
+    border: 2vh ridge rgba(66, 102, 145);
+}
