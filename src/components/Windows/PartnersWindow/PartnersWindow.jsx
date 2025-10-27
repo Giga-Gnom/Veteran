@@ -1,14 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./PartnersWindow.module.css"
 import MyHat from "../../Hat/MyHat";
 import BottomPanel from "../../BottomPanel/BottomPanel";
 import { partnersArray } from "./PartnersArray";
 import PartnerBlock from "./PartnerBlock";
+import PartnerWebview from "./PartnersWebview";
 
 const PartnersWindow = () => {
 
+    const [currentPartner, setCurrentPartner] = useState(null)
+
     function handleOpenPartenrResourse(path){
-        window.open(path,'_blank');
+        setCurrentPartner(path)
+    }
+
+    function handleBackFromPartner(){
+        setCurrentPartner(null)
+    }
+
+    if (currentPartner) {
+        return (<PartnerWebview url={currentPartner} onBack={handleBackFromPartner}></PartnerWebview>)
     }
 
 

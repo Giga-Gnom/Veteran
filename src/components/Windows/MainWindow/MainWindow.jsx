@@ -3,11 +3,13 @@ import video from "./src_mainwindow/0326_endstart.mp4"
 import styles from "./MainWindow.module.css"
 import DropList from "../../DropList/DropList";
 import NextPageButton from "../../UI/MyButtons/NextPageButton";
-import { handleNextPage } from "../../../app/utils";
+import { usePageNavigation } from "../../../app/utils";
 
 const MainWindow = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const videoRef=useRef(null);
+
+const { handelToMainPage, handeleBeforPage, handleNextPage } = usePageNavigation();
 
   const handleVideoClick = () => {
     if(isPlaying){
