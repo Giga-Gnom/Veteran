@@ -22,3 +22,7 @@
     text-align: center;
     border-bottom: 0.2vh solid rgba(0, 0, 0, 0.107);
 }
+
+.active{
+    color:  rgba(165, 42, 42, 0.422)
+}
