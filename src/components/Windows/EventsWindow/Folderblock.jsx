@@ -8,7 +8,11 @@ const FolderBlock = ({event}) => {
       const navigate = useNavigate();
 
     const onClick = () => {
-        navigate(`/gallery/${encodeURIComponent(event.name)}`)
+        const currentSlide = sessionStorage.getItem("eventsCarouselSlide") || "0"
+        sessionStorage.setItem("eventsCarouselSlide", currentSlide)
+        sessionStorage.setItem("fromEventDepartment", "true")
+        console.log("Переход из карусели, сохранен слайд:", currentSlide) // Добавьте для отладки
+        navigate(`/gallery/${encodeURIComponent(event.name)}`, {state: {fromEventDepartment: true}})
     }
     return(
         <div className={styles.container} onClick={onClick}>

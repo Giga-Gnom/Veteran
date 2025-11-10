@@ -20,7 +20,7 @@ const GalleryWindow = () => {
     return(
         <div className={styles.container}>
             <div className={styles.container_head}>
-                <MyHat heading="Наши Мероприятия" />
+                <MyHat heading={folderName} />
             </div>
             <div className={styles.container_content}>
                 {eventsArray.map((e, i) => <EventBlock event={e} key={i}/>)}

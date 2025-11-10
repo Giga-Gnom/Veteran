@@ -49,3 +49,26 @@
     min-height: 65vh;
 }
 
+.slideChanger_button_left{
+    background-image: url(./srcEventsWindow/left_double.png);
+    background-color: transparent;
+    width: 5vw;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 6vh;
+}
+
+.slideChanger_button_right{
+    background-image: url(./srcEventsWindow/right_double.png);
+    background-color: transparent;
+    width: 5vw;
+    height: 6vh;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.buttons_container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}

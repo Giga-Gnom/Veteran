@@ -18,7 +18,7 @@ const imagesByFolder = {
   "Конкурс на лучшую районную медкомиссию" : import.meta.glob('./photo_folders/Конкурс на лучшую районную медкомиссию/*.{png,jpg,jpeg,svg,JPG}'),
   "Конкурс-выставка цветов" : import.meta.glob('./photo_folders/Конкурс-выставка цветов/*.{png,jpg,jpeg,svg,JPG}'),
   "Круглый стол Никто, кроме нас" : import.meta.glob('./photo_folders/Круглый стол Никто, кроме нас/*.{png,jpg,jpeg,svg,JPG}'),
-  "Участие в показе фильма об участниках СВО" : import.meta.glob('./photo_folders/Участие в показе фильма об участниках СВО/*.{png,jpg,jpeg,svg,JPG}'),
+  // "Участие в показе фильма об участниках СВО" : import.meta.glob('./photo_folders/Участие в показе фильма об участниках СВО/*.{png,jpg,jpeg,svg,JPG}'),
 }
 export async function loadImgFromFolder(folderName) {
   const folderImports = imagesByFolder[folderName];

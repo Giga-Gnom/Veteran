@@ -34,7 +34,6 @@ const TrAOorganization = () => {
                         <h3>{districtData.organizations[0].name}</h3>
                         <span><strong>Адрес:</strong> {districtData.organizations[0].address}</span>
                         <br />
-                        <span><strong>Прием:</strong> {districtData.organizations[0].reception}</span>
                         <h4>Председатель:</h4>
                         <span>{districtData.organizations[0].chairman.name}</span >
                         <span><strong>Телефон:</strong> {districtData.organizations[0].chairman.phone}</span>

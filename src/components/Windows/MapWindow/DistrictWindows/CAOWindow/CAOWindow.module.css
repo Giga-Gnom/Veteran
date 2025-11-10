@@ -19,7 +19,10 @@
   }
 
   .container_button{
+    position: fixed;
     z-index: 2;
+    bottom: 2vh;
+    right: 5vw;
     
   }
   

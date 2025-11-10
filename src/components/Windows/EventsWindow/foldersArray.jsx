@@ -91,9 +91,4 @@ export const foldersArray = [
         name: "Круглый стол Никто, кроме нас",
         path: ""
     },
-    {
-        img: folderImg,
-        name: "Участие в показе фильма об участниках СВО",
-        path: ""
-    },
 ]
