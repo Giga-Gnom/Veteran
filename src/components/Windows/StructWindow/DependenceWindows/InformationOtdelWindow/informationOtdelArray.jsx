@@ -1,5 +1,5 @@
 import sosunova from "./srcInformationOtdel/Сосунова.jpg";
-import frolova from "./srcInformationOtdel/фото Фролова Е.А..jpg";
+import frolova from "./srcInformationOtdel/frolova.jpg";
 
 export const  informationOtdelArray = [
     {

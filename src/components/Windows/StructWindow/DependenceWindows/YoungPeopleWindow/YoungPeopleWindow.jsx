@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import lobanov from "./srcYoungPeople/lobanov_full.jpg";
 import aksutin from "./srcYoungPeople/aksutichev_full.jpg";
 import kostuchenko from "./srcYoungPeople/kostuchenko_full.jpg";
-import dorofeeva from "./srcYoungPeople/dorofeeva_full.jpg";
+import dorofeeva from "./srcYoungPeople/dorofeeva_2.png";
 
 const YoungPeopleWindow = () => {
     return(
@@ -52,8 +52,9 @@ const YoungPeopleWindow = () => {
                     <p>Главный специалист</p>
                     <h2>ДОРОФЕЕВА  ОЛЬГА  ВИКТОРОВНА</h2>
                     <p>8 (495) 699-75-40</p>
-                    <p>Образование – Михайловская артиллерийская академия, г. Санкт-Петербург – 1999 г., РГСУ – 2011.</p> 
-                    <p> Полковник, ветеран боевых действий, ветеран военной службы, награжден:  орденами Мужества – 1995, 2000; медалями «За Отвагу» -1995, «За боевые заслуги» -1984 и ведомственными и общественными наградами </p>
+                    <p>Образование высшее ЛГПУ (Липецкий Государственныый Педагогический Университет)</p> 
+                    <p> 23 года стажа работы в авиации </p>
+                    <p>Работала старшим бортпроводником в авиакомпании ФГБУ МЧС России. Ветеран труда. Награждена: Медаль "Участник ликвидации последствий ЧС"; Медаль "За пропаганду спасательного дела" и другими общественными наградами.</p>
                 </div>
             </div>
             <div className={styles.container_content_zadachi}>

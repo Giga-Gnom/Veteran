@@ -87,6 +87,8 @@ h2{
 }
 
 .image{
+    height: 60vh;
+    width: auto;
     margin-inline: 1vw;
     border: 2vh ridge rgba(66, 102, 145);
 }
