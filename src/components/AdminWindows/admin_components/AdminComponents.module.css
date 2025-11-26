@@ -1,0 +1,50 @@
+.windowCard_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(196, 201, 206, 0.331);
+    text-align: center;
+    width: 18vw;
+    margin-inline: 1vw;
+    min-height: 10vh;
+    border: 0.15vw solid rgba(0, 0, 0, 0.265);
+    margin-block: 1vh;
+    color: black;
+}
+
+.windowCard_container:hover{
+    box-shadow: 2px 2px 4px rgba(61, 105, 16, 0.5);
+}
+
+/*-----------------------------------------*/
+
+.adminHeader{
+    background: #970e0e;
+    color: white;
+    border-bottom: 3px solid #3498db;
+    min-height: 15vh;
+}
+
+.adminHeader_contant{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    h1{
+        font-size: 4vh;
+        padding-top: 1vh;
+    }
+}
+
+.close_button_container{
+    width: 100%;
+    margin-top: 3vh;
+}
+
+.close_button{
+    background-color: #aa949400;
+    margin: 1vh;
+    border: 0.12vh solid rgb(255, 0, 0);
+    color: white;
+}

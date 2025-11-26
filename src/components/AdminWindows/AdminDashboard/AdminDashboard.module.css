@@ -1,0 +1,9 @@
+.windowCards_container{
+    display: flex;
+    flex-direction: column;
+    width: 20vw;
+    border-right:0.1vw solid black ;
+    max-height: 85vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}

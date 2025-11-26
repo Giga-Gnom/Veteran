@@ -1,0 +1,15 @@
+/* components/AdminWindows/AdminLayout/AdminLayout.css */
+.admin_layout {
+  min-height: 100vh;
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, sans-serif;
+  background: #ecf0f1;
+}
+
+.admin_main {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+}
