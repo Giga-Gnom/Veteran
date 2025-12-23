@@ -1,14 +1,67 @@
-import { app, BrowserWindow, globalShortcut } from 'electron';
-import path, { dirname } from 'path';
+import { app, BrowserWindow, globalShortcut, ipcMain } from 'electron';
+import path from 'path';
 import { fileURLToPath } from 'url';
+import fs from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const isDev = process.env.NODE_ENV === 'development' || process.env.ELECTRON_IS_DEV === '1';
+// 🔧 ВАЖНО: Определяем пути для разных режимов
+const isDev = process.env.NODE_ENV === 'development';
+const resourcesPath = isDev ? process.cwd() : process.resourcesPath;
+
+console.log('App started:', {
+  isDev,
+  __dirname,
+  resourcesPath,
+  cwd: process.cwd()
+});
 
 let mainWindow;
 let adminWindow;
+
+// 🔧 Универсальная функция для импорта модулей
+async function safeImport(modulePath) {
+  if (isDev) {
+    // В режиме разработки - обычный импорт
+    return import(modulePath);
+  } else {
+    // В production пробуем разные пути
+    const possiblePaths = [
+      path.join(resourcesPath, 'app.asar', modulePath),
+      path.join(resourcesPath, 'app.asar.unpacked', modulePath),
+      path.join(__dirname, modulePath)
+    ];
+    
+    for (const tryPath of possiblePaths) {
+      try {
+        console.log('Trying to import from:', tryPath);
+        // Используем file:// протокол для импорта
+        return await import('file://' + tryPath.replace(/\\/g, '/'));
+      } catch (e) {
+        console.log('Failed:', tryPath);
+      }
+    }
+    throw new Error(`Module not found: ${modulePath}`);
+  }
+}
+
+// 🔧 Инициализация БД
+let dbService = null;
+
+async function initDatabase() {
+  if (dbService) return dbService;
+  
+  try {
+    const module = await safeImport('./src/services/database/connection.js');
+    dbService = module.default || module;
+    console.log('✅ Database module loaded');
+    return dbService;
+  } catch (error) {
+    console.error('❌ Database init error:', error);
+    throw error;
+  }
+}
 
 function createMainWindow() {
   mainWindow = new BrowserWindow({
@@ -19,8 +72,7 @@ function createMainWindow() {
       webSecurity: false,
       webviewTag: true,
       contextIsolation: true,
-      preload: path.join(__dirname, 'preload.js'),
-      webSecurity: false // Добавьте это для разработки
+      preload: path.join(__dirname, 'preload.js')
     },
     fullscreen: true,
     autoHideMenuBar: true,
@@ -28,18 +80,38 @@ function createMainWindow() {
   });
 
   if (isDev) {
-    mainWindow.laodURL('http://localhost:5173')
+    console.log('DEV: Loading from localhost');
+    mainWindow.loadURL('http://localhost:5173');
+    mainWindow.webContents.openDevTools();
   } else {
-    const indexPath = path.join(__dirname, 'dist/index.html')
-    mainWindow.loadURL(`file://${indexPath}`)  }
+    try {
+      // Пробуем загрузить из разных мест
+      const indexPath = path.join(__dirname, 'dist/index.html');
+      const asarIndexPath = path.join(resourcesPath, 'app.asar', 'dist/index.html');
+      
+      if (fs.existsSync(indexPath)) {
+        console.log('Loading from:', indexPath);
+        mainWindow.loadFile(indexPath);
+      } else if (fs.existsSync(asarIndexPath)) {
+        console.log('Loading from asar:', asarIndexPath);
+        mainWindow.loadFile(asarIndexPath);
+      } else {
+        console.error('Index.html not found in any location');
+        mainWindow.loadURL(`data:text/html,<h1>App loaded</h1><p>Database initialized</p>`);
+      }
+    } catch (error) {
+      console.error('Load error:', error);
+      mainWindow.loadURL(`data:text/html,<h1>Error</h1><p>${error.message}</p>`);
+    }
+  }
 
-    mainWindow.once('ready-to-show', ()=> {
-      mainWindow.show()
-    })
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show();
+  });
 
-    mainWindow.on('closed', () => {
-      mainWindow = null
-    })
+  mainWindow.on('closed', () => {
+    mainWindow = null;
+  });
 }
 
 function createAdminWindow() {
@@ -49,6 +121,7 @@ function createAdminWindow() {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
+      webSecurity: false,
       preload: path.join(__dirname, 'preload.js'),
     },
     title: 'Админ-панель киоска', // Заголовок окна
@@ -57,7 +130,7 @@ function createAdminWindow() {
     minimizable: true, // Можно сворачивать
     maximizable: true, // Можно разворачивать
     fullscreen: false, // НЕ полноэкранный режим
-    show: false // Показываем когда готово
+    show: false, // Показываем когда готово
   })
 
   if (isDev) {
@@ -71,33 +144,124 @@ function createAdminWindow() {
     adminWindow.show()
   })
 
-  if (isDev) {
-    adminWindow.webContents.openDevTools()
-  }
+  // if (isDev) {
+  //   adminWindow.webContents.openDevTools()
+  // }
 
   adminWindow.on('closed', () => {
     adminWindow = null
   })
+
 }
 
-function registerGlobalShortcuts() {
-  const ret = globalShortcut.register('Ctrl+Alt+Shift+F12', () => {
-    createAdminWindow()
-  })
-  
-  if (!ret) {
-    console.log('Ошибка регистрации горячих клавиш');
-  } else {
-    console.log('Горячие клавиши зарегистрированы: Ctrl+Alt+Shift+F12');
+
+
+// 🔧 Простые IPC обработчики
+ipcMain.handle('database:getAll', async (event, table) => {
+  try {
+    const db = await initDatabase();
+    return await db.getAll(table);
+  } catch (error) {
+    console.error('IPC Error (getAll):', error);
+    throw error;
   }
+});
+
+ipcMain.handle('database:insert', async (event, table, data) => {
+  try {
+    const db = await initDatabase();
+    return await db.insert(table, data);
+  } catch (error) {
+    console.error('IPC Error (insert):', error);
+    throw error;
+  }
+});
+
+ipcMain.handle('database:delete', async (event, table, id) => {
+  try {
+    const db = await initDatabase();
+    return await db.delete(table, id);
+  } catch (error) {
+    console.error('IPC Error (delete):', error);
+    throw error;
+  }
+});
+
+ipcMain.handle('file:save', async (event, {file_name, buffer}) => {
+  try {
+    const userDataPath = app.getPath('userData')
+    const documentsPath = path.join(userDataPath, 'documents')
+    
+    const timestamp = Date.now()
+    const fileExt = path.extname(file_name)
+    const baseName = path.basename(file_name, fileExt) || 'document'
+    const uniqueFileName = `document_${timestamp}${fileExt}`
+    const filePath = path.join(documentsPath, uniqueFileName)
+
+    fs.writeFileSync(filePath, Buffer.from(buffer))
+
+    return {
+      file_name: uniqueFileName,
+      file_path: `file://${filePath}`
+    }
+  } catch (error) {
+    console.log("file save error: ", error)
+    throw error
+  }
+})
+
+ipcMain.handle('file:delete', async (event, fileUrl) => {
+  try {
+    const url = new URL(fileUrl)
+    const filePath = url.pathname;
+
+    const normolizedPath = process.platform === 'win32' ? filePath.substring(1) : filePath;
+
+    await fs.promises.unlink(normolizedPath)
+
+    return true
+  } catch (error) {
+    console.log("ошибка удаления файла: ", error)
+    throw(error)
+  }
+})
+
+// Горячие клавиши
+function registerGlobalShortcuts() {
+  globalShortcut.register('Ctrl+Alt+Shift+F12', () => {
+    console.log('Admin shortcut pressed');
+    createAdminWindow();
+  });
 }
 
-app.whenReady().then(() => {
-  createMainWindow();
-  registerGlobalShortcuts();
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) createMainWindow();
-  });
+// 🔧 Запуск приложения
+app.whenReady().then(async () => {
+  console.log('App ready, initializing...');
+  
+  try {
+
+    const userDataPath = app.getPath('userData')
+    const documentsPath = path.join(userDataPath, 'documents')
+    if (!fs.existsSync(documentsPath)) {
+      fs.mkdirSync(documentsPath, {recursive: true})
+    }
+    console.log("documents path: ", documentsPath )
+
+    // Инициализируем БД
+    await initDatabase();
+    console.log('✅ Database ready');
+    
+    // Создаем окно
+    createMainWindow();
+    
+    // Регистрируем горячие клавиши
+    registerGlobalShortcuts();
+    
+    console.log('✅ App started successfully');
+  } catch (error) {
+    console.error('❌ App failed to start:', error);
+    app.quit();
+  }
 });
 
 app.on('window-all-closed', () => {
@@ -105,5 +269,5 @@ app.on('window-all-closed', () => {
 });
 
 app.on('will-quit', () => {
-  globalShortcut.unregisterAll()
-})
+  globalShortcut.unregisterAll();
+});
