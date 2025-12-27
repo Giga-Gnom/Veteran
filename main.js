@@ -226,6 +226,35 @@ ipcMain.handle('file:delete', async (event, fileUrl) => {
   }
 })
 
+//РАЗОБРАТЬСЯ С ЭТИМ!!!!!!!!!
+ipcMain.handle('database:execute', async (event, query, params = []) => {
+    try {
+        const dbService = await initDatabase();
+        await dbService.init?.();
+        console.log('dbService:', dbService); // ← что здесь?
+        console.log('dbService.db:', dbService.db); // ← что здесь?
+        
+        if (!dbService.db) {
+            throw new Error('Database not initialized!');
+        }
+        const db = dbService.db;
+        console.log('Executing query:', query, 'Params:', params);
+        
+        if (query.trim().toUpperCase().startsWith('SELECT')) {
+            const result = db.prepare(query).all(...params);
+            console.log('Query result:', result.length, 'rows');
+            return result;
+        } else {
+            const result = db.prepare(query).run(...params);
+            console.log('Query affected:', result.changes, 'rows');
+            return result;
+        }
+    } catch (error) {
+        console.error('IPC Error (execute):', error);
+        throw error;
+    }
+});
+
 // Горячие клавиши
 function registerGlobalShortcuts() {
   globalShortcut.register('Ctrl+Alt+Shift+F12', () => {

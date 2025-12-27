@@ -21,8 +21,10 @@
 .adminHeader{
     background: #970e0e;
     color: white;
-    border-bottom: 3px solid #3498db;
     min-height: 15vh;
+    z-index: 10;
+    box-shadow: 0 0 2vh #970e0e; /* Свечение по всем сторонам */
+
 }
 
 .adminHeader_contant{
@@ -47,4 +49,46 @@
     margin: 1vh;
     border: 0.12vh solid rgb(255, 0, 0);
     color: white;
+}
+
+
+
+/*-------------------------------------------------------*/
+
+
+
+
+.drop_container {
+  position: relative;
+  display: flex;
+  width: 50vw;
+  margin-top: 3vh;
+  gap: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  padding: 20px;
+  border-radius: 10px;
+  border:  0.1vh solid #5555558a;
+  color: #444;
+  cursor: pointer;
+  transition: background .2s ease-in-out, border .2s ease-in-out;
+}
+
+.drop_container:hover {
+  background: #eee;
+  border-color: #111;
+}
+
+.drop_container:hover .drop-title {
+  color: #222;
+}
+
+.drop_title {
+  color: #444;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  transition: color .2s ease-in-out;
 }

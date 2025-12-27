@@ -7,7 +7,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   database: {
     getAll: (table) => ipcRenderer.invoke('database:getAll', table),
     insert: (table, data) => ipcRenderer.invoke('database:insert', table, data),
-    delete: (table, id) => ipcRenderer.invoke('database:delete', table, id)
+    delete: (table, id) => ipcRenderer.invoke('database:delete', table, id),
+    execute: (query, params) => ipcRenderer.invoke('database:execute', query, params)
   },
 
   file: {

@@ -39,6 +39,38 @@ class DatabaseService {
       )
     `);/*title - название для пользователя
     file_name - название сохранения файла*/
+
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS newspapers_years(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        year INTEGER UNIQUE NOT NULL,
+        title TEXT NOT NULL
+        )`
+      );
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS newspapers_quarters(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        quarter INTEGER CHECK (quarter >= 1 AND quarter <= 4),
+        year_id INTEGER,
+        title TEXT,
+        UNIQUE (year_id, quarter),
+        FOREIGN KEY (year_id) REFERENCES newspapers_years(id) ON DELETE CASCADE
+        )`
+      );
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS newspapers (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        quarter_id INTEGER,
+        title TEXT NOT NULL,
+        file_path TEXT NOT NULL,
+        file_name TEXT NOT NULL,
+        issue_date TEXT,
+        issue_number TEXT,
+        upload_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (quarter_id) REFERENCES newspapers_quarters(id) ON DELETE SET NULL
+        )`
+      );
+
     console.log('✅ Таблицы созданы успешно');
   }
 

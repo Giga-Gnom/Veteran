@@ -1,0 +1,348 @@
+.container {
+    font-size: 2vh;
+    width: 80vw;
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    padding: 2vw;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    overflow: hidden;
+}
+.years_widget {
+    display: flex;
+    align-items: center;
+    gap: 2vw;
+    margin-bottom: 3vh;
+}
+
+.carousel_container {
+    position: relative;
+    max-width: 55vw;
+    flex: 1;
+    min-height: 12vh;
+    background: white;
+    border-radius: 1.6vh;
+    padding: 2vw;
+    box-shadow: 0 0.8vh 3vh rgba(220, 53, 69, 0.08);
+    border: 0.1vh solid rgba(220, 53, 69, 0.1);
+}
+
+.carousel {
+    width: 100%;
+    overflow-x: auto;
+    padding: 1vh 0;
+}
+
+.carousel::-webkit-scrollbar {
+    height: 0.6vh;
+    border-radius: 0.3vh;
+}
+
+.carousel::-webkit-scrollbar-track {
+    background: rgba(220, 53, 69, 0.05);
+    border-radius: 0.3vh;
+}
+
+.carousel::-webkit-scrollbar-thumb {
+    background: rgba(220, 53, 69, 0.3);
+    border-radius: 0.3vh;
+    transition: background 0.3s;
+}
+
+.carousel::-webkit-scrollbar-thumb:hover {
+    background: rgba(220, 53, 69, 0.5);
+}
+
+.carousel_group {
+    display: flex;
+    gap: 1.5vw;
+    padding: 0.5vh;
+}
+
+.year_card {
+    flex: 0 0 18vw;
+    height: 10vh;
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    border-radius: 1.2vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0.4vh 1.2vh rgba(220, 53, 69, 0.2);
+    border: none;
+    padding: 1.5vh;
+}
+
+.year_card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0.4vh;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.year_card:hover {
+    transform: translateY(-0.5vh) scale(1.02);
+    box-shadow: 0 0.8vh 2.5vh rgba(220, 53, 69, 0.3);
+    background: linear-gradient(135deg, #e63946 0%, #d62839 100%);
+}
+
+.year_card.active {
+    background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+    box-shadow: 0 0.8vh 2.5vh rgba(40, 167, 69, 0.3);
+}
+
+.year_number {
+    font-size: 3.2vh;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1;
+    text-shadow: 0 0.2vh 0.4vh rgba(0, 0, 0, 0.2);
+}
+
+.year_count {
+    font-size: 1.3vh;
+    font-weight: 500;
+    opacity: 0.9;
+    margin-top: 0.8vh;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 0.3vh 1vh;
+    border-radius: 2vh;
+    backdrop-filter: blur(1vh);
+}
+
+.add_year_btn {
+    flex-shrink: 0;
+    width: 18vw;
+    height: 10vh;
+    background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+    border: none;
+    border-radius: 1.2vh;
+    color: white;
+    font-size: 1.6vh;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8vh;
+    box-shadow: 0 0.4vh 1.2vh rgba(108, 117, 125, 0.2);
+}
+
+.add_year_btn:hover {
+    transform: translateY(-0.3vh);
+    box-shadow: 0 0.8vh 2.5vh rgba(108, 117, 125, 0.3);
+    background: linear-gradient(135deg, #5a6268 0%, #343a40 100%);
+}
+
+.add_year_btn .icon {
+    font-size: 2.4vh;
+    font-weight: bold;
+}
+
+.modal_overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(0.5vh);
+}
+
+.modal {
+    background: white;
+    border-radius: 2vh;
+    padding: 3vh;
+    width: 90%;
+    max-width: 50vw;
+    box-shadow: 0 2vh 6vh rgba(0, 0, 0, 0.3);
+    animation: modalSlide 0.3s ease;
+}
+
+@keyframes modalSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-3vh);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal h3 {
+    margin: 0 0 2vh 0;
+    color: #212529;
+    font-size: 2.4vh;
+}
+
+.form_group {
+    margin-bottom: 2vh;
+}
+
+.form_group label {
+    display: block;
+    margin-bottom: 0.8vh;
+    color: #495057;
+    font-weight: 500;
+}
+
+.form_group input {
+    width: 100%;
+    padding: 1.2vh 1.5vh;
+    border: 0.2vh solid #e9ecef;
+    border-radius: 1vh;
+    font-size: 1.6vh;
+    transition: border-color 0.3s;
+}
+
+.form_group input:focus {
+    outline: none;
+    border-color: #dc3545;
+}
+
+.modal_actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1.5vh;
+    margin-top: 3vh;
+    padding-top: 2vh;
+    border-top: 0.1vh solid #e9ecef;
+}
+
+.cancel_btn {
+    padding: 1.2vh 2.5vh;
+    background: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 1vh;
+    font-size: 1.6vh;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.cancel_btn:hover {
+    background: #5a6268;
+}
+
+.submit_btn {
+    padding: 1.2vh 2.5vh;
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    color: white;
+    border: none;
+    border-radius: 1vh;
+    font-size: 1.6vh;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.submit_btn:hover {
+    background: linear-gradient(135deg, #e63946 0%, #d62839 100%);
+    transform: translateY(-0.2vh);
+    box-shadow: 0 0.5vh 1.5vh rgba(220, 53, 69, 0.3);
+}
+
+
+/* Добавь в AdminNewspapersWindow.module.css */
+
+.section_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2vh;
+    flex-wrap: wrap;
+    gap: 1vw;
+}
+
+.section_actions {
+    display: flex;
+    gap: 1vw;
+    align-items: center;
+}
+
+.add_quarter_btn {
+    background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+    color: white;
+    border: none;
+    padding: 0.8vh 1.5vw;
+    border-radius: 0.8vh;
+    font-size: 1.4vh;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.add_quarter_btn:hover {
+    background: linear-gradient(135deg, #218838 0%, #1e7e34 100%);
+    transform: translateY(-0.2vh);
+}
+
+.add_quarter_btn:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.delete_year_btn {
+    background: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+    border: 0.1vw solid #dc3545;
+    padding: 0.8vh 1.5vw;
+    border-radius: 0.8vh;
+    font-size: 1.4vh;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.delete_year_btn:hover {
+    background: rgba(220, 53, 69, 0.2);
+}
+
+.add_first_quarter {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 1vh 2vw;
+    border-radius: 0.8vh;
+    margin-top: 2vh;
+    cursor: pointer;
+    font-size: 1.4vh;
+}
+
+.add_first_quarter:hover {
+    background: #218838;
+}
+
+/* Стили для select в форме */
+select {
+    width: 100%;
+    padding: 1.2vh 1.5vh;
+    border: 0.2vh solid #e9ecef;
+    border-radius: 1vh;
+    font-size: 1.6vh;
+    transition: border-color 0.3s;
+    background: white;
+    cursor: pointer;
+}
+
+select:focus {
+    outline: none;
+    border-color: #dc3545;
+}

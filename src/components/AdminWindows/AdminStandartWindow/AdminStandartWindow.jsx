@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import standartDocumentService from "../../../services/standartDocumentService";
 import styles from "./AdminStandartWindow.module.css"
+import { FileInput } from "../admin_components/FileInput";
 
 const AdminStandartWindow = () => {
     const [isFormOpen, setIsFormOpen] = useState(false)
@@ -194,16 +195,7 @@ const AdminStandartWindow = () => {
                     onChange={handleTitleChange}
                     required
                     className={styles.file_title_input} />
-                    <label htmlFor="documents" className={styles.drop_container} id="dropcontainer">
-                        <span className={styles.drop_title}>Переместите сюда файл</span>
-                        или
-                        <input 
-                        type="file" 
-                        accept=".pdf" 
-                        required
-                        onChange={handleFileChange}
-                        id="documents"/>
-                    </label>
+                    <FileInput onChange={handleFileChange} id={"document"}/>
                     <div className={styles.buttons_block}>
                         <button
                         type="submit"
