@@ -81,8 +81,7 @@ class NewspapersService {
             try {
                 return await window.electronAPI.database.execute(`SELECT * FROM newspapers
                     WHERE quarter_id = ?
-                    ORDER BY issue_date DESC`),
-                    [quarterID]
+                    ORDER BY issue_date DESC`,[quarterID])
             } catch (error) {
                 console.error("error fetching newspaper by quarter ", error)
                 return []
@@ -100,7 +99,7 @@ class NewspapersService {
                     LEFT JOIN newspapers_quarters q ON n.quarter_id = q.id
                     LEFT JOIN newspapers_years y ON q.year_id = y.id
                     ORDER BY y.year DESC, q.quarter ASC, n.issue_date DESC
-                    `
+                    `, []
                 )
             } catch (error) {
                 console.error("error fetching all newspapers ", error)

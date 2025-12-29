@@ -18,6 +18,17 @@ const AdminNewspapersWindow = () => {
     title: ""
 })
     const [selectedQuarter, setSelectedQuarter] = useState(null)
+    const [newspapers, setNewspapers] = useState([])
+    const [loadingNewspapers, setLoadingNewspapers] = useState(false)
+    const [showAddNewspaperModal, setShowAddNewspaperModal] = useState(false)
+    const [newNewspaper, setNewNewspaper] = useState({
+        title: "",
+        file_name: "",
+        file: null,
+        issue_date: "",
+        issue_number: ""
+    })
+    const newspaperTitleRef = useRef(null)
 
     useEffect(() => {
         loadYears()
@@ -30,12 +41,20 @@ const AdminNewspapersWindow = () => {
     }, [selectedYear])
 
     useEffect(() => {
+        if (selectedQuarter) {
+            loadNewspapersForQuarter(selectedQuarter.id)
+        } else {
+            setNewspapers([])
+        }
+    }, [selectedQuarter])
+
+    useEffect(() => {
         if (showAddYearModal && yearInputRef.current) {
             setTimeout(() => {
                 yearInputRef.current?.focus()
             }, 100)
         }
-    })
+    },[showAddYearModal])
 
     useEffect(() => {
         if (showAddQuarterModal && quarterInputRef.current) {
@@ -43,7 +62,15 @@ const AdminNewspapersWindow = () => {
                 quarterInputRef.current.focus()
             }, 100)
         }
-    })
+    }, [showAddQuarterModal])
+
+    useEffect(() => {
+        if (showAddNewspaperModal && newspaperTitleRef.current) {
+            setTimeout(() => {
+                newspaperTitleRef.current?.focus()
+            }, 100)
+        }
+    }, [showAddNewspaperModal])
 
     const handleCloseYearModal = () => {
         setNewYear("")
@@ -56,6 +83,17 @@ const AdminNewspapersWindow = () => {
             title: ""
         })
         setShowAddQuarterModal(false)
+    }
+
+    const handleCloseNewspaperModal = () => {
+        setNewNewspaper({
+            title:"",
+            file_name:"",
+            file: null,
+            issue_date:"",
+            issue_number:""
+        })
+        setShowAddNewspaperModal(false)
     }
 
     const loadYears = async () => {
@@ -77,8 +115,21 @@ const AdminNewspapersWindow = () => {
         try {
             const quartersData = await newspapersService.getQuartersByYear(yearId);
             setQuarters(quartersData)
+            setSelectedQuarter(null)
         } catch (error) {
             console.error("error fetching quarters by year: ", error)
+        }
+    }
+
+    const loadNewspapersForQuarter = async (quarterID) => {
+        try{
+            setLoadingNewspapers(true)
+            const newspapersData = await newspapersService.getNewsPapersByQuarter(quarterID)
+            setNewspapers(newspapersData)
+        } catch (error) {
+            console.error("error loading newspapers for quarter: ", error)
+        } finally {
+            setLoadingNewspapers(false)
         }
     }
 
@@ -110,6 +161,10 @@ const AdminNewspapersWindow = () => {
             console.error("error adding year: ", error)
             // alert("Ошибка при добавлении года, возможно такой год уже добавлен!")
         }
+    }
+
+    const handleQuarterSelect = (quarter) => {
+        setSelectedQuarter(quarter)
     }
 
     const handleYearSelect = (year) => {
@@ -150,6 +205,20 @@ const AdminNewspapersWindow = () => {
         }
     }
 
+    const handleDeleteNewspaper = async (newspaperID, newspaperTitle) => {
+        if (!window.confirm(`Вы действительно хотите удалить газету - ${newspaperTitle}, и все что с ней связано?`))
+            return
+
+        try{
+            await newspapersService.deleteNewspaper(newspaperID)
+            if (selectedQuarter) {
+                loadNewspapersForQuarter(selectedQuarter.id)
+            }
+        } catch (error) {
+            console.error("error deleting newspaper: ", error)
+        }
+    }
+
     const handleAddQuarter = async () => {
         if (!selectedYear) {
             alert("Сначала выберите год")
@@ -186,6 +255,54 @@ const AdminNewspapersWindow = () => {
         }
     }
 
+    const handleAddNewspaper = async () => {
+        if (!selectedQuarter) {
+            alert("Выберите квартал")
+            return
+        }
+
+        if (!newNewspaper.title.trim()) {
+            alert("Введите название газеты")
+            return
+        }
+
+        if (!newNewspaper.issue_date) {
+            alert("Выберите дату выпуска")
+            return
+        }
+
+        if (!newNewspaper.file) {
+            alert("Выберите файл газеты")
+            return
+        }
+
+        try{
+            const arrayBuffer = await newNewspaper.file.arrayBuffer()
+            const buffer = new Uint8Array(arrayBuffer)
+
+            const fileResult = await window.electronAPI.file.save(newNewspaper.file.name, buffer)
+            
+            const newspaperData = {
+                quarter_id: selectedQuarter.id,
+                title: newNewspaper.title.trim(),
+                issue_date: newNewspaper.issue_date,
+                issue_number: newNewspaper.issue_number || "",
+                file_name: fileResult.file_name,
+                file_path: fileResult.file_path
+            }
+
+            await newspapersService.addNewspaper(newspaperData)
+
+            handleCloseNewspaperModal()
+
+            if (selectedQuarter) {
+                loadNewspapersForQuarter(selectedQuarter.id)
+            }
+        } catch (error) {
+            console.error("error adding newspaper: ", error)
+        }
+    }
+
     const handleQuarterInputChange = (e) => {
         const {name, value} = e.target
         setNewQuarter(prev => ({
@@ -194,21 +311,65 @@ const AdminNewspapersWindow = () => {
         }))
     }
 
-    const handleOpenAddQuarterModal = () => {
-    if (!selectedYear) {
-        alert("Сначала выберите год");
-        return;
+    const handleNewspaperInputChange = (e) => {
+        const {name, value} = e.target
+        setNewNewspaper(prev => ({
+            ...prev,
+            [name]: value
+        }))
     }
-    
-    // Сброс формы
-    setNewQuarter({
-        quarter: "",
-        title: ""
-    });
-    
-    // Открытие модалки
-    setShowAddQuarterModal(true);
-};
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0]
+        if (file) {
+            const allowedTypes = ['pdf']
+            const fileExtension = file.name.split('.').pop().toLowerCase()
+            if (allowedTypes.includes(fileExtension)) {
+                setNewNewspaper(prev => ({
+                    ...prev,
+                    file: file,
+                    file_name: file.name
+                }))
+            } else {
+                alert("Разрешены только PDF файлы")
+                e.target.value = ""
+            }
+        }
+    }
+
+    const handleOpenAddQuarterModal = () => {
+        if (!selectedYear) {
+            alert("Сначала выберите год");
+            return;
+        }
+        
+        // Сброс формы
+        setNewQuarter({
+            quarter: "",
+            title: ""
+        });
+        
+        // Открытие модалки
+        setShowAddQuarterModal(true);
+    };
+
+    const handleOpenAddNewspaperModal = () => {
+        if (!selectedYear || !selectedQuarter) {
+            alert("Выберете год и квартал")
+            return
+        }
+
+        setShowAddNewspaperModal(true)
+    }
+
+    const formatDate = (dateString) => {
+        if(!dateString) return "НЕТ ДАТЫ"
+        try {
+            return new Date(dateString).toLocaleDateString('ru-RU')
+        } catch (error) {
+            return dateString;
+        }
+    }
 
     return(
         <div className={styles.container}>
@@ -247,8 +408,90 @@ const AdminNewspapersWindow = () => {
                 </button>
             </div>
 
-            {selectedYear && 
-            (
+            {selectedQuarter ? (
+                <div className={styles.newspapers_section}>
+                    <div className={styles.section_header}>
+                        <h3 className={styles.section_title}>
+                            Газеты: {selectedQuarter.title || `${selectedQuarter.quarter} квартал`} ({selectedYear?.year})
+                        </h3>
+                        <div className={styles.section_actions}>
+                            <button 
+                                className={styles.add_newspaper_btn}
+                                onClick={handleOpenAddNewspaperModal}
+                            >
+                                + Добавить газету
+                            </button>
+                            <button 
+                                className={styles.back_to_quarters_btn}
+                                onClick={() => setSelectedQuarter(null)}
+                            >
+                                ← Назад к кварталам
+                            </button>
+                        </div>
+                    </div>
+                    {loadingNewspapers ? (
+                        <div className={styles.loading_state}>
+                            <p>Загрузка газет...</p>
+                        </div>
+                    ) : newspapers.length === 0 ? (
+                        <div className={styles.empty_state}>
+                            <div className={styles.icon}>📰</div>
+                            <p>Нет газет для этого квартала</p>
+                            <button 
+                                className={styles.add_first_newspaper}
+                                onClick={handleOpenAddNewspaperModal}
+                            >
+                                + Добавить первую газету
+                            </button>
+                        </div>
+                    ) : (
+                        <div className={styles.newspapers_table_container}>
+                            <table className={styles.newspapers_table}>
+                                <thead>
+                                    <tr>
+                                        <th>Название</th>
+                                        <th>Дата выпуска</th>
+                                        <th>Номер выпуска</th>
+                                        <th>Файл</th>
+                                        <th>Действия</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {newspapers.map((newspaper) => (
+                                        <tr key={newspaper.id}>
+                                            <td className={styles.newspaper_title}>{newspaper.title}</td>
+                                            <td>{formatDate(newspaper.issue_date)}</td>
+                                            <td>{newspaper.issue_number || '—'}</td>
+                                            <td>
+                                                <span className={styles.file_name}>
+                                                    {newspaper.file_name}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <div className={styles.newspaper_actions}>
+                                                    <button 
+                                                        className={`${styles.action_btn} ${styles.view_btn}`}
+                                                        onClick={() => window.open(newspaper.file_path, '_blank')}
+                                                    >
+                                                        Просмотреть
+                                                    </button>
+                                                    <button 
+                                                        className={`${styles.action_btn} ${styles.delete_btn}`}
+                                                        onClick={() => handleDeleteNewspaper(newspaper.id, newspaper.title)}
+                                                    >
+                                                        Удалить
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
+                </div>
+            ) : selectedYear && (
+                // ДОБАВИТЬ: onClick на карточку квартала
                 <div className={styles.quarters_section}>
                     <div className={styles.section_header}>
                         <h3 className={styles.section_title}>
@@ -284,7 +527,11 @@ const AdminNewspapersWindow = () => {
                     ) : (
                         <div className={styles.quarters_grid}>
                             {quarters?.map((quarter) => (
-                                <div key={quarter.id} className={styles.quarter_card}>
+                                <div 
+                                    key={quarter.id} 
+                                    className={styles.quarter_card}
+                                    onClick={() => handleQuarterSelect(quarter)} // ДОБАВИТЬ: выбор квартала
+                                >
                                     <div className={styles.quarter_header}>
                                         <h4 className={styles.quarter_title}>
                                             {quarter.title || `${quarter.quarter} квартал`}
@@ -299,12 +546,21 @@ const AdminNewspapersWindow = () => {
                                         </p>
                                     )}
                                     <div className={styles.quarter_actions}>
-                                        <button className={`${styles.action_btn} ${styles.view_btn}`}>
+                                        <button 
+                                            className={`${styles.action_btn} ${styles.view_btn}`}
+                                            onClick={(e) => {
+                                                e.stopPropagation() // ДОБАВИТЬ: чтобы не срабатывал onClick карточки
+                                                handleQuarterSelect(quarter)
+                                            }}
+                                        >
                                             Просмотреть газеты
                                         </button>
                                         <button 
                                             className={`${styles.action_btn} ${styles.delete_btn}`}
-                                            onClick={() => handleDeleteQuarter(quarter.id, quarter.title || `${quarter.quarter} квартал`)}
+                                            onClick={(e) => {
+                                                e.stopPropagation() // ДОБАВИТЬ: чтобы не срабатывал onClick карточки
+                                                handleDeleteQuarter(quarter.id, quarter.title || `${quarter.quarter} квартал`)
+                                            }}
                                         >
                                             Удалить
                                         </button>
@@ -405,6 +661,89 @@ const AdminNewspapersWindow = () => {
                 </div>
             </div>
         )}
+
+        {showAddNewspaperModal && selectedQuarter && (
+                <div className={styles.modal_overlay} onClick={handleCloseNewspaperModal}>
+                    <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+                        <h3>Добавить газету в {selectedQuarter.title || `${selectedQuarter.quarter} квартал`}</h3>
+                        
+                        <div className={styles.form_group}>
+                            <label htmlFor="newspaperTitle">Название газеты *</label>
+                            <input
+                                ref={newspaperTitleRef}
+                                type="text"
+                                id="newspaperTitle"
+                                name="title"
+                                value={newNewspaper.title}
+                                onChange={handleNewspaperInputChange}
+                                placeholder="Например: Вестник Ветерана"
+                                required
+                            />
+                        </div>
+                        
+                        <div className={styles.form_group}>
+                            <label htmlFor="issueDate">Дата выпуска *</label>
+                            <input
+                                type="date"
+                                id="issueDate"
+                                name="issue_date"
+                                value={newNewspaper.issue_date}
+                                onChange={handleNewspaperInputChange}
+                                required
+                            />
+                        </div>
+                        
+                        <div className={styles.form_group}>
+                            <label htmlFor="issueNumber">Номер выпуска (опционально)</label>
+                            <input
+                                type="text"
+                                id="issueNumber"
+                                name="issue_number"
+                                value={newNewspaper.issue_number}
+                                onChange={handleNewspaperInputChange}
+                                placeholder="Например: №1, Выпуск 5"
+                            />
+                        </div>
+                        
+                        <div className={styles.form_group}>
+                            <label htmlFor="newspaperFile">Файл газеты (PDF) *</label>
+                            <div className={styles.file_upload_container}>
+                                <input
+                                    type="file"
+                                    id="newspaperFile"
+                                    accept=".pdf"
+                                    onChange={handleFileChange}
+                                    className={styles.file_input}
+                                />
+                                <label htmlFor="newspaperFile" className={styles.file_upload_label}>
+                                    {newNewspaper.file_name ? newNewspaper.file_name : 'Выберите файл PDF'}
+                                </label>
+                            </div>
+                            {newNewspaper.file_name && (
+                                <div className={styles.file_selected}>
+                                    Выбран файл: {newNewspaper.file_name}
+                                </div>
+                            )}
+                        </div>
+                        
+                        <div className={styles.modal_actions}>
+                            <button 
+                                className={styles.cancel_btn}
+                                onClick={handleCloseNewspaperModal}
+                            >
+                                Отмена
+                            </button>
+                            <button 
+                                className={styles.submit_btn}
+                                onClick={handleAddNewspaper}
+                            >
+                                Добавить газету
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
         </div>
     )
 }
