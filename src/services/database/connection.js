@@ -71,6 +71,17 @@ class DatabaseService {
         )`
       );
 
+      this.db.exec(`
+        CREATE TABLE IF NOT EXISTS awards (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          title TEXT NOT NULL,
+          file_path TEXT NOT NULL,
+          file_name TEXT NOT NULL,
+          description TEXT,
+          upload_date DATETIME DEFAULT CURRENT_TIME,
+          image_path TEXT
+          )`)
+
     console.log('✅ Таблицы созданы успешно');
   }
 

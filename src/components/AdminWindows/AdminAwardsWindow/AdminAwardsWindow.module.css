@@ -1,0 +1,741 @@
+/* AdminAwardsWindow.module.css */
+
+/* Базовые стили для сенсорного экрана */
+.container {
+  width: 100vw;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 2vh 2vw;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Шапка */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3vh;
+  padding: 2vh 2vw;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 2vw;
+  box-shadow: 0 1vh 2vh rgba(0, 0, 0, 0.1);
+  border: 0.3vw solid #4a6fa5;
+}
+
+.title {
+  font-size: 3.5vw;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0;
+  text-shadow: 0.1vw 0.1vw 0.2vw rgba(0, 0, 0, 0.1);
+}
+
+.add_btn {
+  background: linear-gradient(to right, #3498db, #2980b9);
+  color: white;
+  border: none;
+  padding: 1.8vh 3vw;
+  font-size: 2.2vw;
+  font-weight: 600;
+  border-radius: 1.5vw;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0.5vh 1vh rgba(52, 152, 219, 0.3);
+  min-height: 6vh;
+  min-width: 15vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1vw;
+}
+
+.add_btn:hover {
+  transform: translateY(-0.3vh);
+  box-shadow: 0 1vh 1.5vh rgba(52, 152, 219, 0.4);
+}
+
+.add_btn:active {
+  transform: translateY(0);
+  box-shadow: 0 0.3vh 0.6vh rgba(52, 152, 219, 0.3);
+}
+
+/* Основное содержимое */
+.content {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 2vw;
+  padding: 2vh 2vw;
+  box-shadow: 0 1vh 2vh rgba(0, 0, 0, 0.08);
+  min-height: 70vh;
+}
+
+/* Состояние загрузки */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  font-size: 3vw;
+  color: #7f8c8d;
+  font-weight: 500;
+}
+
+/* Пустое состояние */
+.empty_state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  padding: 5vh 5vw;
+}
+
+.empty_icon {
+  font-size: 10vw;
+  margin-bottom: 3vh;
+  opacity: 0.7;
+}
+
+.empty_text {
+  font-size: 2.8vw;
+  color: #7f8c8d;
+  margin-bottom: 4vh;
+  line-height: 1.4;
+}
+
+.empty_btn {
+  background: linear-gradient(to right, #2ecc71, #27ae60);
+  color: white;
+  border: none;
+  padding: 2vh 4vw;
+  font-size: 2.2vw;
+  font-weight: 600;
+  border-radius: 1.5vw;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0.5vh 1vh rgba(46, 204, 113, 0.3);
+  min-height: 6vh;
+  min-width: 20vw;
+}
+
+.empty_btn:hover {
+  transform: translateY(-0.3vh);
+  box-shadow: 0 1vh 1.5vh rgba(46, 204, 113, 0.4);
+}
+
+.empty_btn:active {
+  transform: translateY(0);
+  box-shadow: 0 0.3vh 0.6vh rgba(46, 204, 113, 0.3);
+}
+
+/* Сетка наград */
+.awards_grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(45vw, 1fr));
+  gap: 2vh 2vw;
+  padding: 1vh 0;
+}
+
+/* Карточка награды */
+.award_card {
+  background: white;
+  border-radius: 2vw;
+  padding: 2vh 2vw;
+  box-shadow: 0 0.5vh 1.5vh rgba(0, 0, 0, 0.1);
+  border: 0.2vw solid #e0e0e0;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  min-height: 25vh;
+}
+
+.award_card:hover {
+  transform: translateY(-0.5vh);
+  box-shadow: 0 1vh 2vh rgba(0, 0, 0, 0.15);
+  border-color: #3498db;
+}
+
+.award_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2vh;
+  gap: 2vw;
+}
+
+.award_title {
+  font-size: 2.5vw;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0;
+  flex: 1;
+  line-height: 1.3;
+}
+
+.award_image_preview {
+  flex-shrink: 0;
+  width: 10vw;
+  height: 10vw;
+  border-radius: 1vw;
+  overflow: hidden;
+  border: 0.2vw solid #ddd;
+}
+
+.award_image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Информация о награде */
+.award_info {
+  margin-bottom: 2vh;
+  flex: 1;
+}
+
+.info_row {
+  display: flex;
+  margin-bottom: 1vh;
+  align-items: center;
+}
+
+.info_label {
+  font-size: 1.8vw;
+  font-weight: 600;
+  color: #34495e;
+  min-width: 12vw;
+  margin-right: 2vw;
+}
+
+.info_value {
+  font-size: 1.8vw;
+  color: #7f8c8d;
+  flex: 1;
+  word-break: break-word;
+}
+
+/* Действия с наградой */
+.award_actions {
+  display: flex;
+  gap: 1.5vw;
+  margin-top: auto;
+}
+
+.action_btn {
+  flex: 1;
+  border: none;
+  padding: 1.5vh 0;
+  font-size: 1.8vw;
+  font-weight: 600;
+  border-radius: 1.2vw;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-height: 5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.view_btn {
+  background: linear-gradient(to right, #3498db, #2980b9);
+  color: white;
+  box-shadow: 0 0.3vh 0.8vh rgba(52, 152, 219, 0.3);
+}
+
+.view_btn:hover {
+  background: linear-gradient(to right, #2980b9, #2573a7);
+  transform: translateY(-0.2vh);
+  box-shadow: 0 0.5vh 1.2vh rgba(52, 152, 219, 0.4);
+}
+
+.view_btn:active {
+  transform: translateY(0);
+  box-shadow: 0 0.2vh 0.5vh rgba(52, 152, 219, 0.3);
+}
+
+.delete_btn {
+  background: linear-gradient(to right, #e74c3c, #c0392b);
+  color: white;
+  box-shadow: 0 0.3vh 0.8vh rgba(231, 76, 60, 0.3);
+}
+
+.delete_btn:hover {
+  background: linear-gradient(to right, #c0392b, #a93226);
+  transform: translateY(-0.2vh);
+  box-shadow: 0 0.5vh 1.2vh rgba(231, 76, 60, 0.4);
+}
+
+.delete_btn:active {
+  transform: translateY(0);
+  box-shadow: 0 0.2vh 0.5vh rgba(231, 76, 60, 0.3);
+}
+
+/* Модальное окно */
+.modal_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 2vh 2vw;
+}
+
+.modal {
+  background: white;
+  border-radius: 2vw;
+  width: 90vw;
+  max-width: 70vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 2vh 4vh rgba(0, 0, 0, 0.3);
+  animation: modalAppear 0.3s ease;
+}
+
+@keyframes modalAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2vh 2vw;
+  background: linear-gradient(to right, #4a6fa5, #2c3e50);
+  border-radius: 2vw 2vw 0 0;
+  border-bottom: 0.3vw solid #1a2530;
+}
+
+.modal_title {
+  font-size: 2.8vw;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+  text-shadow: 0.1vw 0.1vw 0.2vw rgba(0, 0, 0, 0.3);
+}
+
+.modal_close {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  width: 5vw;
+  height: 5vw;
+  min-width: 5vw;
+  min-height: 5vw;
+  border-radius: 50%;
+  font-size: 3vw;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.modal_close:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(90deg);
+}
+
+.modal_close:active {
+  transform: rotate(90deg) scale(0.95);
+}
+
+/* Форма */
+.form {
+  padding: 3vh 3vw;
+}
+
+.form_group {
+  margin-bottom: 3vh;
+}
+
+.form_label {
+  display: block;
+  font-size: 2vw;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 1.5vh;
+}
+
+.form_label::after {
+  content: ' *';
+  color: #e74c3c;
+  opacity: 0.8;
+}
+
+.form_label:has(+ .file_upload)::after,
+.form_label:has(+ .file_upload ~ .error_message)::after {
+  content: '';
+}
+
+.form_input {
+  width: 100%;
+  padding: 1.8vh 2vw;
+  font-size: 2vw;
+  border: 0.2vw solid #ddd;
+  border-radius: 1.2vw;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  background: #f8f9fa;
+}
+
+.form_input:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 0.3vw rgba(52, 152, 219, 0.2);
+  background: white;
+}
+
+.form_input.error {
+  border-color: #e74c3c;
+  background: #fff5f5;
+}
+
+.error_message {
+  display: block;
+  font-size: 1.6vw;
+  color: #e74c3c;
+  margin-top: 0.8vh;
+  font-weight: 500;
+}
+
+/* Загрузка файлов */
+.file_upload {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5vh;
+}
+
+.file_input {
+  display: none;
+}
+
+.file_btn {
+  background: linear-gradient(to right, #95a5a6, #7f8c8d);
+  color: white;
+  border: none;
+  padding: 1.8vh 3vw;
+  font-size: 1.8vw;
+  font-weight: 600;
+  border-radius: 1.2vw;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  min-height: 5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1vw;
+}
+
+.file_btn:hover {
+  background: linear-gradient(to right, #7f8c8d, #6c7b7d);
+  transform: translateY(-0.2vh);
+}
+
+.file_btn:active {
+  transform: translateY(0);
+}
+
+.file_selected {
+  font-size: 1.8vw;
+  color: #27ae60;
+  padding: 1vh 1.5vw;
+  background: #e8f8f0;
+  border-radius: 1vw;
+  border: 0.15vw solid #27ae60;
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+}
+
+.file_selected::before {
+  content: '✓';
+  font-weight: bold;
+}
+
+.current_file {
+  font-size: 1.7vw;
+  color: #3498db;
+  padding: 1vh 1.5vw;
+  background: #e8f4fc;
+  border-radius: 1vw;
+  border: 0.15vw solid #3498db;
+  margin-top: 1vh;
+}
+
+/* Кнопки формы */
+.form_actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 2vw;
+  margin-top: 4vh;
+  padding-top: 2vh;
+  border-top: 0.2vw solid #eee;
+}
+
+.cancel_btn {
+  background: linear-gradient(to right, #95a5a6, #7f8c8d);
+  color: white;
+  border: none;
+  padding: 1.8vh 3vw;
+  font-size: 2vw;
+  font-weight: 600;
+  border-radius: 1.2vw;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-height: 5vh;
+  min-width: 12vw;
+}
+
+.cancel_btn:hover {
+  background: linear-gradient(to right, #7f8c8d, #6c7b7d);
+  transform: translateY(-0.2vh);
+}
+
+.cancel_btn:active {
+  transform: translateY(0);
+}
+
+.submit_btn {
+  background: linear-gradient(to right, #2ecc71, #27ae60);
+  color: white;
+  border: none;
+  padding: 1.8vh 3vw;
+  font-size: 2vw;
+  font-weight: 600;
+  border-radius: 1.2vw;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-height: 5vh;
+  min-width: 15vw;
+  box-shadow: 0 0.3vh 0.8vh rgba(46, 204, 113, 0.3);
+}
+
+.submit_btn:hover {
+  background: linear-gradient(to right, #27ae60, #219653);
+  transform: translateY(-0.2vh);
+  box-shadow: 0 0.5vh 1.2vh rgba(46, 204, 113, 0.4);
+}
+
+.submit_btn:active {
+  transform: translateY(0);
+  box-shadow: 0 0.2vh 0.5vh rgba(46, 204, 113, 0.3);
+}
+
+/* Просмотр документа в iframe */
+.document_viewer_container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #2c3e50;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+}
+
+.document_header {
+  background: linear-gradient(to right, #4a6fa5, #2c3e50);
+  padding: 1.5vh 2vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 0.3vw solid #1a2530;
+  min-height: 8vh;
+}
+
+.document_title {
+  font-size: 2.5vw;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+  text-shadow: 0.1vw 0.1vw 0.2vw rgba(0, 0, 0, 0.3);
+  max-width: 70vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.document_close_btn {
+  background: linear-gradient(to right, #e74c3c, #c0392b);
+  color: white;
+  border: none;
+  padding: 1.5vh 3vw;
+  font-size: 1.8vw;
+  font-weight: 600;
+  border-radius: 1.2vw;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-height: 5vh;
+  min-width: 15vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1vw;
+  box-shadow: 0 0.3vh 0.8vh rgba(231, 76, 60, 0.3);
+}
+
+.document_close_btn:hover {
+  background: linear-gradient(to right, #c0392b, #a93226);
+  transform: translateY(-0.2vh);
+  box-shadow: 0 0.5vh 1.2vh rgba(231, 76, 60, 0.4);
+}
+
+.document_close_btn:active {
+  transform: translateY(0);
+  box-shadow: 0 0.2vh 0.5vh rgba(231, 76, 60, 0.3);
+}
+
+.document_content {
+  flex: 1;
+  position: relative;
+  background: #1a2530;
+}
+
+.document_iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: white;
+}
+
+/* Адаптивность для сенсорных экранов */
+@media (max-width: 768px) {
+  .awards_grid {
+    grid-template-columns: 1fr;
+    gap: 2vh;
+  }
+  
+  .modal {
+    width: 95vw;
+    max-width: 95vw;
+  }
+  
+  .header {
+    flex-direction: column;
+    gap: 2vh;
+    text-align: center;
+  }
+  
+  .award_header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .award_image_preview {
+    width: 20vw;
+    height: 20vw;
+    align-self: center;
+  }
+  
+  .document_title {
+    font-size: 3.5vw;
+  }
+}
+
+/* Для очень маленьких экранов */
+@media (max-width: 480px) {
+  .title {
+    font-size: 5vw;
+  }
+  
+  .add_btn,
+  .empty_btn,
+  .document_close_btn {
+    font-size: 3vw;
+    padding: 2vh 4vw;
+  }
+  
+  .award_title {
+    font-size: 3.5vw;
+  }
+  
+  .info_label,
+  .info_value,
+  .action_btn {
+    font-size: 2.5vw;
+  }
+  
+  .modal_title {
+    font-size: 4vw;
+  }
+  
+  .form_label,
+  .form_input,
+  .file_btn,
+  .cancel_btn,
+  .submit_btn {
+    font-size: 3vw;
+  }
+}
+
+/* Улучшения для touch */
+@media (hover: none) and (pointer: coarse) {
+  .add_btn,
+  .empty_btn,
+  .action_btn,
+  .file_btn,
+  .cancel_btn,
+  .submit_btn,
+  .document_close_btn,
+  .modal_close {
+    min-height: 7vh;
+    padding: 2vh 4vw;
+  }
+  
+  .form_input {
+    min-height: 6vh;
+    padding: 2vh 3vw;
+  }
+  
+  .award_card {
+    padding: 2.5vh 3vw;
+  }
+  
+  /* Увеличиваем touch targets */
+  .action_btn {
+    min-height: 6vh;
+  }
+  
+  .info_row {
+    margin-bottom: 1.5vh;
+  }
+  
+  .file_selected,
+  .current_file {
+    padding: 1.5vh 2vw;
+  }
+}
+
+/* Анимации для лучшего UX */
+@media (prefers-reduced-motion: no-preference) {
+  .award_card,
+  .add_btn,
+  .empty_btn,
+  .action_btn,
+  .file_btn,
+  .cancel_btn,
+  .submit_btn,
+  .document_close_btn,
+  .modal_close {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
