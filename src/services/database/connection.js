@@ -80,7 +80,35 @@ class DatabaseService {
           description TEXT,
           upload_date DATETIME DEFAULT CURRENT_TIME,
           image_path TEXT
-          )`)
+          )`
+        );
+
+
+
+
+        this.db.exec(`
+          CREATE TABLE IF NOT EXISTS gallery_folders (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL
+          )`
+        );
+        this.db.exec(`
+          CREATE TABLE IF NOT EXISTS gallery_images (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            image_path TEXT NOT NULL,
+            image_name TEXT NOT NULL,
+            folder_id INTEGER,
+            FOREIGN KEY (folder_id) REFERENCES gallery_folders(id) ON DELETE CASCADE
+          )`
+        );
+        this.db.exec(`
+          CREATE TABLE IF NOT EXISTS slider_images (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          title TEXT,
+          image_path TEXT NOT NULL,
+          image_name TEXT NOT NULL
+          )`
+        );
 
     console.log('✅ Таблицы созданы успешно');
   }

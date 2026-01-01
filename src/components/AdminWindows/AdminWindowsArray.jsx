@@ -1,9 +1,15 @@
 import AdminAwardsWindow from "./AdminAwardsWindow/AdminAwardsWindow";
 import AdminDashboard from "./AdminDashboard/AdminDashboard";
+import AdminEventsWindow from "./AdminEventsWindow/AdminEventsWindow";
 import AdminNewspapersWindow from "./AdminNewspapersWindow/AdminNewspapersWindow";
 import AdminStandartWindow from "./AdminStandartWindow/AdminStandartWindow";
 
 export const AdminWindowsArray = [
+    {
+        name: "Мероприятия",
+        path: "events",
+        element: <AdminEventsWindow/>
+    },
     {
         name: "Награды",
         path: "awards",

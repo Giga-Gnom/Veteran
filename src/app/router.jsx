@@ -120,7 +120,7 @@ export const router = createBrowserRouter([
         element: <EventsWindow/>
     },
     {
-        path: "/gallery/:folderName",
+        path: "/gallery/:id",
         element: <GalleryWindow/>
     },
     {

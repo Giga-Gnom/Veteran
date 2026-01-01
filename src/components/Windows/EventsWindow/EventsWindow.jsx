@@ -1,96 +1,118 @@
-import React, { useEffect, useReducer, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./EventsWindow.module.css";
 import MyHat from "../../Hat/MyHat";
 import BottomPanel from "../../BottomPanel/BottomPanel";
-import EventBlock from "./EventBlock";
-import { v4 as uuidv4 } from "uuid";
-import Carousel from "react-spring-3d-carousel";
-import { foldersArray } from "./foldersArray";
-import FolderBlock from "./folderblock";
-import { useLocation, useNavigate } from "react-router-dom";
+import FolderBlock from "./FolderBlock";
 import ImageSlider from "./ImageSlider";
+import eventsService from "../../../services/eventsService"; // ← ДОБАВЬТЕ
 
 const EventsWindow = () => {
-  const [goToSlide, setGoToSlide] = useState(0);
-  const location = useLocation()
-  const isInitialLoad = useRef(true)
+  const [folders, setFolders] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [sliderImages, setSliderImages] = useState([]);
 
   useEffect(() => {
-    if (isInitialLoad.current) {
-      const savedSlide = sessionStorage.getItem("eventsCarouselSlide")
-      const fromDepartment = location.state?.fromEventDepartment === true || sessionStorage.getItem("fromEventDepartment") === "true"
+    loadData();
+  }, []);
 
-
-       console.log("DEBUG - savedSlide:", savedSlide, 
-                  "fromDepartment:", fromDepartment, 
-                  "location.state:", location.state)
-
-      if (savedSlide && fromDepartment) {
-        setGoToSlide(parseInt(savedSlide, 10))
-        console.log("востоновлен слайд ", savedSlide)
-      }
-      else {
-        setGoToSlide(0)
-        sessionStorage.setItem("eventsCarouselSlide", "0")
-      }
-
-      sessionStorage.setItem("fromEventDepartment", "false")
-      isInitialLoad.current = false
-
+  const loadData = async () => {
+    try {
+      setLoading(true);
+      
+      // Загружаем папки для карусели
+      const foldersData = await eventsService.getAllFolders();
+      setFolders(foldersData);
+      
+      // Загружаем слайды для слайдера
+      const slidesData = await eventsService.getAllSlides();
+      setSliderImages(slidesData);
+      
+    } catch (error) {
+      console.error("Error loading events data:", error);
+    } finally {
+      setLoading(false);
     }
-  }, [location.state])
+  };
 
-  useEffect(()=> {
-    if(!isInitialLoad.current) {
-      sessionStorage.setItem("eventsCarouselSlide", goToSlide.toString())
-      console.log("saved slide: ", goToSlide)
-    }
-  }, [goToSlide])
-
-  console.log("foldersArray:", foldersArray.length, "элементов");
-
-
-  const slides = foldersArray.map((event) => ({
-    key: uuidv4(),
-    content: <FolderBlock event={event} />
-  }));
-
-    const nextSlide = () => {
-    const newSlide = (goToSlide + 1) % foldersArray.length;
-    setGoToSlide(newSlide);
+  const nextSlide = () => {
+    if (folders.length === 0) return;
+    setCurrentSlide((prev) => (prev + 1) % folders.length);
   };
 
   const prevSlide = () => {
-    const newSlide = (goToSlide - 1 + foldersArray.length) % foldersArray.length;
-    setGoToSlide(newSlide);
+    if (folders.length === 0) return;
+    setCurrentSlide((prev) => (prev - 1 + folders.length) % folders.length);
   };
+
+  if (loading) {  // ← ИСПРАВЛЕНО: добавьте закрывающую скобку
+    return (
+      <div className={styles.container}>
+        <div className={styles.container_head}>
+          <MyHat heading="Наши Мероприятия" />
+        </div>
+        <div className={styles.loading}>
+          Загрузка...
+        </div>
+      </div>
+    );
+  }  // ← ЗАКРЫВАЮЩАЯ СКОБКА
 
   return (
     <div className={styles.container}>
       <div className={styles.container_head}>
         <MyHat heading="Наши Мероприятия" />
       </div>
+      
       <div className={styles.container_content}>
+        {/* Карусель папок */}
         <div className={styles.container_content_carousel}>
-
-          <Carousel
-            slides={slides}
-            goToSlide={goToSlide}
-            offsetRadius={2}
-            showNavigation={false}
-            animationConfig={{ tension: 120, friction: 14 }}
-            onChange={setGoToSlide}
-          />
-
-          <div className={styles.buttons_container}>
-            <button onClick={prevSlide} className={styles.slideChanger_button_left}></button>
-            <button onClick={nextSlide} className={styles.slideChanger_button_right}></button>
-          </div>
+          {folders.length === 0 ? (
+            <div className={styles.empty}>Нет папок</div>
+          ) : (
+            <>
+              <div className={styles.carousel_wrapper}>
+                {folders.map((folder, index) => (
+                  <div
+                    key={folder.id}
+                    className={`${styles.carousel_slide} ${
+                    index === currentSlide ? styles.active : ""
+                    }`}
+                    style={{
+                      transform: `translateX(${(index - currentSlide) * 100}%)`,
+                    }}
+                  >
+                    <FolderBlock folder={folder} />
+                  </div>
+                ))}
+              </div>
+              
+              <div className={styles.buttons_container}>
+                <button 
+                  onClick={prevSlide} 
+                  className={styles.slideChanger_button_left}
+                  disabled={folders.length <= 1}
+                >
+                  ‹
+                </button>
+                <button 
+                  onClick={nextSlide} 
+                  className={styles.slideChanger_button_right}
+                  disabled={folders.length <= 1}
+                >
+                  ›
+                </button>
+              </div>
+            </>
+          )}
         </div>
+        
+        {/* Слайдер изображений */}
         <div className={styles.container_content_slider}>
-          <ImageSlider/>
+          <ImageSlider slides={sliderImages} />
         </div>
       </div>
+      
       <div className={styles.container_bottom}>
         <BottomPanel />
       </div>
