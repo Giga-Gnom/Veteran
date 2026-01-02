@@ -110,6 +110,17 @@ class DatabaseService {
           )`
         );
 
+        this.db.exec(`
+          CREATE TABLE IF NOT EXISTS regions(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            region_name TEXT NOT NULL,
+            document_name TEXT NOT NULL,
+            document_path TEXT NOT NULL,
+            logo_path TEXT NOT NULL,
+            upload_date DATETIME DEFAULT CURRENT_TIME
+          )`
+        );
+
     console.log('✅ Таблицы созданы успешно');
   }
 
