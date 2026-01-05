@@ -121,6 +121,48 @@ class DatabaseService {
           )`
         );
 
+
+
+        this.db.exec(`
+          CREATE TABLE IF NOT EXISTS statistic_charts (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            chart_name TEXT NOT NULL,
+            sort_order INTEGER DEFAULT 0,
+            chart_type TEXT DEFAULT 'bar',
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+          )`
+        );
+        this.db.exec(`
+          CREATE TABLE IF NOT EXISTS chart_categories (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            chart_id INTEGER NOT NULL,
+            category_name TEXT NOT NULL,
+            sort_order INTEGER DEFAULT 0,
+            FOREIGN KEY (chart_id) REFERENCES statistic_charts(id) ON DELETE CASCADE
+          )`
+        );
+        this.db.exec(`
+          CREATE TABLE IF NOT EXISTS chart_datasets (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            chart_id INTEGER NOT NULL,
+            dataset_label TEXT NOT NULL,
+            dataset_color TEXT NOT NULL,
+            border_color TEXT NOT NULL,
+            sort_order INTEGER DEFAULT 0,
+            FOREIGN KEY (chart_id) REFERENCES statistic_charts(id) ON DELETE CASCADE
+          )`
+        );
+        this.db.exec(`
+          CREATE TABLE IF NOT EXISTS chart_data_points (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            dataset_id INTEGER NOT NULL,
+            category_id INTEGER NOT NULL,
+            data_value DECIMAL(10, 2) NOT NULL,
+            FOREIGN KEY (dataset_id) REFERENCES chart_datasets(id) ON DELETE CASCADE,
+            FOREIGN KEY (category_id) REFERENCES chart_categories(id) ON DELETE CASCADE
+          )`
+        );
+
     console.log('✅ Таблицы созданы успешно');
   }
 
