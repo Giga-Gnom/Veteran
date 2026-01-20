@@ -314,7 +314,6 @@ const AdminStatisticsWindow = () => {
 
     const handleCreateChart = async () => {
         if (!chartMetadata.chart_name.trim()) {
-            alert("Введите название графика");
             return;
         }
 
@@ -330,7 +329,6 @@ const AdminStatisticsWindow = () => {
             });
             setShowChartForm(false);
             
-            alert("График создан!");
         } catch (error) {
             console.error("Ошибка создания графика:", error);
         }

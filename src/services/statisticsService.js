@@ -43,6 +43,8 @@ class StatisticService{
         return [];
     }
 
+// В StatisticService.js исправьте метод getFullChartData:
+
     async getFullChartData(chartId){
         if (window.electronAPI){
             try{
@@ -55,27 +57,27 @@ class StatisticService{
 
                 const categories = await window.electronAPI.database.execute(
                     `SELECT * FROM chart_categories
-                     WHERE chart_id = ?
-                     ORDER BY sort_order ASC`,
-                     [chartId]
+                    WHERE chart_id = ?
+                    ORDER BY sort_order ASC`,
+                    [chartId]
                 )
 
                 const datasets = await window.electronAPI.database.execute(
                     `SELECT * FROM chart_datasets 
-                     WHERE chart_id = ? 
-                     ORDER BY sort_order ASC`,
-                     [chartId]
+                    WHERE chart_id = ? 
+                    ORDER BY sort_order ASC`,
+                    [chartId]
                 )
 
                 const fullDatasets = await Promise.all(
                     datasets.map(async (dataset) => {
                         const dataPoints = await window.electronAPI.database.execute(
                             `SELECT cd.*, cc.category_name 
-                             FROM chart_data_points cd
-                             JOIN chart_categories cc ON cd.category_id = cc.id
-                             WHERE cd.dataset_id = ?
-                             ORDER BY cc.sort_order ASC`,
-                             [dataset.id]
+                            FROM chart_data_points cd
+                            JOIN chart_categories cc ON cd.category_id = cc.id
+                            WHERE cd.dataset_id = ?
+                            ORDER BY cc.sort_order ASC`,
+                            [dataset.id]
                         )
 
                         const data = categories.map(category => {
@@ -84,8 +86,12 @@ class StatisticService{
                         });
 
                         return {
-                            ...dataset,
-                            data: data
+                            ...dataset, // оставляем все поля из БД, включая id
+                            data: data,
+                            // Добавляем совместимые поля
+                            label: dataset.dataset_label,
+                            backgroundColor: dataset.dataset_color,
+                            borderColor: dataset.border_color
                         };
                     })
                 )
@@ -93,13 +99,7 @@ class StatisticService{
                 return {
                     ...chart[0],
                     labels: categories.map(c => c.category_name),
-                    datasets: fullDatasets.map(ds => ({
-                        label: ds.dataset_label,
-                        data: ds.data,
-                        backgroundColor: ds.dataset_color,
-                        borderColor: ds.border_color,
-                        borderWidth: 1
-                    }))
+                    datasets: fullDatasets
                 }
             } catch (error) {
                 console.error("Error fetching full chart data:", error);
@@ -107,6 +107,7 @@ class StatisticService{
             }
         }
     }
+
 
     async getAllFullCharts() {
         const charts = await this.getAllCharts();

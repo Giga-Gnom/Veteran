@@ -122,10 +122,10 @@
     flex-shrink: 0;
     width: 18vw;
     height: 10vh;
-    background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+    background: linear-gradient(135deg, #7d6c6c98 0%, #ab4f2d24 100%);
     border: none;
     border-radius: 1.2vh;
-    color: white;
+    color: rgba(0, 0, 0, 0.769);
     font-size: 1.6vh;
     font-weight: 600;
     cursor: pointer;
@@ -135,16 +135,11 @@
     align-items: center;
     justify-content: center;
     gap: 0.8vh;
-    box-shadow: 0 0.4vh 1.2vh rgba(108, 117, 125, 0.2);
-}
-
-.add_year_btn:hover {
-    transform: translateY(-0.3vh);
-    box-shadow: 0 0.8vh 2.5vh rgba(108, 117, 125, 0.3);
-    background: linear-gradient(135deg, #5a6268 0%, #343a40 100%);
+    box-shadow: 0.3vh 0.3vh 1.2vh rgba(209, 100, 81, 0.2), -0.3vh -0.3vh 1.2vh rgba(209, 100, 81, 0.2);
 }
 
 .add_year_btn .icon {
+    stroke: #c82333;
     font-size: 2.4vh;
     font-weight: bold;
 }
@@ -345,4 +340,165 @@ select {
 select:focus {
     outline: none;
     border-color: #dc3545;
+}
+
+
+/*qurter block*/
+.quarter_card{
+    margin-block: 2vh;
+    position: relative;
+    margin-left: 1vw;
+    background-color: white;
+    width: 55vw;
+    height: 12vh;
+    border-radius: 2vh;
+    border:0.2vh solid rgb(0, 137, 25);
+    color: rgb(59, 58, 58);
+    padding: 1vh;
+}
+
+.quarter_card::after{
+    content: '';
+    bottom: -0.2vh;
+    right:-0.2vh;
+    border-top: 0.2vh solid rgb(0, 137, 25);
+    border-left: 0.2vh solid rgb(0, 137, 25);
+    height: 4vh;
+    width: 20vw;
+    border-radius: 2vh;
+    position: absolute;
+    background-color: #ffffff;
+}
+.quarter_card::before{
+    content: '';
+    bottom: -0.2vh;
+    left:-0.2vh;
+    border-top: 0.2vh solid rgb(0, 137, 25);
+    border-right: 0.2vh solid rgb(0, 137, 25);
+    height: 4vh;
+    width: 20vw;
+    border-radius: 2vh;
+    position: absolute;
+    background-color: #ffffff;
+}
+
+.delete_btn{
+    bottom: -0.2vh;
+    right:-0.2vh;
+    height: 4vh;
+    width: 20vw;
+    border-radius: 2vh;
+    position: absolute;
+    background-color: transparent;
+    color: rgb(192, 3, 3);
+    z-index: 2;
+    padding: 1vh;
+}
+
+.view_btn{
+    bottom: -0.2vh;
+    left:-0.2vh;
+    height: 4vh;
+    width: 20vw;
+    border-radius: 2vh;
+    position: absolute;
+    background-color: transparent;
+    color: rgb(0, 137, 25);
+    z-index: 2;
+}
+
+.view_btn:active {
+    outline: none;
+    border: none;
+    box-shadow: none;
+}
+
+.delete_btn:active {
+    outline: none;
+    border: none;
+    box-shadow: none;
+}
+
+.quarter_header{
+    overflow: hidden;
+    text-align: center;
+}
+
+.quarters_grid{
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    height: 50vh;
+}
+
+
+/* newspapers table */
+.newspapers_table{
+    width: 75vw;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+.newspapersTable__header{
+    background-color: #f8f9fa;
+}
+
+.newspapersTable__header th{
+    padding: 2vh;
+    text-align: left;
+    font-weight: 600;
+    color: #495057;
+    border-bottom: 0.3vh solid #dee2e6;
+    border-right: 0.1vh solid #dee2e6;
+}
+
+.newspapers_table td {
+    padding: 1.5vh 2vh;
+    border-bottom: 0.1vh solid #5c5c5c;
+    border-right: 0.1vh solid #535353;
+    overflow-x: auto;
+    vertical-align: middle;
+}
+.newspapers_table tr {
+    height: 8vh;
+}
+
+.newspaper_title {
+    font-weight: 500;
+    color: #212529;
+}
+
+.newspaper_actions{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.actionPaper_btn{
+    flex: 0 0 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 0%; 
+    cursor: pointer;
+    font-size: inherit;
+    height: 100%;
+    padding: 0;
+    
+    /* Убираем стандартное выделение */
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+.newspapers_table td:last-child {
+    padding: 0;
+    position: relative;
 }

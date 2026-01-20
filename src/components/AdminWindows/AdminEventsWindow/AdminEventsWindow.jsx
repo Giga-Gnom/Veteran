@@ -256,7 +256,6 @@ const AdminEventsWindow = () => {
 
             {isFolders ? (
                 selectedFolder ? (
-                    // ГАЛЕРЕЯ КОНКРЕТНОЙ ПАПКИ
                     <div className={styles.folder_gallery_section}>
                         <div className={styles.gallery_header}>
                             <button 
@@ -300,13 +299,12 @@ const AdminEventsWindow = () => {
                         )}
                     </div>
                 ) : (
-                    // СПИСОК ПАПОК
                     <div className={styles.folder_section}>
                         <button 
                             className={styles.add_button}
                             onClick={handleAddFolderClick}
                         >
-                            + Добавить папку
+                            Добавить папку
                         </button>
                         
                         {loading ? (
@@ -326,7 +324,7 @@ const AdminEventsWindow = () => {
                                         <button 
                                             className={styles.delete_button}
                                             onClick={(e) => {
-                                                e.stopPropagation(); // Чтобы не срабатывал клик по папке
+                                                e.stopPropagation();
                                                 handleDeleteFolder(folder.id, folder.title);
                                             }}
                                         >
@@ -344,7 +342,7 @@ const AdminEventsWindow = () => {
                         className={styles.add_button}
                         onClick={handleAddSlideClick}
                     >
-                        + Добавить слайд
+                        Добавить слайд
                     </button>
                     
                     {loading ? (
@@ -355,11 +353,13 @@ const AdminEventsWindow = () => {
                         <div className={styles.slides_grid}>
                             {slides.map((slide, i) => (
                                 <div key={slide.id || i} className={styles.slide_card}>
+                                <div className={styles.slide_card_img_div}>
                                     <img 
                                         src={slide.image_path} 
                                         alt={slide.title || `Слайд ${i+1}`}
                                         className={styles.slide_image}
                                     />
+                                </div>
                                     <div className={styles.slide_title}>
                                         {slide.title || slide.image_name}
                                     </div>

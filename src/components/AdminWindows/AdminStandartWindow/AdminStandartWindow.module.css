@@ -8,6 +8,10 @@
 .array_container{
   max-height: calc(100vh - 8vh - 15vh);
   overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
 }
 
 .flex_column_center{
@@ -28,7 +32,9 @@
 
 .file_title_input{
     width: 50vw;
+    max-width: 50vw;
     height: 20vh;
+    max-height: 50vh;
     margin-top: 2vh;
     border-radius: 2vw;
     background: transparent;
@@ -108,5 +114,55 @@
 }
 
 .doc_block{
+  display: flex;
+  width: 50vw;
+  height: 10vh;
+  position: relative;
+  background: transparent;
   margin: 1vw;
+  border: 0.2vw solid rgb(137, 134, 134);
+  border-bottom-right-radius: 8px;
+  justify-content: center;
+}
+
+.doc_block_text{
+  overflow: hidden;
+  text-align: center;
+  width: 45vw;
+  height: 6vh;
+}
+
+/* Псевдоэлемент для "выреза" границы */
+.doc_block::after{
+  content: '';
+  position: absolute;
+  right: -0.2vw;
+  bottom: -0.2vw;
+  border-bottom-right-radius: 8px;
+  width: 8vw; /* Ширина "выреза" */
+  height: 3vh; /* Высота "выреза" */
+  background: #c1c1c1;
+  border-top: 0.2vw solid rgb(137, 134, 134);;
+  border-left: 0.2vw solid rgb(137, 134, 134);;
+  border-top-left-radius: 8px;
+}
+
+
+.delete_document_button{
+  font-size: 2vh;
+  padding: 1vh;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 8vw;
+  height: 3vh;
+  background: transparent;
+  border: none;
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

@@ -163,6 +163,17 @@ class DatabaseService {
           )`
         );
 
+        this.db.exec(`
+          CREATE TABLE IF NOT EXISTS area_organizations (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            is_head boolean NOT NULL DEFAULT FALSE,
+            director TEXT,
+            phone TEXT,
+            address TEXT NOT NULL,
+            district_num INTEGER
+          )`
+        )
+
     console.log('✅ Таблицы созданы успешно');
   }
 

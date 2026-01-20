@@ -212,7 +212,6 @@ const AdminAwardsWindow = () => {
     return(
         <div className={styles.container}>
             <div className={styles.header}>
-                <h1 className={styles.title}>Управление наградами</h1>
                 <button 
                     className={styles.add_btn}
                     onClick={handleOpenForm}
@@ -228,14 +227,7 @@ const AdminAwardsWindow = () => {
                     </div>
                 ) : awards.length === 0 ? (
                     <div className={styles.empty_state}>
-                        <div className={styles.empty_icon}>🏆</div>
-                        <p className={styles.empty_text}>Нет добавленных наград</p>
-                        <button 
-                            className={styles.empty_btn}
-                            onClick={handleOpenForm}
-                        >
-                            + Добавить первую награду
-                        </button>
+                        нет добавленных наград
                     </div>
                 ) : (
                     <div className={styles.awards_grid}>
@@ -245,7 +237,7 @@ const AdminAwardsWindow = () => {
                                     <h3 className={styles.award_title}>{award.title}</h3>
                                     {award.image_path && (
                                         <div className={styles.award_image_preview}>
-                                            <img 
+                                            <img
                                                 src={award.image_path} 
                                                 alt={award.title}
                                                 className={styles.award_image}
@@ -301,7 +293,7 @@ const AdminAwardsWindow = () => {
                         <form onSubmit={handleSubmit} className={styles.form}>
                             <div className={styles.form_group}>
                                 <label htmlFor="title" className={styles.form_label}>
-                                    Название награды *
+                                    Название награды
                                 </label>
                                 <input
                                     type="text"
@@ -328,13 +320,13 @@ const AdminAwardsWindow = () => {
                                     onChange={handleInputChange}
                                     className={styles.form_input}
                                     placeholder="Введите описание награды"
-                                    rows="3"
+                                    rows="2"
                                 />
                             </div>
 
                             <div className={styles.form_group}>
                                 <label htmlFor="file" className={styles.form_label}>
-                                    Файл документа *
+                                    Файл документа
                                 </label>
                                 <div className={styles.file_upload}>
                                     <input
@@ -343,14 +335,14 @@ const AdminAwardsWindow = () => {
                                         ref={fileInputRef}
                                         onChange={handleFileChange}
                                         className={styles.file_input}
-                                        accept=".pdf,.doc,.docx"
+                                        accept=".pdf"
                                     />
                                     <button
                                         type="button"
                                         className={styles.file_btn}
                                         onClick={() => fileInputRef.current?.click()}
                                     >
-                                        Выберите файл (PDF, DOC, DOCX)
+                                        Выберите файл (PDF)
                                     </button>
                                     {formData.file_name && (
                                         <div className={styles.file_selected}>

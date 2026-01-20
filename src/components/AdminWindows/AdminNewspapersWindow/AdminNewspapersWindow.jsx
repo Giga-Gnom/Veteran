@@ -1,6 +1,7 @@
 import { useEffect, useReducer, useRef, useState } from "react";
 import styles from "./AdminNewspapersWindow.module.css"
 import newspapersService from "../../../services/newspapersService";
+import { ErrorMassage } from "../admin_components/ErrorMassage";
 
 
 const AdminNewspapersWindow = () => {
@@ -29,6 +30,7 @@ const AdminNewspapersWindow = () => {
         issue_number: ""
     })
     const newspaperTitleRef = useRef(null)
+    const [error, setError] = useState(null)
 
     useEffect(() => {
         loadYears()
@@ -71,6 +73,14 @@ const AdminNewspapersWindow = () => {
             }, 100)
         }
     }, [showAddNewspaperModal])
+
+    const showError = (message) => {
+        setError(message)
+    }
+
+    const clearError = () => {
+        setError(null)
+    }
 
     const handleCloseYearModal = () => {
         setNewYear("")
@@ -136,13 +146,13 @@ const AdminNewspapersWindow = () => {
 
     const handleAddYear = async () => {
         if (!newYear || !newYear.match(/^\d{4}$/)) {
-            alert("Введите корректный год (4 цифры)");
+            showError("Введите корректный год (4 цифры)");
             return;
         }
 
         const yearValue = parseInt(newYear)
         if (yearValue < 1994 || yearValue > 2100) {
-            alert("Год должен быть между 1994 и 2100");
+            showError("Год должен быть между 1994 и 2100");
             return;
         }
         
@@ -183,10 +193,10 @@ const AdminNewspapersWindow = () => {
                 setSelectedYear(null)
                 setQuarters([])
             }
-            alert(`Год ${yearValue} успешно удален.`)
+            showError(`Год ${yearValue} успешно удален.`)
         } catch (error) {
             console.error("Error deleting year:", error);
-            alert("Ошибка при удалении года");
+            showError("Ошибка при удалении года");
         }
     }
 
@@ -201,7 +211,7 @@ const AdminNewspapersWindow = () => {
             }
         } catch (error) {
             console.log("error deleting quarter: ", error)
-            alert("Ошибка удаления квартала")
+            showError("Ошибка удаления квартала")
         }
     }
 
@@ -221,18 +231,18 @@ const AdminNewspapersWindow = () => {
 
     const handleAddQuarter = async () => {
         if (!selectedYear) {
-            alert("Сначала выберите год")
+            showError("Сначала выберите год")
             return
         }
 
         const quarterNum = parseInt(newQuarter.quarter)
         if (!quarterNum || quarterNum > 4 || quarterNum < 1) {
-            alert("Выберите квартал в пределах от 1 до 4")
+            showError("Выберите квартал в пределах от 1 до 4")
             return
         }
 
         if (!newQuarter.title.trim()) {
-            alert("добавьте заголовок для квартала")
+            showError("добавьте заголовок для квартала")
             return
         }
 
@@ -251,28 +261,28 @@ const AdminNewspapersWindow = () => {
             // alert(`Квартал "${quarterData.title}" успешно добавлен`)
         } catch (error) {
             console.error("error adding quarter: ", error)
-            alert("Ошибка при добавлении квартала. Возможно такой квартал уже существует.")
+            showError("Ошибка при добавлении квартала. Возможно такой квартал уже существует.")
         }
     }
 
     const handleAddNewspaper = async () => {
         if (!selectedQuarter) {
-            alert("Выберите квартал")
+            showError("Выберите квартал")
             return
         }
 
         if (!newNewspaper.title.trim()) {
-            alert("Введите название газеты")
+            showError("Введите название газеты")
             return
         }
 
         if (!newNewspaper.issue_date) {
-            alert("Выберите дату выпуска")
+            showError("Выберите дату выпуска")
             return
         }
 
         if (!newNewspaper.file) {
-            alert("Выберите файл газеты")
+            showError("Выберите файл газеты")
             return
         }
 
@@ -331,7 +341,7 @@ const AdminNewspapersWindow = () => {
                     file_name: file.name
                 }))
             } else {
-                alert("Разрешены только PDF файлы")
+                showError("Разрешены только PDF файлы")
                 e.target.value = ""
             }
         }
@@ -339,7 +349,7 @@ const AdminNewspapersWindow = () => {
 
     const handleOpenAddQuarterModal = () => {
         if (!selectedYear) {
-            alert("Сначала выберите год");
+            showError("Сначала выберите год");
             return;
         }
         
@@ -355,7 +365,7 @@ const AdminNewspapersWindow = () => {
 
     const handleOpenAddNewspaperModal = () => {
         if (!selectedYear || !selectedQuarter) {
-            alert("Выберете год и квартал")
+            showError("Выберете год и квартал")
             return
         }
 
@@ -373,6 +383,12 @@ const AdminNewspapersWindow = () => {
 
     return(
         <div className={styles.container}>
+                        {error && (
+                            <ErrorMassage 
+                                message={error} 
+                                onClose={clearError}
+                            />
+                        )}
             <div className={styles.years_widget}>
                 <div className={styles.carousel_container}>
                     <div className={styles.carousel}>
@@ -447,7 +463,7 @@ const AdminNewspapersWindow = () => {
                     ) : (
                         <div className={styles.newspapers_table_container}>
                             <table className={styles.newspapers_table}>
-                                <thead>
+                                <thead className={styles.newspapersTable__header}>
                                     <tr>
                                         <th>Название</th>
                                         <th>Дата выпуска</th>
@@ -470,13 +486,13 @@ const AdminNewspapersWindow = () => {
                                             <td>
                                                 <div className={styles.newspaper_actions}>
                                                     <button 
-                                                        className={`${styles.action_btn} ${styles.view_btn}`}
+                                                        className={`${styles.actionPaper_btn} ${styles.view_newspaper_btn}`}
                                                         onClick={() => window.open(newspaper.file_path, '_blank')}
                                                     >
                                                         Просмотреть
                                                     </button>
                                                     <button 
-                                                        className={`${styles.action_btn} ${styles.delete_btn}`}
+                                                        className={`${styles.actionPaper_btn} ${styles.delete_newspaper_btn}`}
                                                         onClick={() => handleDeleteNewspaper(newspaper.id, newspaper.title)}
                                                     >
                                                         Удалить

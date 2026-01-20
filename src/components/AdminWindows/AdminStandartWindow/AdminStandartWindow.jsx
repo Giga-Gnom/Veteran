@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import standartDocumentService from "../../../services/standartDocumentService";
 import styles from "./AdminStandartWindow.module.css"
 import { FileInput } from "../admin_components/FileInput";
+import { ErrorMassage } from "../admin_components/ErrorMassage";
 
 const AdminStandartWindow = () => {
     const [isFormOpen, setIsFormOpen] = useState(false)
@@ -16,6 +17,7 @@ const AdminStandartWindow = () => {
         upload_date: "",
         file_path: ""
     })
+    const [error, setError] = useState(null)
 
     useEffect(() => {
         loadDocuments()
@@ -28,6 +30,14 @@ const AdminStandartWindow = () => {
         } catch (error) {
             console.log(error)
         }
+    }
+
+    const showError = (message) => {
+        setError(message)
+    }
+
+    const clearError = () => {
+        setError(null)
     }
 
     const handleOpenForm = () => {
@@ -64,7 +74,7 @@ const AdminStandartWindow = () => {
                     file_name: file.name
                 }))
             } else {
-                alert("разрешены только pdf")
+                showError("разрешены только pdf")
                 e.target.value = ""
             }
         }
@@ -74,12 +84,12 @@ const AdminStandartWindow = () => {
         e.preventDefault()
 
         if (!data.title.trim()){
-            alert("введите название для документа")
+            showError("введите название для документа")
             return
         }
 
         if (!selectedFile){
-            alert("выберете файл")
+            showError("выберете файл")
             return
         }
 
@@ -102,14 +112,16 @@ const AdminStandartWindow = () => {
             const result = await standartDocumentService.addDocument(documentData)
 
             if (result){
-                alert("Документ успешно сохранен")
+                showError("Документ успешно сохранен")
                 handleCloseForm()
                 loadDocuments()
             } else {
-                alert("Ошибка при сохранении документа")
+                console.error(error)
+                showError("Ошибка при сохранении документа")
             }
         } catch (error) {
             console.log(error)
+            showError("Ошибка при сохранении: " + error.message)
         }
     }
 
@@ -134,19 +146,26 @@ const AdminStandartWindow = () => {
             if (dbDeleted) {
                 await window.electronAPI.file.delete(document.file_path)
 
-                alert("Документ удален")
+                showError("Документ удален")
                 loadDocuments()
             } else {
-                alert("Ошибка удаления из бд")
+                showError("Ошибка удаления из бд")
             }
         } catch (error) {
             console.log("Ошибка удаления: ", error)
-            alert("Ошибка удаления документа")
+            showError("Ошибка удаления документа")
         }
     }
 
     return (
         <div className={styles.contant}>
+            {error && (
+                <ErrorMassage 
+                    message={error} 
+                    onClose={clearError}
+                />
+            )}
+
             {showDocument && showingDoc && (
                 <div>
                     <div>
@@ -176,10 +195,11 @@ const AdminStandartWindow = () => {
                 </div>
                 <div className={styles.array_container}>
                     {Array.isArray(documents) && documents.length > 0 && documents.map((doc, index) => (
-                        <div key={index} className={styles.doc_block}>
-                            {doc.title}
-                            <button className={styles.simple_button_for_standartadmin} onClick={()=>handleShowDocument(doc)}>Просмотреть документ</button>
-                            <button className={styles.simple_button_for_standartadmin} onClick={() => handleDeleteDocument(doc)}>Удалить</button>
+                        <div key={index} className={styles.doc_block} >
+                            <div className={styles.doc_block_text} onClick={()=>handleShowDocument(doc)}>
+                                {doc.title}
+                            </div>
+                            <button className={styles.delete_document_button} onClick={() => handleDeleteDocument(doc)}>Удалить</button>
                         </div>
                     ))}
                 </div>
