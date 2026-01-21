@@ -164,8 +164,11 @@ class DatabaseService {
         );
 
         this.db.exec(`
+          DROP TABLE IF EXISTS area_organizations;
+          
           CREATE TABLE IF NOT EXISTS area_organizations (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
+            head_text TEXT NOT NULL,
             is_head boolean NOT NULL DEFAULT FALSE,
             director TEXT,
             phone TEXT,
