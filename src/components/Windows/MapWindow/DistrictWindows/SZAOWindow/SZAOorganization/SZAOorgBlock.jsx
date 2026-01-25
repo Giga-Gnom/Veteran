@@ -4,12 +4,12 @@ import styles from "./SZAOorgBlock.module.css"
 const SZAOorgBlock = ({org}) => {
     return(
         <div className={styles.block}>
-                    <h3>{org.name}</h3>
-                    <span><strong>Адрес:</strong> {org.address}</span>
+                    <h3>{org.head_text}</h3>
+                    <span><strong>Адрес:</strong> <br />{org.address}</span>
                     <br />
                     <h4>Председатель:</h4>
-                    <span>{org.chairman.name}</span > 
-                    <span><strong>Телефон:</strong> {org.chairman.phone}</span>
+                    <span>{org.director}</span > 
+                    <span><strong>Телефон:</strong> {org.phone}</span>
                 </div>
     )
 }

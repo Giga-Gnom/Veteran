@@ -6,4 +6,5 @@ align-items: center;
 border: 0.4vh ridge rgba(0, 0, 0, 0.585);
 margin-bottom: 2vh;
 font-family: 'Roboto', serif;
+text-align: center;
 }

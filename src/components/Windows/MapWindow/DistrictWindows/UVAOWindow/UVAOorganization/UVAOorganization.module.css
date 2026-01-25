@@ -48,3 +48,14 @@
     font-size: 2.5vh;
   }
   
+    .container_content_SV{
+    display: flex;
+    height: auto;
+    width: 55vw;
+    flex-direction: column;
+    align-items: center;
+    border: 0.8vh ridge rgba(0, 0, 0, 0.585);
+    margin-bottom: 2vh;
+    font-family: 'Roboto', serif;
+  }
+  

@@ -163,9 +163,7 @@ class DatabaseService {
           )`
         );
 
-        this.db.exec(`
-          DROP TABLE IF EXISTS area_organizations;
-          
+        this.db.exec(`          
           CREATE TABLE IF NOT EXISTS area_organizations (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             head_text TEXT NOT NULL,
@@ -173,7 +171,8 @@ class DatabaseService {
             director TEXT,
             phone TEXT,
             address TEXT NOT NULL,
-            district_num INTEGER
+            district_name TEXT,
+            area_num INTEGER
           )`
         )
 

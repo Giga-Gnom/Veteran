@@ -1,11 +1,11 @@
 class MapService{
 
-    async getAllOrganizationsFromArea(areaId){
+    async getAllOrganizationsFromArea(districtName, areaId){
         if (window.electronAPI){
             return await window.electronAPI.database.execute(`
                 SELECT * FROM area_organizations
-                WHERE district_num = ?`,
-            [areaId])
+                WHERE district_name = ? and area_num = ?`,
+            [districtName, areaId])
         }
         return []
     }

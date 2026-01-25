@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./CAOWindow.module.css";
 import MyHat from "../../../../Hat/MyHat";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import BeforePageButton from "../../../../UI/MyButtons/BeforePageButton";
 import { districtsArray } from "../../districtsArray";
 import babenko from "./babenko.png"
+import mapService from "../../../../../services/mapService";
 
 const CAOWindow = () => {
     const district = districtsArray.find(item => item.id === 'CAO');

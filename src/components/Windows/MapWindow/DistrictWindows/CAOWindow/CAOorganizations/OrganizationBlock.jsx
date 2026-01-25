@@ -1,16 +1,15 @@
 import React from "react";
 import styles from "./OrganizationBlock.module.css";
 
-const OrganizationBlock = ({ name, address, reception, chairman }) => {
+const OrganizationBlock = ({ name, address, phone, chairman }) => {
     return (
         <div className={styles.block}>
-            <h3>{name}</h3>
-            <span><strong>Адрес:</strong> {address}</span>
+            <h3>Первичная организация №{name}</h3>
+            <span><strong>Адрес:</strong><br /> {address}</span>
             <br />
-            <span><strong>Прием:</strong> {reception}</span>
             <h4>Председатель:</h4>
-            <span>{chairman.name}</span >
-            <span><strong>Телефон:</strong> {chairman.phone}</span>
+            <span>{chairman}</span >
+            <span><strong>Телефон:</strong> {phone}</span>
             {/* <span><strong>Мобильный телефон:</strong> {chairman.mobile}</span> */}
         </div>
     );
