@@ -93,7 +93,7 @@ export const foldersArray = [
     },
     {
         img: folderImg,
-        name: "Участие в показе фильма об участниках СВО",
+        name: "Голубой огонек МГСВ",
         path: ""
     },
 ]

@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./LegendBlock.module.css";
 
 const LegendBlock = ({datasets}) => {
-    const regions = ["ЦАО", "САО", "СВАО", "ВАО", "ЮВАО", "ЮАО", "ЮЗАО", "ЗАО", "СЗАО", "ЗелАО", "ТинАО"];
+    const regions = ["ЦАО", "САО", "СВАО", "ВАО", "ЮВАО", "ЮАО", "ЮЗАО", "ЗАО", "СЗАО", "ЗелАО", "ТинАО", "Итого"];
 
     return(
         <div className={styles.container}>
@@ -24,6 +24,7 @@ const LegendBlock = ({datasets}) => {
                                 {data}
                             </div>
                         ))}
+                        {dataset.data.reduce((accumulator, value) => accumulator + value, 0)}
                     </div>
                 </div>
             ))}
