@@ -55,6 +55,15 @@ class EventsService {
         return []
     }
 
+    async getFirstImageFormFolder(folderId){
+        if(window.electronAPI){
+            return await window.electronAPI.database.execute(`SELECT image_path from gallery_images
+                WHERE folder_id = ?
+                LIMIT 1`, [folderId])
+        }
+        return null
+    }
+
     async deleteImage(imageId){
         if(window.electronAPI){
             return await window.electronAPI.database.delete('gallery_images', imageId)

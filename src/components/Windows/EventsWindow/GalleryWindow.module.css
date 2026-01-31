@@ -30,7 +30,7 @@
 
 .container_bottom{
     position: fixed;
-    right: 2vw;
+    left: 2vw;
     bottom: 2vh;
     z-index: 2;
 }

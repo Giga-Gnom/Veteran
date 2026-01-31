@@ -4,6 +4,8 @@ import MyHat from "../../Hat/MyHat";
 import styles from "./GalleryWindow.module.css";
 import BottomPanel from "../../BottomPanel/BottomPanel";
 import eventsService from "../../../services/eventsService";
+import EventBlock from "./EventBlock";
+import BeforePageButton from "../../UI/MyButtons/BeforePageButton";
 
 const GalleryWindow = () => {
     const { id } = useParams();
@@ -51,31 +53,21 @@ const GalleryWindow = () => {
                 <MyHat heading={`Галерея: ${folderTitle}`} />
             </div>
             
-            <div className={styles.container_content}>
-                <button 
-                    className={styles.back_button}
-                    onClick={handleBack}
-                >
-                    ← Назад к папкам
-                </button>
-                
+            <div className={styles.container_content}>              
                 {loading ? (
                     <div className={styles.loading}>Загрузка фото...</div>
                 ) : images.length === 0 ? (
                     <div className={styles.empty}>Нет фото в этой папке</div>
                 ) : (
-                    <div className={styles.gallery_grid}>
+                    <div className={styles.container_content}>
                         {images.map((image, index) => (
-                            <div key={image.id || index} className={styles.image_card}>
-                                <img 
-                                    src={image.image_path} 
-                                    alt={image.image_name || `Фото ${index + 1}`}
-                                    className={styles.gallery_image}
-                                />
-                            </div>
+                            <EventBlock event={image}/>
                         ))}
                     </div>
                 )}
+            </div>
+            <div className={styles.container_bottom}>
+                <BeforePageButton onClick={handleBack}/>
             </div>
         </div>
     );

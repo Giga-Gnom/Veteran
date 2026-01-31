@@ -1,9 +1,28 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styles from "./FolderBlock.module.css";
 import { useNavigate } from "react-router-dom";
+import eventsService from "../../../services/eventsService";
 
 const FolderBlock = ({ folder }) => {
     const navigate = useNavigate();
+    const [firstImg, setFirstImg] = useState(null)
+
+    useEffect(() => {
+        handleLoadImg()
+    }, [folder.id])
+
+    const handleLoadImg = async () => {
+        try{
+            const result = await eventsService.getFirstImageFormFolder(folder.id)
+            if (result.length > 0){
+                setFirstImg(result[0].image_path)
+            } else {
+                setFirstImg(null)
+            }
+        } catch (error) {
+            console.error("error loading load img, ", error)
+        }
+    }
 
     const onClick = () => {
         navigate(`/gallery/${folder.id}`, { 
@@ -17,7 +36,11 @@ const FolderBlock = ({ folder }) => {
 
     return(
         <div className={styles.container} onClick={onClick}>
-            <div className={styles.folder_icon}>📁</div>
+            {firstImg ? (
+                <img src={firstImg} className={styles.folder_image} alt="" />
+            ) : (
+                <div className={styles.folder_placeholder}></div>
+            )}
             <div className={styles.container_text}>{folder.title}</div>
         </div>
     );

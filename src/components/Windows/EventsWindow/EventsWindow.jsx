@@ -5,6 +5,7 @@ import BottomPanel from "../../BottomPanel/BottomPanel";
 import FolderBlock from "./FolderBlock";
 import ImageSlider from "./ImageSlider";
 import eventsService from "../../../services/eventsService"; // ← ДОБАВЬТЕ
+import Carousel3d from "../../UI/Carousel3d/Carousel3d";
 
 const EventsWindow = () => {
   const [folders, setFolders] = useState([]);
@@ -70,40 +71,11 @@ const EventsWindow = () => {
           {folders.length === 0 ? (
             <div className={styles.empty}>Нет папок</div>
           ) : (
-            <>
-              <div className={styles.carousel_wrapper}>
-                {folders.map((folder, index) => (
-                  <div
-                    key={folder.id}
-                    className={`${styles.carousel_slide} ${
-                    index === currentSlide ? styles.active : ""
-                    }`}
-                    style={{
-                      transform: `translateX(${(index - currentSlide) * 100}%)`,
-                    }}
-                  >
-                    <FolderBlock folder={folder} />
-                  </div>
-                ))}
-              </div>
-              
-              <div className={styles.buttons_container}>
-                <button 
-                  onClick={prevSlide} 
-                  className={styles.slideChanger_button_left}
-                  disabled={folders.length <= 1}
-                >
-                  ‹
-                </button>
-                <button 
-                  onClick={nextSlide} 
-                  className={styles.slideChanger_button_right}
-                  disabled={folders.length <= 1}
-                >
-                  ›
-                </button>
-              </div>
-            </>
+            <Carousel3d gap={-20}>
+              {folders.map((folder) => (
+                <FolderBlock key={folder.id} folder={folder}/>
+              ))}
+            </Carousel3d>
           )}
         </div>
         
