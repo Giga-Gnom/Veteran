@@ -96,4 +96,9 @@ export const foldersArray = [
         name: "Голубой огонек МГСВ",
         path: ""
     },
+    {
+        img: folderImg,
+        name: "Дорогой Созидания. Награждение",
+        path: ""
+    }
 ]
