@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./LegendBlock.module.css";
 
-const LegendBlock = ({datasets}) => {
-    const regions = ["ЦАО", "САО", "СВАО", "ВАО", "ЮВАО", "ЮАО", "ЮЗАО", "ЗАО", "СЗАО", "ЗелАО", "ТинАО"];
+const LegendBlock = ({datasets, labels}) => {
+    const regions = labels;
 
     return(
         <div className={styles.container}>

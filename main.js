@@ -2,6 +2,7 @@ import { app, BrowserWindow, globalShortcut, ipcMain } from 'electron';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
+import MigrationManager from './src/scripts/migration-manager.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -62,6 +63,8 @@ async function initDatabase() {
     throw error;
   }
 }
+
+
 
 function createMainWindow() {
   mainWindow = new BrowserWindow({
@@ -263,6 +266,21 @@ function registerGlobalShortcuts() {
   });
 }
 
+async function runMigrationsIfNeeded() {
+    console.log('🔍 runMigrationsIfNeeded called');
+    console.log('🔍 MigrationManager:', MigrationManager); // 👈 Проверяем, импортирован ли класс
+    
+    try {
+        const migrationManager = new MigrationManager();
+        console.log('🔍 MigrationManager instance:', migrationManager); // 👈 Проверяем создание
+        await migrationManager.runAllMigrations();
+    } catch (error) {
+        console.error('❌ Migration error:', error);
+        console.error('❌ Error stack:', error.stack); // 👈 Показываем полную ошибку
+    }
+}
+
+
 // 🔧 Запуск приложения
 app.whenReady().then(async () => {
   console.log('App ready, initializing...');
@@ -279,6 +297,8 @@ app.whenReady().then(async () => {
     // Инициализируем БД
     await initDatabase();
     console.log('✅ Database ready');
+
+    await runMigrationsIfNeeded();
     
     // Создаем окно
     createMainWindow();
