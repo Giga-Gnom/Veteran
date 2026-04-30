@@ -270,6 +270,21 @@ function registerGlobalShortcuts() {
   });
 }
 
+async function runMigrationsIfNeeded() {
+    console.log('🔍 runMigrationsIfNeeded called');
+    console.log('🔍 MigrationManager:', MigrationManager); // 👈 Проверяем, импортирован ли класс
+    
+    try {
+        const migrationManager = new MigrationManager();
+        console.log('🔍 MigrationManager instance:', migrationManager); // 👈 Проверяем создание
+        await migrationManager.runAllMigrations();
+    } catch (error) {
+        console.error('❌ Migration error:', error);
+        console.error('❌ Error stack:', error.stack); // 👈 Показываем полную ошибку
+    }
+}
+
+
 // 🔧 Запуск приложения
 app.whenReady().then(async () => {
   console.log('App ready, initializing...');

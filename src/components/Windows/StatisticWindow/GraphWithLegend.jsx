@@ -70,7 +70,7 @@ const GraphWithLegend = () =>{
                             <Bar data={data} options={options}/>
                         </div>
                         <div className={styles.container_legend}>
-                            <LegendBlock datasets={data.datasets}/>
+                            <LegendBlock datasets={data.datasets} labels={data.labels}/>
                         </div>
                     </div>
                 </div>

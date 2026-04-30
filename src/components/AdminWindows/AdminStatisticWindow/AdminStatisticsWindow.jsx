@@ -453,14 +453,14 @@ const AdminStatisticsWindow = () => {
                             value={chartMetadata.chart_name}
                             onChange={(e) => setChartMetadata({...chartMetadata, chart_name: e.target.value})} 
                         />
-                        <select
+                        {/* <select
                             value={chartMetadata.chart_type}
                             onChange={(e) => setChartMetadata({...chartMetadata, chart_type: e.target.value})}
                         >
                             <option value="bar">Столбчатая</option>
                             <option value="line">Линейная</option>
                             <option value="pie">Круговая</option>
-                        </select>
+                        </select> */}
                         <input
                             type="number"
                             placeholder="Порядок сортировки"
