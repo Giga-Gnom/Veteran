@@ -2,6 +2,7 @@ import { app, BrowserWindow, globalShortcut, ipcMain } from 'electron';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
+import {migrateStandarts} from "./src/scripts/standartMigrations.js"
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -62,6 +63,12 @@ async function initDatabase() {
     throw error;
   }
 }
+
+const userDataPath = app.getPath('userData');
+console.log('📁 UserData path:', userDataPath);
+console.log('📁 DB file exists?', fs.existsSync(path.join(userDataPath, 'kiosk.db')));
+console.log('📁 Migration flag exists?', fs.existsSync(path.join(userDataPath, '.migration_completed')));
+
 
 function createMainWindow() {
   mainWindow = new BrowserWindow({
@@ -279,6 +286,9 @@ app.whenReady().then(async () => {
     // Инициализируем БД
     await initDatabase();
     console.log('✅ Database ready');
+
+    console.log("some text---------------------------------------------------------------")
+    await migrateStandarts(dbService);
     
     // Создаем окно
     createMainWindow();
