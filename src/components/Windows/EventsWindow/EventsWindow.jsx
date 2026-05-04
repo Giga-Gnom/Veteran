@@ -71,7 +71,7 @@ const EventsWindow = () => {
           {folders.length === 0 ? (
             <div className={styles.empty}>Нет папок</div>
           ) : (
-            <Carousel3d gap={-20}>
+            <Carousel3d gap={20}>
               {folders.map((folder) => (
                 <FolderBlock key={folder.id} folder={folder}/>
               ))}

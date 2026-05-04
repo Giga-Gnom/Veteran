@@ -1,44 +1,52 @@
+/* FolderBlock.module.css */
 .container{
-    width: 32vw;
-    height: 32vh;
+    width: 220px;        /* уменьшил ширину */
+    min-width: 220px;
+    height: 280px;       /* уменьшил высоту */
     display: flex;
     align-items: center;
     flex-direction: column;
     cursor: pointer;
     transition: transform 0.3s ease;
+    margin: 0 15px;      /* отступы между блоками */
+    background: transparent;
 }
 
 .container:hover{
     transform: scale(1.05);
 }
 
+.folder_image {
+    width: 200px;        /* уменьшил под новый размер */
+    height: 200px;
+    object-fit: cover;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.folder_placeholder {
+    width: 200px;
+    height: 200px;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .container_text{
-    height: auto;
-    font-size: 2.4vh;
-    width: 20vw;
+    font-size: 16px;
+    width: 200px;
     text-align: center;
     font-family: "Lobster", "sans-serif";
     color: rgb(169, 35, 35);
     text-transform: uppercase;
-    margin-top: 1vh;
-}
-
-.folder_image {
-    width: 24vw;  /* Увеличил размер предварительной картинки */
-    height: 24vh; /* Увеличил размер предварительной картинки */
-    object-fit: cover;
-    border-radius: 1.6vh;
-    box-shadow: 0 0.2vh 0.8vh rgba(0,0,0,0.2);
-}
-
-.folder_placeholder {
-    width: 24vw;
-    height: 24vh;
-    background-color: white;
-    border-radius: 1.6vh;
-    box-shadow: 0 0.2vh 0.8vh rgba(0,0,0,0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 4vh;
+    margin-top: 12px;
+    word-wrap: break-word;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
 }

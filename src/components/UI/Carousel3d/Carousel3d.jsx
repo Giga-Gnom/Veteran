@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import styles from "./Carousel3d.module.css";
 
 const Carousel3d = ({ children, gap = 0 }) => {
@@ -47,8 +47,7 @@ const Carousel3d = ({ children, gap = 0 }) => {
   const itemStyle = (i) => ({
     transformOrigin: `50% 50% ${-apothem}px`,
     transform: `rotateY(${i * theta}rad)`,
-    // Уменьшил расстояние между блоками (было 0, стало -20px)
-    padding: `0 -20px`,
+    padding: `0 ${gap}px`,
     backfaceVisibility: "hidden",
     visibility: n > 0 ? "visible" : "hidden",
   });
