@@ -7,6 +7,7 @@ import { migrateAwards } from './src/scripts/awardMigrations.js';
 import { migrateStatistics } from './src/scripts/statisticMigration.js';
 import { migrateSlider } from './src/scripts/sliderMigration.js';
 import { migrateGallery } from './src/scripts/galleryMigrate.js';
+import { migrateRegions } from './src/scripts/regionsMigration.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -312,7 +313,7 @@ app.whenReady().then(async () => {
     await migrateStatistics(dbService);
     await migrateSlider(dbService);
     await migrateGallery(dbService);
-    
+    await migrateRegions(dbService);
     // Создаем окно
     createMainWindow();
     
