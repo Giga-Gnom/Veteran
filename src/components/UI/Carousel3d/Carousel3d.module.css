@@ -35,3 +35,26 @@
   border-radius: 16px;
   backface-visibility: hidden;
 }
+
+.carousel_button_prev,
+.carousel_button_next {
+  position: absolute;
+  bottom: 5vh;
+  background: rgba(0, 0, 0, 0.6);
+  filter: drop-shadow(0px 0px 0px 3px white) drop-shadow(0px 0px 0px 5px black);  font-size: 2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.carousel_button_prev {
+  left: 10vw;
+  clip-path: polygon(0% 50%, 50% 100%, 50% 0%);
+}
+
+.carousel_button_next {
+  right: 10vw;
+  clip-path: polygon(50% 0%, 50% 100%, 100% 50%);
+}
