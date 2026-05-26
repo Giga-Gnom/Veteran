@@ -26,3 +26,4 @@ dist-installer
 *.njsproj
 *.sln
 *.sw?
+*.pdf
