@@ -62,10 +62,10 @@ async function initDatabase() {
   try {
     const module = await safeImport('./src/services/database/connection.js');
     dbService = module.default || module;
-    console.log('✅ Database module loaded');
+    console.log('Database module loaded');
     return dbService;
   } catch (error) {
-    console.error('❌ Database init error:', error);
+    console.error('Database init error:', error);
     throw error;
   }
 }

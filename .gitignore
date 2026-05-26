@@ -24,6 +24,7 @@ dist-installer
 *.njsproj
 *.sln
 *.sw?
+*.pdf
 
 #images for events
 srcEvents
