@@ -1,4 +1,4 @@
-export const UZAOorgArray = [
+const UZAOorgArray = [
     {
         id: 9,
         name: "Академический",
@@ -1016,3 +1016,4 @@ export const UZAOorgArray = [
         ]
       }
 ]
+export default UZAOorgArray;

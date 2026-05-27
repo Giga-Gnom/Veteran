@@ -1,4 +1,4 @@
-export const ZAOorgArray = [
+const ZAOorgArray = [
     {
         id: 10,
         name: "Дорогимолово",
@@ -1120,3 +1120,4 @@ export const ZAOorgArray = [
         ]
     },
 ]
+export default ZAOorgArray;

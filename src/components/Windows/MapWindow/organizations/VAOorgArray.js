@@ -1,4 +1,4 @@
-export const VAOorgArray = 
+const VAOorgArray = 
 [
     {
       id: 2,
@@ -1265,3 +1265,5 @@ export const VAOorgArray =
       ]
     }
   ]
+
+export default VAOorgArray;

@@ -20,7 +20,7 @@ const NovAOorganization = () => {
     
         const loadOrganizationsForVovao = async (areaId) => {
             try {
-                const organizationsData = await mapService.getAllOrganizationsFromArea('Новомосквский', areaId)
+                const organizationsData = await mapService.getAllOrganizationsFromArea('Новомосковский', areaId)
                 console.log(organizations)
                 setMainOrganization(organizationsData.find(org => org.is_head === 1  || org.is_head === true))
                 setSortOrganizations(organizationsData.filter(org => org.is_head === 0 || org.is_head === false).sort((a, b) => a.head_text - b.head_text))

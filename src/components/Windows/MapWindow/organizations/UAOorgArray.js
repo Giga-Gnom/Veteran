@@ -1,4 +1,4 @@
-export const UAOorgArray = [
+const UAOorgArray = [
     {
       id: 11,
       name: "Бирюлево-Восточное",
@@ -1306,3 +1306,5 @@ export const UAOorgArray = [
         ]
       }
   ]
+
+  export default UAOorgArray;

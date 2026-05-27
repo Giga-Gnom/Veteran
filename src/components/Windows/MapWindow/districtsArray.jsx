@@ -34,7 +34,7 @@ export const districtsArray = [
     },
     {
         id:'NovAO',
-        name:"Новомосквский",
+        name:"Новомосковский",
         path:"/districts/1",
         title: "Районы Новомосковского административного округа",
         area:[

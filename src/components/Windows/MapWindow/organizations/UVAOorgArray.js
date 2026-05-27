@@ -1,4 +1,4 @@
-export const UVAOorgArray = [
+const UVAOorgArray = [
     {
       id: 10,
       name: "Выхино-Жулебино",
@@ -824,3 +824,5 @@ export const UVAOorgArray = [
       ]
     }
   ]
+
+  export default UVAOorgArray;

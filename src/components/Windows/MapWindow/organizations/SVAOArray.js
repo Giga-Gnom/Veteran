@@ -1,4 +1,4 @@
-export const SVAOArray = [
+const SVAOArray = [
   {
     id: 14,
     name: "Алексеевский район",
@@ -1134,3 +1134,5 @@ export const SVAOArray = [
         ]
       }   
 ]
+
+export default SVAOArray;

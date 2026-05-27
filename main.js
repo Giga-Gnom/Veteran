@@ -9,6 +9,7 @@ import { migrateSlider } from './src/scripts/sliderMigration.js';
 import { migrateGallery } from './src/scripts/galleryMigrate.js';
 import { migrateRegions } from './src/scripts/regionsMigration.js';
 import { migrateNewspapers } from './src/scripts/newspapersMigrate.js';
+import { migrateOrganizations } from './src/scripts/migrateOrganizations.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -316,6 +317,7 @@ app.whenReady().then(async () => {
     await migrateGallery(dbService);
     await migrateRegions(dbService);
     await migrateNewspapers(dbService);
+    await migrateOrganizations(dbService);
     // Создаем окно
     createMainWindow();
     

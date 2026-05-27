@@ -1,4 +1,4 @@
-export const SZAOorgArray = [
+const SZAOorgArray = [
     {
         id: 1,
         district: "Строгино",
@@ -895,3 +895,5 @@ export const SZAOorgArray = [
         ]
       }
 ]
+
+export default SZAOorgArray;

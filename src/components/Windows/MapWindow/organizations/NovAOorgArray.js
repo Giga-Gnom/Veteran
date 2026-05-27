@@ -1,4 +1,4 @@
-export const NovAOorgArray = [
+const NovAOorgArray = [
     {
         id: 0,
         name: "Внуково",
@@ -56,3 +56,5 @@ export const NovAOorgArray = [
         ]
     },
 ]
+
+export default NovAOorgArray;
