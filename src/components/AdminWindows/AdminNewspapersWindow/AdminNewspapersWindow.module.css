@@ -433,6 +433,16 @@ select:focus {
 
 
 /* newspapers table */
+
+.newspapers_table_container {
+    max-height: 50vh;
+    overflow-y: auto;
+    overflow-x: auto;
+    border-radius: 1.2vh;
+    border: 0.1vh solid #dee2e6;
+    position: relative;
+}
+
 .newspapers_table{
     width: 75vw;
     border-collapse: collapse;
@@ -442,13 +452,12 @@ select:focus {
     background-color: #f8f9fa;
 }
 
-.newspapersTable__header th{
-    padding: 2vh;
-    text-align: left;
-    font-weight: 600;
-    color: #495057;
-    border-bottom: 0.3vh solid #dee2e6;
-    border-right: 0.1vh solid #dee2e6;
+.newspapersTable__header th {
+    position: sticky;
+    top: 0;
+    background-color: #f8f9fa;
+    z-index: 10;
+    box-shadow: 0 0.2vh 0.2vh rgba(0, 0, 0, 0.1);
 }
 
 .newspapers_table td {
