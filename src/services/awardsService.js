@@ -44,7 +44,6 @@ class AwardsService {
                 }
             }
 
-            // Удаляем запись из базы данных
             await window.electronAPI.database.delete('awards', awardId);
             return true;
 

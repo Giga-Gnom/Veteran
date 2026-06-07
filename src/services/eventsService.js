@@ -14,10 +14,32 @@ class EventsService {
     }
 
     async deleteSlide(slideId){
-        if (window.electronAPI){
-            return await window.electronAPI.database.delete('slider_images', slideId)
+        if (!window.electronAPI) return false;
+        
+        try {
+            const slides = await window.electronAPI.database.execute(
+                'SELECT id, image_path FROM slider_images WHERE id = ?', 
+                [slideId]
+            );
+            
+            if (slides && slides.length > 0) {
+                const slide = slides[0];
+                
+                if (slide.image_path) {
+                    try {
+                        await window.electronAPI.file.delete(slide.image_path);
+                        console.log('Изображение слайда удалено:', slide.image_path);
+                    } catch (error) {
+                        console.error('Ошибка удаления изображения слайда:', error);
+                    }
+                }
+            }
+            
+            return await window.electronAPI.database.delete('slider_images', slideId);
+        } catch (error) {
+            console.error('Ошибка в deleteSlide:', error);
+            throw error;
         }
-        return null
     }
 
     async getAllFolders(){
@@ -35,10 +57,29 @@ class EventsService {
     }
 
     async deleteFolder(folderId){
-        if (window.electronAPI){
-            return await window.electronAPI.database.delete('gallery_folders', folderId)
+        if (!window.electronAPI) return false;
+        
+        try {
+            const images = await this.getAllImagesFormFolder(folderId);
+            
+            if (images && images.length > 0) {
+                for (const image of images) {
+                    if (image.image_path) {
+                        try {
+                            await window.electronAPI.file.delete(image.image_path);
+                            console.log('Изображение удалено:', image.image_path);
+                        } catch (error) {
+                            console.error('Ошибка удаления изображения:', error);
+                        }
+                    }
+                }
+            }
+            
+            return await window.electronAPI.database.delete('gallery_folders', folderId);
+        } catch (error) {
+            console.error('Ошибка в deleteFolder:', error);
+            throw error;
         }
-        return null
     }
 
     async getAllImagesFormFolder(folderId) {
@@ -57,16 +98,40 @@ class EventsService {
 
     async getFirstImageFormFolder(folderId){
         if(window.electronAPI){
-            return await window.electronAPI.database.execute(`SELECT image_path from gallery_images
+            const result = await window.electronAPI.database.execute(`SELECT image_path from gallery_images
                 WHERE folder_id = ?
                 LIMIT 1`, [folderId])
+            return result && result.length > 0 ? result[0] : null
         }
         return null
     }
 
     async deleteImage(imageId){
-        if(window.electronAPI){
-            return await window.electronAPI.database.delete('gallery_images', imageId)
+        if (!window.electronAPI) return false;
+        
+        try {
+            const images = await window.electronAPI.database.execute(
+                'SELECT id, image_path FROM gallery_images WHERE id = ?', 
+                [imageId]
+            );
+            
+            if (images && images.length > 0) {
+                const image = images[0];
+                
+                if (image.image_path) {
+                    try {
+                        await window.electronAPI.file.delete(image.image_path);
+                        console.log('Изображение удалено:', image.image_path);
+                    } catch (error) {
+                        console.error('Ошибка удаления изображения:', error);
+                    }
+                }
+            }
+            
+            return await window.electronAPI.database.delete('gallery_images', imageId);
+        } catch (error) {
+            console.error('Ошибка в deleteImage:', error);
+            throw error;
         }
     }
 
@@ -74,8 +139,8 @@ class EventsService {
         if(window.electronAPI){
             return await window.electronAPI.database.insert('gallery_images', imageData)
         }
+        return null
     }
-
 }
 
 export default new EventsService();

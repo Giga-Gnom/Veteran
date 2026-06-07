@@ -5,9 +5,6 @@ import path from 'path';
 class DatabaseService {
   constructor() {
     this.db = null;
-    
-    // ⚠️ Не инициализируем БД сразу в конструкторе
-    // this.init() - УДАЛИТЕ эту строку
   }
 
   async init() {
@@ -37,8 +34,7 @@ class DatabaseService {
         file_name TEXT NOT NULL,
         upload_date DATETIME DEFAULT CURRENT_TIMESTAMP
       )
-    `);/*title - название для пользователя
-    file_name - название сохранения файла*/
+    `);
 
     this.db.exec(`
       CREATE TABLE IF NOT EXISTS newspapers_years(
