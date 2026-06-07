@@ -1,24 +1,39 @@
 class NewspapersService {
 
-    // async getAllNewspapers (){
-    //     if (window.electronAPI) {
-    //         return await window.electronAPI.database.getAll('newspappers')
-    //     }
-    //     return []
-    // }
-
-    async addNewspaper(newspaperDate) {
+    async addNewspaper(newspaperData) {
         if (window.electronAPI) {
-            return await window.electronAPI.database.insert('newspapers', newspaperDate)
+            return await window.electronAPI.database.insert('newspapers', newspaperData)
         }
         return null
     }
 
     async deleteNewspaper(id) {
-        if (window.electronAPI) {
-            return await window.electronAPI.database.delete('newspapers', id)
+        if (!window.electronAPI) return false;
+        
+        try {
+            const newspapers = await window.electronAPI.database.execute(
+                'SELECT id, file_path, file_name FROM newspapers WHERE id = ?', 
+                [id]
+            );
+            
+            if (newspapers && newspapers.length > 0) {
+                const newspaper = newspapers[0];
+                
+                if (newspaper.file_path) {
+                    try {
+                        await window.electronAPI.file.delete(newspaper.file_path);
+                        console.log('Файл газеты удален:', newspaper.file_path);
+                    } catch (error) {
+                        console.error('Ошибка удаления файла газеты:', error);
+                    }
+                }
+            }
+            
+            return await window.electronAPI.database.delete('newspapers', id);
+        } catch (error) {
+            console.error('Ошибка в deleteNewspaper:', error);
+            throw error;
         }
-        return false
     }
 
     async getAllYearsWithQuarters() {
@@ -27,7 +42,7 @@ class NewspapersService {
                 const years = await window.electronAPI.database.execute(`SELECT * FROM newspapers_years ORDER BY year DESC`);
                 
                 const yearWithData = await Promise.all(years.map(async (year) => {
-                    const quarter = await window.electronAPI.database.execute(`SELECT q.*, COUNT(n.id) as newspaper_count
+                    const quarters = await window.electronAPI.database.execute(`SELECT q.*, COUNT(n.id) as newspaper_count
                         FROM newspapers_quarters AS q
                         LEFT JOIN newspapers n ON n.quarter_id = q.id
                         WHERE year_id = ?
@@ -36,11 +51,11 @@ class NewspapersService {
                         [year.id]
                     );
 
-                    const totalNewspapers = quarter.reduce((sum, q) => sum + (q.newspaper_count || 0), 0);
+                    const totalNewspapers = quarters.reduce((sum, q) => sum + (q.newspaper_count || 0), 0);
 
                     return {
                         ...year,
-                        quarters: quarter.map(q => ({
+                        quarters: quarters.map(q => ({
                             ...q,
                             title: q.title || `${q.quarter} квартал`,
                             newspaper_count: q.newspaper_count || 0,
@@ -50,7 +65,7 @@ class NewspapersService {
                 }))
                 return yearWithData;
             } catch (error) {
-                console.error("error fetching ears with quarters: ", error)
+                console.error("error fetching years with quarters: ", error)
                 return []
             }
         }
@@ -117,15 +132,55 @@ class NewspapersService {
     }
 
     async deleteQuarter(quarter_id) {
-        if (window.electronAPI) {
-            return await window.electronAPI.database.delete('newspapers_quarters', quarter_id)
+        if (!window.electronAPI) return false;
+        
+        try {
+            const newspapers = await this.getNewsPapersByQuarter(quarter_id);
+            
+            if (newspapers && newspapers.length > 0) {
+                for (const newspaper of newspapers) {
+                    if (newspaper.file_path) {
+                        try {
+                            await window.electronAPI.file.delete(newspaper.file_path);
+                            console.log('Файл газеты удален:', newspaper.file_path);
+                        } catch (error) {
+                            console.error('Ошибка удаления файла газеты:', error);
+                        }
+                    }
+                }
+            }
+            
+            return await window.electronAPI.database.delete('newspapers_quarters', quarter_id);
+        } catch (error) {
+            console.error('Ошибка в deleteQuarter:', error);
+            throw error;
         }
-        return false
     }
 
     async deleteYear(year_id) {
-        if(window.electronAPI){
-            return window.electronAPI.database.delete('newspapers_years', year_id)
+        if (!window.electronAPI) return false;
+        
+        try {
+            const quarters = await this.getQuartersByYear(year_id);
+            
+            for (const quarter of quarters) {
+                const newspapers = await this.getNewsPapersByQuarter(quarter.id);
+                for (const newspaper of newspapers) {
+                    if (newspaper.file_path) {
+                        try {
+                            await window.electronAPI.file.delete(newspaper.file_path);
+                            console.log('Файл газеты удален:', newspaper.file_path);
+                        } catch (error) {
+                            console.error('Ошибка удаления файла газеты:', error);
+                        }
+                    }
+                }
+            }
+            
+            return await window.electronAPI.database.delete('newspapers_years', year_id);
+        } catch (error) {
+            console.error('Ошибка в deleteYear:', error);
+            throw error;
         }
     }
 
