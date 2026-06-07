@@ -141,16 +141,8 @@ const AdminStandartWindow = () => {
         }
 
         try {
-            const dbDeleted = await standartDocumentService.deleteDocument(document.id)
-
-            if (dbDeleted) {
-                await window.electronAPI.file.delete(document.file_path)
-
-                showError("Документ удален")
-                loadDocuments()
-            } else {
-                showError("Ошибка удаления из бд")
-            }
+            await standartDocumentService.deleteDocument(document.id)
+            loadDocuments()
         } catch (error) {
             console.log("Ошибка удаления: ", error)
             showError("Ошибка удаления документа")
