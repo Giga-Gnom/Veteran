@@ -45,7 +45,7 @@ export const pokContentArray = [
         id:8
     },
     {
-        name: "По увековечиванию памяти защитников Отечества",
+        name: "По увековечению памяти защитников Отечества",
         path: "/commissions/9",
         id:9
     },
