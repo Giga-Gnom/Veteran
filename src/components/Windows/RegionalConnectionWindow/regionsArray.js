@@ -2,6 +2,11 @@
 
 export const regionsArray = [
     {
+        name: "Минск",
+        document: null,  // заглушка, нет документа
+        logo: "minsk (1).png"
+    },
+    {
         name: "Великий Новгород",
         document: "Novgorod.pdf",
         logo: "Velnov (1).png"
@@ -12,9 +17,9 @@ export const regionsArray = [
         logo: "len (1).png"
     },
     {
-        name: "Минск",
-        document: null,  // заглушка, нет документа
-        logo: "minsk (1).png"
+        name: "Тверская область",
+        document: "Tver.pdf",
+        logo: "tver.png"
     },
     {
         name: "Калуга",
@@ -27,19 +32,19 @@ export const regionsArray = [
         logo: "tula (1).png"
     },
     {
-        name: "Ярославль",
-        document: null,  // заглушка, нет документа
-        logo: "yaroslavl (1).png"
-    },
-    {
         name: "Московская область",
         document: "MoscoO.pdf",
         logo: "mosobl (1).png"
     },
     {
-        name: "Москва",
-        document: "Mosco.pdf",
-        logo: "msc (1).webp"
+        name: "Ярославль",
+        document: null,  // заглушка, нет документа
+        logo: "yaroslavl (1).png"
+    },
+    {
+        name: "Волгоград",
+        document: "Volgograd.pdf",
+        logo: "volgograd (1).png"
     },
     {
         name: "Луганская Народная Республика",
@@ -57,14 +62,9 @@ export const regionsArray = [
         logo: "sev (1).png"
     },
     {
-        name: "Волгоград",
-        document: "Volgograd.pdf",
-        logo: "volgograd (1).png"
-    },
-    {
-        name: "Челябинская область",
-        document: "CHB.pdf",
-        logo: "chel (1).png"
+        name: "Пермский край",
+        document: "Perm.pdf",
+        logo: "perm (1).png"
     },
     {
         name: "Свердловская область",
@@ -72,9 +72,9 @@ export const regionsArray = [
         logo: "sverd (1).png"
     },
     {
-        name: "Пермский край",
-        document: "Perm.pdf",
-        logo: "perm (1).png"
+        name: "Челябинская область",
+        document: "CHB.pdf",
+        logo: "chel (1).png"
     },
     {
         name: "Республика Казахстан",
@@ -91,19 +91,4 @@ export const regionsArray = [
         document: "YAK.pdf",
         logo: "yakut.png"
     },
-    {
-        name: "Тверская область",
-        document: "Tver.pdf",
-        logo: "tver.png"
-    },
-    {
-        name: "Смоленская область",
-        document: "SLO.pdf",
-        logo: "slo (1).png"
-    },
-    {
-        name: "Киев",
-        document: "Kiev.pdf",
-        logo: "kiev (1).png"
-    }
 ];

@@ -2,6 +2,7 @@
 import fs from 'fs';
 import path from 'path';
 import { app } from 'electron';
+import { title } from 'process';
 
 // Данные о папках с фотографиями
 const galleryFolders = [
@@ -17,6 +18,7 @@ const galleryFolders = [
     { title: "2023", path: "2023" },
     { title: "2024", path: "2024" },
     { title: "2025", path: "2025" },
+    { title: "2026", path: "2026" },
     { title: "Выездное совещание в Совете ветеранов ЗАО", path: "Выездное совещание в Совете ветеранов ЗАО" },
     { title: "Заседание медицинской комиссии МГСВ", path: "Заседание медицинской комиссии МГСВ" },
     { title: "Инструктивно-методическое занятие", path: "Инструктивно-методическое занятие" },
