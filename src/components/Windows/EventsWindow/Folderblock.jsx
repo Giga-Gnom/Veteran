@@ -14,6 +14,7 @@ const FolderBlock = ({ folder }) => {
     const handleLoadImg = async () => {
         try{
             const result = await eventsService.getFirstImageFormFolder(folder.id)
+            console.log("current img: ", result)
             if (result.length > 0){
                 setFirstImg(result[0].image_path)
             } else {
@@ -39,7 +40,7 @@ const FolderBlock = ({ folder }) => {
             {firstImg ? (
                 <img src={firstImg} className={styles.folder_image} alt="" />
             ) : (
-                <div className={styles.folder_placeholder}></div>
+                <div className={styles.folder_placeholder}>хахахъахахахахах</div>
             )}
             <div className={styles.container_text}>{folder.title}</div>
         </div>
