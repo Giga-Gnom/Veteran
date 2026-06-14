@@ -43,7 +43,7 @@ const AwardsWindow = () => {
             ) : (
                 <>
                     <div className={styles.container_head}>            
-                        <MyHat heading="Награды МГСВ"/>
+                        <MyHat heading="Награды МГОВ"/>
                     </div>
                     <div className={styles.container_content}>
                         {awards.map((award, index) => (

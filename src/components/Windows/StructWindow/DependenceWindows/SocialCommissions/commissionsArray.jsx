@@ -5,7 +5,7 @@ export const commissionsArray = [
         phone: "8-495-699-88-48",
         persons:[
             {
-                name:"Алёшина Людмила Григорьевна",
+                name:"Алешина Людмила Григорьевна",
                 role:"председатель"
             },
             {

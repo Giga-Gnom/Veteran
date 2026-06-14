@@ -3,6 +3,7 @@ import styles from "./SecretaryWindow.module.css"
 import MyHat from "../../../../Hat/MyHat";
 import BeforePageButton from "../../../../UI/MyButtons/BeforePageButton";
 import { Link } from "react-router-dom";
+import photo from "./20251215_141724 (1).jpg"
 
 const SecretaryWindow = () => {
     return(
@@ -10,7 +11,10 @@ const SecretaryWindow = () => {
             <div className={styles.container_head}>
                 <MyHat heading="СЕКРЕТАРИАТ"/>
             </div>
-            <div className={styles.container_content}>              
+            <div className={styles.container_content}>     
+                                        <div className={styles.person}>
+                            <img src={photo} alt="" />
+                        </div>         
                 <div className={styles.container_content_header}>
                     <h2>ПРИЕМНАЯ РУКОВОДИТЕЛЯ МГСВ</h2>
                     <div className={styles.container_content_header_text}>
