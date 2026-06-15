@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./AdminAwardsWindow.module.css"
 import awardsService from "../../../services/awardsService";
 import { _descriptors } from "chart.js/helpers";
+import { showAlert, showConfirm } from "../UI/ConfirmModal/ConfirmModel";
 
 const AdminAwardsWindow = () => {
     const [loading, setloading] = useState(false)
@@ -103,7 +104,7 @@ const AdminAwardsWindow = () => {
                     image_name: file.name
                 }));
             } else {
-                alert("Разрешены только изображения (JPG, PNG, GIF, WebP)");
+                showAlert("Разрешены только изображения (JPG, PNG, GIF, WebP)");
                 e.target.value = "";
             }
         }
@@ -165,8 +166,8 @@ const AdminAwardsWindow = () => {
     }
 
     const handleDeleteAward = async (awardId, awardTitle) => {
-        if(!window.confirm(`Вы уверены, что хотите удалить награду "${awardTitle}"?`))
-            return
+        const confirmed = await showConfirm("Вы уверены?");
+        if (!confirmed) return;
 
         try{
             await awardsService.deleteAward(awardId)

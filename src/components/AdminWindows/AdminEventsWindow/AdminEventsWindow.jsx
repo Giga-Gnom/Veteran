@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import styles from "./AdminEventsWindow.module.css"
 import eventsService from "../../../services/eventsService"
+import { showConfirm } from "../UI/ConfirmModal/ConfirmModel"
 
 const AdminEventsWindow = () => {
     const [isFolders, setIsFolders] = useState(false)
@@ -151,7 +152,8 @@ const AdminEventsWindow = () => {
     }
 
     const handleDeleteSlide = async (slideId, slideTitle) => {
-        if (!window.confirm(`Удалить слайд "${slideTitle}"?`)) return
+        const confirmed = await showConfirm("Вы уверены?");
+        if (!confirmed) return;
 
         try {
             await eventsService.deleteSlide(slideId)
@@ -162,7 +164,8 @@ const AdminEventsWindow = () => {
     }
 
     const handleDeleteFolder = async (folderId, folderTitle) => {
-        if (!window.confirm(`Удалить папку "${folderTitle}"?`)) return
+        const confirmed = await showConfirm("Вы уверены?");
+        if (!confirmed) return;
 
         try {
             await eventsService.deleteFolder(folderId)
@@ -219,7 +222,8 @@ const AdminEventsWindow = () => {
     };
 
     const handleDeleteImage = async (imageId, imageName) => {
-        if (!window.confirm(`Удалить фото "${imageName}"?`)) return;
+        const confirmed = await showConfirm("Вы уверены?");
+        if (!confirmed) return;
 
         try {
             await eventsService.deleteImage(imageId);

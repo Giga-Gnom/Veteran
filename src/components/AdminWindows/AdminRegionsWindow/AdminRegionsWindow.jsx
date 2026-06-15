@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./AdminRegionsWindow.module.css"
 import regionsService from "../../../services/regionsService";
+import { showAlert, showConfirm } from "../UI/ConfirmModal/ConfirmModel";
 
 const AdminRegionsWindow = () => {
     const [regions, setRegions] = useState([])
@@ -84,17 +85,17 @@ const AdminRegionsWindow = () => {
 
     const handleAddRegion = async () => {
         if (!newRegion.region_name.trim()) {
-            alert("Введите название региона")
+            showAlert("Введите название региона")
             return
         }
 
         if (!newRegion.document) {
-            alert("Выберите документ региона")
+            showAlert("Выберите документ региона")
             return
         }
 
         if (!newRegion.logo) {
-            alert("Выберите логотип региона")
+            showAlert("Выберите логотип региона")
             return
         }
 
@@ -124,15 +125,16 @@ const AdminRegionsWindow = () => {
     }
 
     const handleDeleteRegion = async (regionId, regionName) => {
-        if (!window.confirm(`Удалить регион "${regionName}"?`)) return
+        const confirmed = await showConfirm("Вы уверены?");
+        if (!confirmed) return;
 
         try {
             await regionsService.deleteRegion(regionId)
             loadRegions()
-            alert("Регион удален")
+            showAlert("Регион удален")
         } catch (error) {
             console.error("error deleting region: ", error)
-            alert("Ошибка при удалении региона")
+            showAlert("Ошибка при удалении региона")
         }
     }
 

@@ -4,10 +4,9 @@ import { Outlet, Link, useLocation } from 'react-router-dom';
 import styles from './AdminLayout.module.css';
 import AdminHeader from '../admin_components/AdminHeader';
 import AdminDashboard from '../AdminDashboard/AdminDashboard';
+import ConfirmModal from '../UI/ConfirmModal/ConfirmModel';
 
 const AdminLayout = () => {
-  
-  console.log('🏠 AdminLayout - current path:', location.pathname);
 
   return (
     <div className={styles.admin_layout}>
@@ -17,6 +16,8 @@ const AdminLayout = () => {
         <AdminDashboard/>
         <Outlet />
       </main>
+
+      <ConfirmModal/>
     </div>
   );
 };

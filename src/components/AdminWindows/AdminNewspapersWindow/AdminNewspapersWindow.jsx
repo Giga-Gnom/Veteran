@@ -2,6 +2,7 @@ import { useEffect, useReducer, useRef, useState } from "react";
 import styles from "./AdminNewspapersWindow.module.css"
 import newspapersService from "../../../services/newspapersService";
 import { ErrorMassage } from "../admin_components/ErrorMassage";
+import { showAlert, showConfirm } from "../UI/ConfirmModal/ConfirmModel";
 
 
 const AdminNewspapersWindow = () => {
@@ -166,10 +167,10 @@ const AdminNewspapersWindow = () => {
             setNewYear("")
             setShowAddYearModal(false)
             loadYears()
-            // alert(`Год ${yearValue} успешно добавлен`);
+            showAlert(`Год ${yearValue} успешно добавлен`);
         } catch (error) {
             console.error("error adding year: ", error)
-            // alert("Ошибка при добавлении года, возможно такой год уже добавлен!")
+            showAlert("Ошибка при добавлении года, возможно такой год уже добавлен!")
         }
     }
 
@@ -182,9 +183,8 @@ const AdminNewspapersWindow = () => {
     }
 
     const handleDeleteYear = async (yearId, yearValue) => {
-        if (!window.confirm(`Вы уверены что хотите удалить ${yearValue} год и все с ним связанное?`)) {
-            return
-        }
+        const confirmed = await showConfirm("Вы уверены?");
+        if (!confirmed) return;
 
         try {
             await newspapersService.deleteYear(yearId)
@@ -201,8 +201,8 @@ const AdminNewspapersWindow = () => {
     }
 
     const handleDeleteQuarter = async (quarterId, quarterTitle) => {
-        if (!window.confirm(`Вы действительно хотите удалить "${quarterTitle}" квартал и все с ним связанное?`))
-            return
+        const confirmed = await showConfirm("Вы уверены?");
+        if (!confirmed) return;
 
         try {
             await newspapersService.deleteQuarter(quarterId)
@@ -216,8 +216,8 @@ const AdminNewspapersWindow = () => {
     }
 
     const handleDeleteNewspaper = async (newspaperID, newspaperTitle) => {
-        if (!window.confirm(`Вы действительно хотите удалить газету - ${newspaperTitle}, и все что с ней связано?`))
-            return
+        const confirmed = await showConfirm("Вы уверены?");
+        if (!confirmed) return;
 
         try{
             await newspapersService.deleteNewspaper(newspaperID)
@@ -258,7 +258,7 @@ const AdminNewspapersWindow = () => {
             await newspapersService.addQuarter(quarterData)
 
             loadQuartersForYear(currentYearId)
-            // alert(`Квартал "${quarterData.title}" успешно добавлен`)
+            showAlert(`Квартал "${quarterData.title}" успешно добавлен`)
         } catch (error) {
             console.error("error adding quarter: ", error)
             showError("Ошибка при добавлении квартала. Возможно такой квартал уже существует.")

@@ -4,6 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "main": "main.js",
+  "author": "Your Name",
+  "description": "Veteran App",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -12,7 +14,8 @@
     "electron-dev": "set NODE_ENV=development&& electron .",
     "electron-build": "npm run build && electron-builder",
     "dist": "npm run electron-build",
-    "start": "electron ."
+    "start": "electron .",
+    "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
     "better-sqlite3": "^12.9.0",
@@ -55,20 +58,30 @@
       "dist/**/*",
       "main.js",
       "preload.js",
-      "src/**/*",
-      "!src/**/*.test.js",
-      "!src/**/*.spec.js",
-      "package.json"
+      "src/services/database/connection.js",
+      "!node_modules/.cache"
     ],
     "asar": true,
+    "asarUnpack": [
+      "**/*.node"
+    ],
+    "npmRebuild": true,
     "extraResources": [
       {
-        "from": "src/services/database",
-        "to": "src/services/database"
+        "from": "src/scripts/",
+        "to": "src/scripts/"
       }
     ],
     "win": {
-      "target": "nsis"
+      "target": "nsis",
+      "icon": "public/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
     }
   }
 }

@@ -101,7 +101,7 @@ class EventsService {
             const result = await window.electronAPI.database.execute(`SELECT image_path from gallery_images
                 WHERE folder_id = ?
                 LIMIT 1`, [folderId])
-            return result && result.length > 0 ? result : []  // возвращаем массив
+            return result && result.length > 0 ? result : []
         }
         return []
     }

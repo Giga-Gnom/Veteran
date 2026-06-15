@@ -4,6 +4,7 @@ import standartDocumentService from "../../../services/standartDocumentService";
 import styles from "./AdminStandartWindow.module.css"
 import { FileInput } from "../admin_components/FileInput";
 import { ErrorMassage } from "../admin_components/ErrorMassage";
+import { showConfirm } from "../UI/ConfirmModal/ConfirmModel";
 
 const AdminStandartWindow = () => {
     const [isFormOpen, setIsFormOpen] = useState(false)
@@ -136,9 +137,8 @@ const AdminStandartWindow = () => {
     }
 
     const handleDeleteDocument = async (document) => {
-        if (!window.confirm(`Удалить документ - ${document.title}?`)){
-            return
-        }
+        const confirmed = await showConfirm("Вы уверены?");
+        if (!confirmed) return;
 
         try {
             await standartDocumentService.deleteDocument(document.id)
