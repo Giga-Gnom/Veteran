@@ -44,7 +44,7 @@ const GalleryWindow = () => {
     };
 
     const handleBack = () => {
-        navigate(-1);
+        navigate('/events');
     };
 
     return (

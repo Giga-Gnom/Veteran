@@ -14,22 +14,22 @@ export function getCurrentUrlIndex() {
 }
 
 // Основные экспорты (старый вариант для совместимости)
-export function handleNextPage() {
-    const currentIndex = getCurrentUrlIndex();
-    const nextIndex = currentIndex === pageIndex.length - 1 ? 0 : currentIndex + 1;
-    window.location.href = pageIndex[nextIndex].route;
-}
+// export function handleNextPage() {
+//     const currentIndex = getCurrentUrlIndex();
+//     const nextIndex = currentIndex === pageIndex.length - 1 ? 0 : currentIndex + 1;
+//     window.location.href = pageIndex[nextIndex].route;
+// }
 
-export function handeleBeforPage() {
-    const currentIndex = getCurrentUrlIndex();
-    if (currentIndex > 0) {
-        window.location.href = pageIndex[currentIndex - 1].route;
-    }
-}
+// export function handeleBeforPage() {
+//     const currentIndex = getCurrentUrlIndex();
+//     if (currentIndex > 0) {
+//         window.location.href = pageIndex[currentIndex - 1].route;
+//     }
+// }
 
-export function handelToMainPage() {
-    window.location.href = "/";
-}
+// export function handelToMainPage() {
+//     window.location.href = "/";
+// }
 
 // Новый вариант с useNavigate (по желанию)
 export function usePageNavigation() {

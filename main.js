@@ -233,7 +233,7 @@ app.whenReady().then(async () => {
         console.log('✅ Database ready');
 
         // Раскомментируйте после проверки работы окна
-        // await runAllMigrations(dbService);
+        await runAllMigrations(dbService);
 
         logToFile('Calling createMainWindow...');
         createMainWindow();

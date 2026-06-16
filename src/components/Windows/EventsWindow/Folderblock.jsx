@@ -40,7 +40,7 @@ const FolderBlock = ({ folder }) => {
             {firstImg ? (
                 <img src={firstImg} className={styles.folder_image} alt="" />
             ) : (
-                <div className={styles.folder_placeholder}>хахахъахахахахах</div>
+                <div className={styles.folder_placeholder}></div>
             )}
             <div className={styles.container_text}>{folder.title}</div>
         </div>

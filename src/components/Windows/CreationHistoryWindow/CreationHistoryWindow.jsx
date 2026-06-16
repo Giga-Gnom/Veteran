@@ -7,7 +7,7 @@ import borodin from "./srcCreationHistory/Бородин_2.png";
 import schov from "./srcCreationHistory/Сычев_НЯ.jpg";
 import belarev from "./srcCreationHistory/Беларев.png";
 import dolgih from "./srcCreationHistory/Dolgih.jpg";
-import { handeleBeforPage, handleImgClick } from "../../../app/utils";
+import {handleImgClick } from "../../../app/utils";
 
 
 const CreationHistoryWindow = () => {

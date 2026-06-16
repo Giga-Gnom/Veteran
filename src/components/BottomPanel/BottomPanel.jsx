@@ -4,7 +4,6 @@ import BeforePageButton from "../UI/MyButtons/BeforePageButton";
 import ToMainButton from "../UI/MyButtons/ToMainButton";
 import styles from "./BottomPanel.module.css"
 import { pageIndex } from "../../app/pageIndex";
-import { handeleBeforPage, handelToMainPage, handleNextPage } from "../../app/utils";
 
 import { usePageNavigation } from "../../app/utils";
 
