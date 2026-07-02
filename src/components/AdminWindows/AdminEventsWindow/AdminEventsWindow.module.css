@@ -146,7 +146,8 @@
     top: 20vh;
     right: 25vw;
     width: 50vw;
-    height: 40vh;
+    min-height: 40vh;
+    height: 70VH;
     background: white;
     border-radius: 2vh;
     display: flex;
@@ -154,6 +155,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 2vw;
+    overflow-y: auto;
 }
 
 .modal_header{
