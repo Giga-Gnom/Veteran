@@ -25,8 +25,7 @@ const AdminNewspapersWindow = () => {
     const [showAddNewspaperModal, setShowAddNewspaperModal] = useState(false)
     const [newNewspaper, setNewNewspaper] = useState({
         title: "",
-        file_name: "",
-        file: null,
+        files: [],
         issue_date: "",
         issue_number: ""
     })
@@ -98,14 +97,13 @@ const AdminNewspapersWindow = () => {
 
     const handleCloseNewspaperModal = () => {
         setNewNewspaper({
-            title:"",
-            file_name:"",
-            file: null,
-            issue_date:"",
-            issue_number:""
-        })
-        setShowAddNewspaperModal(false)
-    }
+            title: "",
+            files: [],
+            issue_date: "",
+            issue_number: ""
+        });
+        setShowAddNewspaperModal(false);
+    };
 
     const loadYears = async () => {
         try {
@@ -267,49 +265,50 @@ const AdminNewspapersWindow = () => {
 
     const handleAddNewspaper = async () => {
         if (!selectedQuarter) {
-            showError("Выберите квартал")
-            return
+            showError("Выберите квартал");
+            return;
         }
 
-        if (!newNewspaper.title.trim()) {
-            showError("Введите название газеты")
-            return
+        if (newNewspaper.files.length === 0) {
+            showError("Выберите хотя бы один PDF-файл");
+            return;
         }
 
         if (!newNewspaper.issue_date) {
-            showError("Выберите дату выпуска")
-            return
-        }
-
-        if (!newNewspaper.file) {
-            showError("Выберите файл газеты")
-            return
+            showError("Выберите дату выпуска");
+            return;
         }
 
         try{
-            const arrayBuffer = await newNewspaper.file.arrayBuffer()
-            const buffer = new Uint8Array(arrayBuffer)
+            for (const {file} of newNewspaper.files){
+                const arrayBuffer = await file.arrayBuffer()
+                const buffer = new Uint8Array(arrayBuffer)
+                const fileResult = await window.electronAPI.file.save(file.name, buffer)
 
-            const fileResult = await window.electronAPI.file.save(newNewspaper.file.name, buffer)
-            
-            const newspaperData = {
-                quarter_id: selectedQuarter.id,
-                title: newNewspaper.title.trim(),
-                issue_date: newNewspaper.issue_date,
-                issue_number: newNewspaper.issue_number || "",
-                file_name: fileResult.file_name,
-                file_path: fileResult.file_path
+                const newspaperTitle = newNewspaper.title.trim()
+                ? newNewspaper.title.trim()
+                : file.name.replace(/\.[^/.]+$/, "")
+
+                const newspaperData = {
+                    quarter_id: selectedQuarter.id,
+                    title: newspaperTitle,
+                    issue_date: newNewspaper.issue_date,
+                    issue_number: newNewspaper.issue_number || "",
+                    file_name: fileResult.file_name,
+                    file_path: fileResult.file_path
+                };
+
+                await newspapersService.addNewspaper(newspaperData)
             }
-
-            await newspapersService.addNewspaper(newspaperData)
-
-            handleCloseNewspaperModal()
-
+            handleCloseNewspaperModal();
             if (selectedQuarter) {
                 loadNewspapersForQuarter(selectedQuarter.id)
             }
+            showAlert(`Добавлено ${newNewspaper.files.length} газет`);
+
         } catch (error) {
-            console.error("error adding newspaper: ", error)
+            console.error("error adding newspapers: ", error);
+            showError("Ошибка при добавлении газет");
         }
     }
 
@@ -330,21 +329,23 @@ const AdminNewspapersWindow = () => {
     }
 
     const handleFileChange = (e) => {
-        const file = e.target.files[0]
-        if (file) {
-            const allowedTypes = ['pdf']
-            const fileExtension = file.name.split('.').pop().toLowerCase()
-            if (allowedTypes.includes(fileExtension)) {
-                setNewNewspaper(prev => ({
-                    ...prev,
-                    file: file,
-                    file_name: file.name
-                }))
-            } else {
-                showError("Разрешены только PDF файлы")
-                e.target.value = ""
-            }
+        const fileList = Array.from(e.target.files)
+        if (fileList.length === 0) return
+
+        const invalid = fileList.some(f => {
+            const ext = f.name.split('.').pop().toLowerCase()
+            return ext !== 'pdf'
+        })
+        if (invalid){
+            showError("Разрешены только PDF файлы");
+            e.target.value = "";
+            return;
         }
+
+        setNewNewspaper(prev => ({
+            ...prev,
+            files: fileList.map(f => ({file: f, name: f.name}))
+        }))
     }
 
     const handleOpenAddQuarterModal = () => {
@@ -678,87 +679,95 @@ const AdminNewspapersWindow = () => {
             </div>
         )}
 
-        {showAddNewspaperModal && selectedQuarter && (
-                <div className={styles.modal_overlay} onClick={handleCloseNewspaperModal}>
-                    <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-                        <h3>Добавить газету в {selectedQuarter.title || `${selectedQuarter.quarter} квартал`}</h3>
-                        
-                        <div className={styles.form_group}>
-                            <label htmlFor="newspaperTitle">Название газеты *</label>
-                            <input
-                                ref={newspaperTitleRef}
-                                type="text"
-                                id="newspaperTitle"
-                                name="title"
-                                value={newNewspaper.title}
-                                onChange={handleNewspaperInputChange}
-                                placeholder="Например: Вестник Ветерана"
-                                required
-                            />
-                        </div>
-                        
-                        <div className={styles.form_group}>
-                            <label htmlFor="issueDate">Дата выпуска *</label>
-                            <input
-                                type="date"
-                                id="issueDate"
-                                name="issue_date"
-                                value={newNewspaper.issue_date}
-                                onChange={handleNewspaperInputChange}
-                                required
-                            />
-                        </div>
-                        
-                        <div className={styles.form_group}>
-                            <label htmlFor="issueNumber">Номер выпуска (опционально)</label>
-                            <input
-                                type="text"
-                                id="issueNumber"
-                                name="issue_number"
-                                value={newNewspaper.issue_number}
-                                onChange={handleNewspaperInputChange}
-                                placeholder="Например: №1, Выпуск 5"
-                            />
-                        </div>
-                        
-                        <div className={styles.form_group}>
-                            <label htmlFor="newspaperFile">Файл газеты (PDF) *</label>
-                            <div className={styles.file_upload_container}>
-                                <input
-                                    type="file"
-                                    id="newspaperFile"
-                                    accept=".pdf"
-                                    onChange={handleFileChange}
-                                    className={styles.file_input}
-                                />
-                                <label htmlFor="newspaperFile" className={styles.file_upload_label}>
-                                    {newNewspaper.file_name ? newNewspaper.file_name : 'Выберите файл PDF'}
-                                </label>
-                            </div>
-                            {newNewspaper.file_name && (
-                                <div className={styles.file_selected}>
-                                    Выбран файл: {newNewspaper.file_name}
-                                </div>
-                            )}
-                        </div>
-                        
-                        <div className={styles.modal_actions}>
-                            <button 
-                                className={styles.cancel_btn}
-                                onClick={handleCloseNewspaperModal}
-                            >
-                                Отмена
-                            </button>
-                            <button 
-                                className={styles.submit_btn}
-                                onClick={handleAddNewspaper}
-                            >
-                                Добавить газету
-                            </button>
-                        </div>
-                    </div>
+       {showAddNewspaperModal && selectedQuarter && (
+        <div className={styles.modal_overlay} onClick={handleCloseNewspaperModal}>
+            <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+                <h3>Добавить газету в {selectedQuarter.title || `${selectedQuarter.quarter} квартал`}</h3>
+                
+                <div className={styles.form_group}>
+                    <label htmlFor="newspaperTitle">Общее название (опционально)</label>
+                    <input
+                        ref={newspaperTitleRef}
+                        type="text"
+                        id="newspaperTitle"
+                        name="title"
+                        value={newNewspaper.title}
+                        onChange={handleNewspaperInputChange}
+                        placeholder="Если не заполнено, будет использовано имя файла"
+                    />
                 </div>
-            )}
+                
+                <div className={styles.form_group}>
+                    <label htmlFor="issueDate">Дата выпуска *</label>
+                    <input
+                        type="date"
+                        id="issueDate"
+                        name="issue_date"
+                        value={newNewspaper.issue_date}
+                        onChange={handleNewspaperInputChange}
+                        required
+                    />
+                </div>
+                
+                <div className={styles.form_group}>
+                    <label htmlFor="issueNumber">Номер выпуска (опционально)</label>
+                    <input
+                        type="text"
+                        id="issueNumber"
+                        name="issue_number"
+                        value={newNewspaper.issue_number}
+                        onChange={handleNewspaperInputChange}
+                        placeholder="Например: №1, Выпуск 5"
+                    />
+                </div>
+                
+                {/* Поле выбора файлов – с multiple */}
+                <div className={styles.form_group}>
+                    <label htmlFor="newspaperFile">Файлы газет (PDF) *</label>
+                    <div className={styles.file_upload_container}>
+                        <input
+                            type="file"
+                            id="newspaperFile"
+                            accept=".pdf"
+                            multiple
+                            onChange={handleFileChange}
+                            className={styles.file_input}
+                        />
+                        <label htmlFor="newspaperFile" className={styles.file_upload_label}>
+                            {newNewspaper.files.length > 0 
+                                ? `Выбрано ${newNewspaper.files.length} файлов` 
+                                : 'Выберите файлы PDF'}
+                        </label>
+                    </div>
+                    {newNewspaper.files.length > 0 && (
+                        <div className={styles.file_list}>
+                            <ul>
+                                {newNewspaper.files.map((f, idx) => (
+                                    <li key={idx}>{f.name}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+                </div>
+                
+                <div className={styles.modal_actions}>
+                    <button 
+                        className={styles.cancel_btn}
+                        onClick={handleCloseNewspaperModal}
+                    >
+                        Отмена
+                    </button>
+                    <button 
+                        className={styles.submit_btn}
+                        onClick={handleAddNewspaper}
+                        disabled={newNewspaper.files.length === 0}
+                    >
+                        Добавить
+                    </button>
+                </div>
+            </div>
+        </div>
+    )}
 
         </div>
     )
