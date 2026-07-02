@@ -11,8 +11,7 @@ const AdminEventsWindow = () => {
     const [isAddSlideOpen, setIsAddSlideOpen] = useState(false)
     const [isAddFolderOpen, setIsAddFolderOpen] = useState(false)
     const [newSlide, setNewSlide] = useState({
-        image: null,
-        image_name: "",
+        files: [],
         title: ""
     })
     const [newFolder, setNewFolder] = useState({
@@ -22,8 +21,7 @@ const AdminEventsWindow = () => {
     const [folderImages, setFolderImages] = useState([]);
     const [isAddImageOpen, setIsAddImageOpen] = useState(false);
     const [newImage, setNewImage] = useState({
-        image: null,
-        image_name: ""
+        files:[]
     });
 
     useEffect(() => {
@@ -61,8 +59,7 @@ const AdminEventsWindow = () => {
     const handleAddSlideClick = () => {
         setIsAddSlideOpen(true)
         setNewSlide({
-            image: null,
-            image_name: "",
+            files: [],
             title: ""
         })
     }
@@ -83,14 +80,14 @@ const AdminEventsWindow = () => {
     }
 
     const handleSlideFileChange = (e) => {
-        const file = e.target.files[0]
-        if (file) {
-            setNewSlide(prev => ({
-                ...prev,
-                image: file,
-                image_name: file.name
-            }))
+        const fileList = Array.from(e.target.files)
+        if (fileList.length === 0){
+            return
         }
+        setNewSlide(prev => ({
+            ...prev,
+            files: fileList.map(file => ({file, name: file.name}))
+        }))
     }
 
     const handleSlideInputChange = (e) => {
@@ -110,28 +107,35 @@ const AdminEventsWindow = () => {
     }
 
     const handleAddSlide = async () => {
-        if (!newSlide.image) {
-            return
+        if (newSlide.files.length === 0) {
+            return;
         }
 
         try {
-            const arrayBuffer = await newSlide.image.arrayBuffer()
-            const buffer = new Uint8Array(arrayBuffer)
-            const fileResult = await window.electronAPI.file.save(newSlide.image.name, buffer)
+            for (const { file } of newSlide.files) {
+                const arrayBuffer = await file.arrayBuffer();
+                const buffer = new Uint8Array(arrayBuffer);
+                const fileResult = await window.electronAPI.file.save(file.name, buffer);
 
-            const slideData = {
-                title: newSlide.title.trim(),
-                image_path: fileResult.file_path,
-                image_name: fileResult.file_name
+                const slideTitle = newSlide.title.trim() 
+                    ? newSlide.title.trim() 
+                    : file.name.replace(/\.[^/.]+$/, "");
+
+                const slideData = {
+                    title: slideTitle,
+                    image_path: fileResult.file_path,
+                    image_name: fileResult.file_name
+                };
+
+                await eventsService.addSlide(slideData);
             }
 
-            await eventsService.addSlide(slideData)
-            handleCloseAddSlide()
-            loadSlides()
+            handleCloseAddSlide();
+            loadSlides();
         } catch (error) {
-            console.error("error adding slide: ", error)
+            console.error("Ошибка при добавлении слайдов:", error);
         }
-    }
+    };
 
     const handleAddFolder = async () => {
         if (!newFolder.title.trim()) {
@@ -191,33 +195,33 @@ const AdminEventsWindow = () => {
     const handleAddImageClick = () => {
         setIsAddImageOpen(true);
         setNewImage({
-            image: null,
-            image_name: ""
+            files: []
         });
     };
 
     const handleAddImage = async () => {
-        if (!newImage.image || !selectedFolder) return;
+        if (newImage.files.length === 0 || !selectedFolder) return;
 
         try {
-            const arrayBuffer = await newImage.image.arrayBuffer();
-            const buffer = new Uint8Array(arrayBuffer);
-            const fileResult = await window.electronAPI.file.save(newImage.image.name, buffer);
+            for (const { file } of newImage.files) {
+                const arrayBuffer = await file.arrayBuffer();
+                const buffer = new Uint8Array(arrayBuffer);
+                const fileResult = await window.electronAPI.file.save(file.name, buffer);
 
-            const imageData = {
-                folder_id: selectedFolder.id,
-                image_path: fileResult.file_path,
-                image_name: fileResult.file_name
-            };
+                const imageData = {
+                    folder_id: selectedFolder.id,
+                    image_path: fileResult.file_path,
+                    image_name: fileResult.file_name
+                };
 
-            await eventsService.addImageIntoFolder(imageData);
+                await eventsService.addImageIntoFolder(imageData);
+            }
+
             setIsAddImageOpen(false);
-            
-            // Обновляем список фото
             const updatedImages = await eventsService.getAllImagesFormFolder(selectedFolder.id);
             setFolderImages(updatedImages);
         } catch (error) {
-            console.error("Error adding image:", error);
+            console.error("Ошибка при добавлении фото:", error);
         }
     };
 
@@ -405,15 +409,21 @@ const AdminEventsWindow = () => {
                         </div>
                         
                         <div className={styles.form_group}>
-                            <label>Изображение *</label>
+                            <label>Изображения * (можно выбрать несколько)</label>
                             <input
                                 type="file"
                                 accept="image/*"
+                                multiple
                                 onChange={handleSlideFileChange}
                             />
-                            {newSlide.image_name && (
-                                <div className={styles.file_selected}>
-                                    Выбрано: {newSlide.image_name}
+                            {newSlide.files.length > 0 && (
+                                <div className={styles.file_list}>
+                                    Выбрано файлов: {newSlide.files.length}
+                                    <ul>
+                                        {newSlide.files.map((f, idx) => (
+                                            <li key={idx}>{f.name}</li>
+                                        ))}
+                                    </ul>
                                 </div>
                             )}
                         </div>
@@ -492,23 +502,27 @@ const AdminEventsWindow = () => {
                         </div>
                         
                         <div className={styles.form_group}>
-                            <label>Изображение *</label>
+                            <label>Изображения * (можно выбрать несколько)</label>
                             <input
                                 type="file"
                                 accept="image/*"
+                                multiple
                                 onChange={(e) => {
-                                    const file = e.target.files[0];
-                                    if (file) {
-                                        setNewImage({
-                                            image: file,
-                                            image_name: file.name
-                                        });
-                                    }
+                                    const fileList = Array.from(e.target.files);
+                                    if (fileList.length === 0) return;
+                                    setNewImage({
+                                        files: fileList.map(file => ({ file, name: file.name }))
+                                    });
                                 }}
                             />
-                            {newImage.image_name && (
-                                <div className={styles.file_selected}>
-                                    Выбрано: {newImage.image_name}
+                            {newImage.files.length > 0 && (
+                                <div className={styles.file_list}>
+                                    Выбрано файлов: {newImage.files.length}
+                                    <ul>
+                                        {newImage.files.map((f, idx) => (
+                                            <li key={idx}>{f.name}</li>
+                                        ))}
+                                    </ul>
                                 </div>
                             )}
                         </div>
