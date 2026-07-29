@@ -4,7 +4,6 @@
     align-items: center;
     background-color: rgba(196, 201, 206, 0.331);
     text-align: center;
-    width: 18vw;
     margin-inline: 1vw;
     min-height: 10vh;
     border: 0.15vw solid rgba(0, 0, 0, 0.265);
@@ -65,7 +64,6 @@
 .drop_container {
   position: relative;
   display: flex;
-  width: 50vw;
   margin-top: 3vh;
   gap: 10px;
   flex-direction: column;

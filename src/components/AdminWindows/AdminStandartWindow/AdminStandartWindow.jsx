@@ -170,7 +170,7 @@ const AdminStandartWindow = () => {
                         title={showingDoc.title}
                         style={{
                             width: '100%',
-                            height: '40vh',
+                            height: '63vh',
                             border: 'none'}}></iframe>
                     </div>
                 </div>
@@ -200,7 +200,7 @@ const AdminStandartWindow = () => {
             }
             {isFormOpen &&
                 <form className={styles.add_form} onSubmit={handleSave}>            
-                    <textarea 
+                    <input 
                     type="text"
                     placeholder="Заголовок для документа"
                     value={data.title}
