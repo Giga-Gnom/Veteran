@@ -10173,7 +10173,7 @@ export const organizationsArray = [
     "address": "г.Москва, ул.Бобруйская, д.6,к.2"
   },
   {
-    "district_name": "Зеленоградский",
+    "district_name": "Зеленоград",
     "area_num": 3,
     "head_text": "Крюково",
     "is_head": 1,
@@ -10182,7 +10182,7 @@ export const organizationsArray = [
     "address": "Москва, Зеленоград, корп.2010"
   },
   {
-    "district_name": "Зеленоградский",
+    "district_name": "Зеленоград",
     "area_num": 3,
     "head_text": "1",
     "is_head": 0,
@@ -10191,7 +10191,7 @@ export const organizationsArray = [
     "address": "124617, г. Москва, Зеленоград, корп.1425, мкр14"
   },
   {
-    "district_name": "Зеленоградский",
+    "district_name": "Зеленоград",
     "area_num": 3,
     "head_text": "2",
     "is_head": 0,
@@ -10200,7 +10200,7 @@ export const organizationsArray = [
     "address": "124683, г. Москва, Зеленоград, корп.1505, мкр15"
   },
   {
-    "district_name": "Зеленоградский",
+    "district_name": "Зеленоград",
     "area_num": 3,
     "head_text": "3",
     "is_head": 0,
@@ -10209,7 +10209,7 @@ export const organizationsArray = [
     "address": "124365, Москва, Зеленоград, корп.1604, мкр16"
   },
   {
-    "district_name": "Зеленоградский",
+    "district_name": "Зеленоград",
     "area_num": 3,
     "head_text": "4",
     "is_head": 0,
@@ -10218,7 +10218,7 @@ export const organizationsArray = [
     "address": "124681, г. Москва, Зеленоград, корп.1807, мкр18"
   },
   {
-    "district_name": "Зеленоградский",
+    "district_name": "Зеленоград",
     "area_num": 3,
     "head_text": "5",
     "is_head": 0,
@@ -10227,7 +10227,7 @@ export const organizationsArray = [
     "address": "124681, г. Москва, Зеленоград, корп.1809, кв.44, мкр18"
   },
   {
-    "district_name": "Зеленоградский",
+    "district_name": "Зеленоград",
     "area_num": 3,
     "head_text": "6",
     "is_head": 0,
@@ -10236,7 +10236,7 @@ export const organizationsArray = [
     "address": "124365, г. Москва, Зеленоград, корп.2034, мкр.20"
   },
   {
-    "district_name": "Зеленоградский",
+    "district_name": "Зеленоград",
     "area_num": 0,
     "head_text": "Матушкино",
     "is_head": 1,
@@ -10245,7 +10245,7 @@ export const organizationsArray = [
     "address": "Москва, Зеленоград, корп.414"
   },
   {
-    "district_name": "Зеленоградский",
+    "district_name": "Зеленоград",
     "area_num": 0,
     "head_text": "1",
     "is_head": 0,
@@ -10254,7 +10254,7 @@ export const organizationsArray = [
     "address": "124482, г. Москва, Зеленоград, корп.107-б, мкр1"
   },
   {
-    "district_name": "Зеленоградский",
+    "district_name": "Зеленоград",
     "area_num": 0,
     "head_text": "2",
     "is_head": 0,
@@ -10263,7 +10263,7 @@ export const organizationsArray = [
     "address": "124498, г. Москва, Зеленоград, корп.250, мкр2"
   },
   {
-    "district_name": "Зеленоградский",
+    "district_name": "Зеленоград",
     "area_num": 0,
     "head_text": "3",
     "is_head": 0,
@@ -10272,7 +10272,7 @@ export const organizationsArray = [
     "address": "124498, г. Москва, Зеленоград, корп.410, кв.72, мкр4а"
   },
   {
-    "district_name": "Зеленоградский",
+    "district_name": "Зеленоград",
     "area_num": 0,
     "head_text": "4",
     "is_head": 0,
@@ -10281,7 +10281,7 @@ export const organizationsArray = [
     "address": "124498, г. Москва, Зеленоград, корп.441, кв.108, мкр4б"
   },
   {
-    "district_name": "Зеленоградский",
+    "district_name": "Зеленоград",
     "area_num": 1,
     "head_text": "Савелки",
     "is_head": 1,
@@ -10290,7 +10290,7 @@ export const organizationsArray = [
     "address": "Москва, Зеленоград, корп.301б"
   },
   {
-    "district_name": "Зеленоградский",
+    "district_name": "Зеленоград",
     "area_num": 1,
     "head_text": "1",
     "is_head": 0,
@@ -10299,7 +10299,7 @@ export const organizationsArray = [
     "address": "124482, г. Москва, Зеленоград, корп.302а, кв.1, мкр3А"
   },
   {
-    "district_name": "Зеленоградский",
+    "district_name": "Зеленоград",
     "area_num": 1,
     "head_text": "2",
     "is_head": 0,
@@ -10308,7 +10308,7 @@ export const organizationsArray = [
     "address": "124482, г. Москва, Зеленоград, корп.301б, мкр3б"
   },
   {
-    "district_name": "Зеленоградский",
+    "district_name": "Зеленоград",
     "area_num": 1,
     "head_text": "3",
     "is_head": 0,
@@ -10317,7 +10317,7 @@ export const organizationsArray = [
     "address": "124482, г. Москва, Зеленоград, корп.514а, мкр5"
   },
   {
-    "district_name": "Зеленоградский",
+    "district_name": "Зеленоград",
     "area_num": 1,
     "head_text": "4",
     "is_head": 0,
@@ -10326,7 +10326,7 @@ export const organizationsArray = [
     "address": "124489, г. Москва, Зеленоград, корп.613, кв.203, мкр6"
   },
   {
-    "district_name": "Зеленоградский",
+    "district_name": "Зеленоград",
     "area_num": 1,
     "head_text": "5",
     "is_head": 0,
@@ -10335,7 +10335,7 @@ export const organizationsArray = [
     "address": "124489, г. Москва, Зеленоград,корп.704, кв.37, мкр7"
   },
   {
-    "district_name": "Зеленоградский",
+    "district_name": "Зеленоград",
     "area_num": 2,
     "head_text": "Силино",
     "is_head": 1,
@@ -10344,7 +10344,7 @@ export const organizationsArray = [
     "address": "Москва, Зеленоград, корп.1102"
   },
   {
-    "district_name": "Зеленоградский",
+    "district_name": "Зеленоград",
     "area_num": 2,
     "head_text": "1",
     "is_head": 0,
@@ -10353,7 +10353,7 @@ export const organizationsArray = [
     "address": "124460, г. Москва, Зеленоград, корп.1003, кв.8, мкр10"
   },
   {
-    "district_name": "Зеленоградский",
+    "district_name": "Зеленоград",
     "area_num": 2,
     "head_text": "2",
     "is_head": 0,
@@ -10362,7 +10362,7 @@ export const organizationsArray = [
     "address": "124460, г. Москва, Зеленоград, корп.1116, мкр11а"
   },
   {
-    "district_name": "Зеленоградский",
+    "district_name": "Зеленоград",
     "area_num": 2,
     "head_text": "3",
     "is_head": 0,
@@ -10371,7 +10371,7 @@ export const organizationsArray = [
     "address": "124460, г. Москва, Зеленоград, корп.1137, мкр11б"
   },
   {
-    "district_name": "Зеленоградский",
+    "district_name": "Зеленоград",
     "area_num": 2,
     "head_text": "4",
     "is_head": 0,
@@ -10380,7 +10380,7 @@ export const organizationsArray = [
     "address": "124460, г. Москва, Зеленоград, корп.1209, мкр12"
   },
   {
-    "district_name": "Зеленоградский",
+    "district_name": "Зеленоград",
     "area_num": 4,
     "head_text": "Старое Крюково",
     "is_head": 1,
@@ -10389,7 +10389,7 @@ export const organizationsArray = [
     "address": "Москва, Зеленоград, корп.828"
   },
   {
-    "district_name": "Зеленоградский",
+    "district_name": "Зеленоград",
     "area_num": 4,
     "head_text": "1",
     "is_head": 0,
@@ -10398,7 +10398,7 @@ export const organizationsArray = [
     "address": "124527, г. Москва, Зеленоград, корп.802, мкр.8а"
   },
   {
-    "district_name": "Зеленоградский",
+    "district_name": "Зеленоград",
     "area_num": 4,
     "head_text": "2",
     "is_head": 0,
@@ -10407,7 +10407,7 @@ export const organizationsArray = [
     "address": "124527, г. Москва, Зеленоград, корп.828, мкр.8б"
   },
   {
-    "district_name": "Зеленоградский",
+    "district_name": "Зеленоград",
     "area_num": 4,
     "head_text": "3",
     "is_head": 0,
@@ -10416,7 +10416,7 @@ export const organizationsArray = [
     "address": "124575, г. Москва, Зеленоград, корп.913, кв.2, мкр.9а"
   },
   {
-    "district_name": "Зеленоградский",
+    "district_name": "Зеленоград",
     "area_num": 4,
     "head_text": "4",
     "is_head": 0,
