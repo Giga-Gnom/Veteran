@@ -1,81 +1,67 @@
-// src/scripts/migrateSlider.js - исправленная версия
+// src/scripts/migrateSlider.js
 import fs from 'fs';
 import path from 'path';
 import { app } from 'electron';
+import { getResourcePath } from '../utils/paths.js';
 
-export async function migrateSlider(dbService) {
-    console.log("🚀 start migrate slider");
-    
+export async function migrateSlider(dbService, log) {
+    if (!log) log = console.log;
+    log('🚀 start migrate slider');
+
     try {
         if (!dbService) {
-            console.error('❌ dbService не передан в migrateSlider');
+            log('❌ dbService не передан в migrateSlider');
             return false;
         }
 
-        // Проверяем, есть ли уже данные
         const existingSlides = await dbService.getAll('slider_images');
-        
         if (existingSlides && existingSlides.length > 0) {
-            console.log('✅ Данные слайдера уже есть в БД, миграция не нужна');
+            log('✅ Данные слайдера уже есть в БД, миграция не нужна');
             return false;
         }
 
-        // Путь к папке с изображениями для слайдера
-        const sourceDir = path.join(
-            process.cwd(),
-            'src',
-            'components',
-            'Windows',
-            'EventsWindow',
-            'srcEvents'
-        );
+        // ✅ Правильный путь к исходным изображениям
+        const sourceDir = getResourcePath('components/Windows/EventsWindow/srcEvents');
+        log(`📁 Source dir: ${sourceDir}`);
 
         const userDataPath = app.getPath('userData');
         const documentsDir = path.join(userDataPath, 'documents');
+        if (!fs.existsSync(documentsDir)) {
+            fs.mkdirSync(documentsDir, { recursive: true });
+        }
+        log(`📁 Documents dir: ${documentsDir}`);
 
-        console.log(`📁 Source dir: ${sourceDir}`);
-        console.log(`📁 Documents dir: ${documentsDir}`);
-
-        // Проверяем существование папки
         if (!fs.existsSync(sourceDir)) {
-            console.error(`❌ Папка с исходниками не найдена: ${sourceDir}`);
+            log(`❌ Папка с исходниками не найдена: ${sourceDir}`);
             return false;
         }
 
-        // Получаем список всех изображений в папке
         const filesInDir = fs.readdirSync(sourceDir);
-        
-        // Фильтруем только изображения
         const imageExtensions = ['.png', '.jpg', '.jpeg', '.svg', '.JPG'];
-        const imageFiles = filesInDir.filter(file => 
+        const imageFiles = filesInDir.filter(file =>
             imageExtensions.includes(path.extname(file).toLowerCase())
         );
-
-        console.log(`📸 Найдено изображений для слайдера: ${imageFiles.length}`);
+        log(`📸 Найдено изображений для слайдера: ${imageFiles.length}`);
 
         if (imageFiles.length === 0) {
-            console.warn('⚠️ Нет изображений для миграции');
+            log('⚠️ Нет изображений для миграции');
             return false;
         }
 
         let migratedCount = 0;
 
-        // Копируем каждое изображение и добавляем в БД
         for (const imageFile of imageFiles) {
             const sourceFile = path.join(sourceDir, imageFile);
-            // Получаем имя без расширения для заголовка
             const title = path.basename(imageFile, path.extname(imageFile));
             const uniqueName = `${Date.now()}_${imageFile}`;
             const targetFile = path.join(documentsDir, uniqueName);
 
-            console.log(`📸 Обработка: ${imageFile}`);
+            log(`📸 Обработка: ${imageFile}`);
 
             if (fs.existsSync(sourceFile)) {
-                // Копируем файл
                 fs.copyFileSync(sourceFile, targetFile);
-                console.log(`   ✅ Файл скопирован`);
+                log(`   ✅ Файл скопирован`);
 
-                // Сохраняем в БД - БЕЗ upload_date!
                 await dbService.insert('slider_images', {
                     title: title,
                     image_path: `file://${targetFile.replace(/\\/g, '/')}`,
@@ -83,20 +69,17 @@ export async function migrateSlider(dbService) {
                 });
 
                 migratedCount++;
-                console.log(`   ✅ Добавлен в БД`);
-
-                // Небольшая задержка для уникальности имен
                 await new Promise(resolve => setTimeout(resolve, 10));
             } else {
-                console.warn(`   ⚠️ Файл не найден: ${imageFile}`);
+                log(`   ⚠️ Файл не найден: ${imageFile}`);
             }
         }
 
-        console.log(`✅ Миграция слайдера завершена! Перенесено изображений: ${migratedCount}`);
+        log(`✅ Миграция слайдера завершена! Перенесено изображений: ${migratedCount}`);
         return true;
 
     } catch (error) {
-        console.error('❌ Ошибка миграции слайдера:', error);
+        log(`❌ Ошибка миграции слайдера: ${error.message}`);
         return false;
     }
 }

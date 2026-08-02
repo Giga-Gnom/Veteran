@@ -1,6 +1,8 @@
+// src/scripts/awardMigrations.js
 import fs from 'fs';
 import path from 'path';
 import { app } from 'electron';
+import { getResourcePath } from '../utils/paths.js';
 
 const awardsArray = [
     {
@@ -23,83 +25,69 @@ const awardsArray = [
     }
 ];
 
-export async function migrateAwards(dbService) {
-    console.log("🚀 start migrate awards");
-    
+export async function migrateAwards(dbService, log) {
+    if (!log) log = console.log;
+    log('🚀 start migrate awards');
+
     try {
         if (!dbService) {
-            console.error('❌ dbService не передан в migrateAwards');
+            log('❌ dbService не передан в migrateAwards');
             return false;
         }
 
-        // Проверяем, есть ли уже данные
         const existingAwards = await dbService.getAll('awards');
-
         if (existingAwards && existingAwards.length > 0) {
-            console.log('✅ Данные уже есть в БД, миграция не нужна');
+            log('✅ Данные уже есть в БД, миграция не нужна');
             return false;
         }
 
-        // Путь к исходным файлам
-        const sourceDir = path.join(
-            process.cwd(),
-            'src',
-            'components',
-            'Windows',
-            'AwardsWindow',
-            'srcAwards'
-        );
+        // ✅ Используем getResourcePath
+        const sourceDir = getResourcePath('components/Windows/AwardsWindow/srcAwards');
+        log(`📁 Source dir: ${sourceDir}`);
 
         const userDataPath = app.getPath('userData');
         const documentsDir = path.join(userDataPath, 'documents');
+        if (!fs.existsSync(documentsDir)) {
+            fs.mkdirSync(documentsDir, { recursive: true });
+        }
+        log(`📁 Documents dir: ${documentsDir}`);
 
-        console.log(`📁 Source dir: ${sourceDir}`);
-        console.log(`📁 Documents dir: ${documentsDir}`);
-
-        // Проверяем существование папки
         if (!fs.existsSync(sourceDir)) {
-            console.error(`❌ Папка с исходниками не найдена: ${sourceDir}`);
+            log(`❌ Папка с исходниками не найдена: ${sourceDir}`);
             return false;
         }
 
-        // Показываем файлы в папке
         const filesInDir = fs.readdirSync(sourceDir);
-        console.log('📄 Файлы в srcAwards:', filesInDir);
+        log(`📄 Файлы в srcAwards: ${filesInDir.join(', ')}`);
 
         let migratedCount = 0;
 
-        // Копируем файлы и добавляем в БД
         for (const item of awardsArray) {
-            // Копируем PDF файл
             const sourceFile = path.join(sourceDir, item.file);
             const uniqueFileName = `${Date.now()}_${item.file}`;
             const targetFile = path.join(documentsDir, uniqueFileName);
-            
-            // Копируем изображение
+
             const sourceImage = path.join(sourceDir, item.image);
             const uniqueImageName = `${Date.now()}_${item.image}`;
             const targetImage = path.join(documentsDir, uniqueImageName);
 
-            console.log(`📄 Обработка: ${item.name}`);
-            console.log(`   PDF: ${item.file}`);
-            console.log(`   Image: ${item.image}`);
+            log(`📄 Обработка: ${item.name}`);
+            log(`   PDF: ${item.file}`);
+            log(`   Image: ${item.image}`);
 
-            // Проверяем и копируем PDF
             if (fs.existsSync(sourceFile)) {
                 fs.copyFileSync(sourceFile, targetFile);
-                console.log(`   ✅ PDF скопирован`);
-                
-                // Проверяем и копируем изображение
+                log(`   ✅ PDF скопирован`);
+
                 let imagePath = null;
                 if (fs.existsSync(sourceImage)) {
                     fs.copyFileSync(sourceImage, targetImage);
                     imagePath = `file://${targetImage.replace(/\\/g, '/')}`;
-                    console.log(`   ✅ Изображение скопировано`);
+                    log(`   ✅ Изображение скопировано`);
                 } else {
-                    console.warn(`   ⚠️ Изображение не найдено: ${item.image}`);
+                    log(`   ⚠️ Изображение не найдено: ${item.image}`);
                 }
 
-                // Сохраняем в БД
                 await dbService.insert('awards', {
                     title: item.name,
                     description: item.text,
@@ -110,19 +98,18 @@ export async function migrateAwards(dbService) {
                 });
 
                 migratedCount++;
-                console.log(`   ✅ Добавлен в БД: ${item.name}`);
-                
+                log(`   ✅ Добавлен в БД: ${item.name}`);
                 await new Promise(resolve => setTimeout(resolve, 10));
             } else {
-                console.warn(`   ⚠️ PDF не найден: ${item.file}`);
+                log(`   ⚠️ PDF не найден: ${item.file}`);
             }
         }
 
-        console.log(`✅ Миграция наград завершена! Перенесено: ${migratedCount} документов`);
+        log(`✅ Миграция наград завершена! Перенесено: ${migratedCount} документов`);
         return true;
 
     } catch (error) {
-        console.error('❌ Ошибка миграции наград:', error);
+        log(`❌ Ошибка миграции наград: ${error.message}`);
         return false;
     }
 }

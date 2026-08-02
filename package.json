@@ -67,10 +67,15 @@
     ],
     "npmRebuild": true,
     "extraResources": [
-      {
-        "from": "src/scripts/",
-        "to": "src/scripts/"
-      }
+      { "from": "src/scripts/", "to": "src/scripts/" },
+    { "from": "src/utils/", "to": "src/utils/" },
+    { "from": "src/components/Windows/RegionalConnectionWindow/", "to": "src/components/Windows/RegionalConnectionWindow/" },
+    { "from": "src/components/Windows/NewspaperWindow/", "to": "src/components/Windows/NewspaperWindow/" },
+    { "from": "src/components/AdminWindows/AdminMapWindow/", "to": "src/components/AdminWindows/AdminMapWindow/" },
+    { "from": "src/components/Windows/StandartDocumentsWindow/srcStandarts/", "to": "src/components/Windows/StandartDocumentsWindow/srcStandarts/" },
+    { "from": "src/components/Windows/EventsWindow/srcEvents/", "to": "src/components/Windows/EventsWindow/srcEvents/" },
+    { "from": "src/components/Windows/AwardsWindow/srcAwards/", "to": "src/components/Windows/AwardsWindow/srcAwards/" },
+    { "from": "src/components/Windows/StatisticWindow/", "to": "src/components/Windows/StatisticWindow/" }
     ],
     "win": {
       "target": "nsis",

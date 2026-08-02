@@ -1,98 +1,75 @@
 import fs from 'fs';
 import path from 'path';
 import { app } from 'electron';
-// import standartDocumentService from '../services/standartDocumentService.js';
-// import {standartsArray} from "../components/Windows/StandartDocumentsWindow/stabdartsArray.jsx";
+import { getResourcePath } from '../utils/paths.js';
 
 const standartsArray = [
-    {
-        title: "Федеральный закон от 12.01.1995 г. «О ветеранах».",
-        file: "FZ_5.pdf"
-    },
-    {
-        title: "Устав Московской городской общественной организации пенсионеров, ветеранов войны, труда, Вооруженных Сил и правоохранительных органов.",
-        file: "Устав2.pdf"
-    },
-    {
-        title: "Соглашение о взаимодействии Правительства Москвы и московских городских общественных организаций ветеранов по защите прав и интересов, улучшению благосостояния ветеранов, активизации работы по патриотическому воспитанию молодежи.",
-        file: "обложка.pdf"
-    }
+    { title: "Федеральный закон от 12.01.1995 г. «О ветеранах».", file: "FZ_5.pdf" },
+    { title: "Устав Московской городской общественной организации пенсионеров...", file: "Устав2.pdf" },
+    { title: "Соглашение о взаимодействии Правительства Москвы...", file: "обложка.pdf" }
 ];
 
+export async function migrateStandarts(dbService, log) {
+    if (!log) log = console.log;
+    log('🚀 start migrate standarts');
 
-export async function migrateStandarts(dbService) {
-    console.log("🚀 start migrate standarts");
-
-    try{
+    try {
         if (!dbService) {
-            console.error('❌ dbService не передан в migrateStandarts');
+            log('❌ dbService не передан');
             return false;
         }
 
-        const existingDocs = await dbService.getAll('standart_documents')
-
+        const existingDocs = await dbService.getAll('standart_documents');
         if (existingDocs && existingDocs.length > 0) {
-            console.log('✅ Данные уже есть в БД, миграция не нужна');
+            log('✅ Данные уже есть в БД, миграция не нужна');
             return false;
         }
 
-        const sourceDir = path.join(
-            process.cwd(),
-            'src', 
-            'components', 
-            'Windows', 
-            'StandartDocumentsWindow', 
-            'srcStandarts'
-        );
-
-        const userDataPath = app.getPath('userData')
-        const documentsDir = path.join(userDataPath, 'documents')
+        const sourceDir = getResourcePath('components/Windows/StandartDocumentsWindow/srcStandarts');
+        log(`📂 sourceDir = ${sourceDir}`);
 
         if (!fs.existsSync(sourceDir)) {
-            console.error(`❌ Папка с исходниками не найдена: ${sourceDir}`);
-            console.log('📂 Содержимое текущей папки:', fs.readdirSync(process.cwd()));
+            log(`❌ Папка не найдена: ${sourceDir}`);
+            // дополнительная диагностика
+            const componentsPath = path.join(process.resourcesPath, 'src', 'components');
+            log(`🔍 Проверяем componentsPath: ${componentsPath}, exists: ${fs.existsSync(componentsPath)}`);
+            if (fs.existsSync(componentsPath)) {
+                log(`📂 Содержимое componentsPath: ${fs.readdirSync(componentsPath).join(', ')}`);
+            }
             return false;
         }
 
-        const filesInDir = fs.readdirSync(sourceDir);
+        const userDataPath = app.getPath('userData');
+        const documentsDir = path.join(userDataPath, 'documents');
+        if (!fs.existsSync(documentsDir)) fs.mkdirSync(documentsDir, { recursive: true });
 
         let migratedCount = 0;
-        
-        // Копируем файлы и добавляем в БД
         for (const item of standartsArray) {
             const sourceFile = path.join(sourceDir, item.file);
-            const uniqueName = `${Date.now()}_${item.file}`;
-            const targetFile = path.join(documentsDir, uniqueName);
-            
-            console.log(`📄 Обработка: ${item.title}`);
-            console.log(`   Ищем файл: ${sourceFile}`);
-            
+            log(`🔍 Проверяем файл: ${sourceFile}, exists: ${fs.existsSync(sourceFile)}`);
             if (fs.existsSync(sourceFile)) {
-                // Копируем файл
+                const uniqueName = `${Date.now()}_${item.file}`;
+                const targetFile = path.join(documentsDir, uniqueName);
                 fs.copyFileSync(sourceFile, targetFile);
-                console.log(`   ✅ Файл скопирован`);
-                
-                // Сохраняем в БД
+                log(`   ✅ Файл скопирован в ${targetFile}`);
+
                 await dbService.insert('standart_documents', {
                     title: item.title,
                     file_path: `file://${targetFile.replace(/\\/g, '/')}`,
                     file_name: uniqueName,
                     upload_date: new Date().toISOString()
                 });
-                
                 migratedCount++;
-                
-                // Небольшая задержка для уникальности имен
                 await new Promise(resolve => setTimeout(resolve, 10));
             } else {
-                console.warn(`   ⚠️ Файл не найден: ${item.file}`);
+                log(`   ⚠️ Файл не найден: ${item.file}`);
             }
         }
-        
-        console.log(`✅ Миграция завершена! Перенесено: ${migratedCount} документов`);
+
+        log(`✅ Миграция завершена! Перенесено: ${migratedCount} документов`);
         return true;
     } catch (error) {
-        console.error('❌ Ошибка миграции:', error);
+        log(`❌ Ошибка: ${error.message}`);
         return false;
     }
 }

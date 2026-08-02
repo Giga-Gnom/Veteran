@@ -232,8 +232,10 @@ app.whenReady().then(async () => {
         logToFile('initDatabase completed');
         console.log('✅ Database ready');
 
-        // Раскомментируйте после проверки работы окна
-        await runAllMigrations(dbService);
+        logToFile('Before runAllMigrations');
+await runAllMigrations(dbService, logToFile);
+logToFile('After runAllMigrations');
+
 
         logToFile('Calling createMainWindow...');
         createMainWindow();
