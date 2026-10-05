@@ -2,6 +2,7 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
 }
 
 .container::before{
@@ -25,7 +26,7 @@
     flex: 1; 
     display: flex;
     flex-direction: column;
-    text-align: center; 
+    text-align: left; 
     max-height: 85vh;
     overflow: auto;
     z-index: 1;
@@ -89,4 +90,108 @@ h2{
 .image{
     margin-inline: 1vw;
     border: 2vh ridge rgba(66, 102, 145);
+}
+
+
+
+
+
+.about_cards {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+    align-items: flex-start;  
+    margin-top: 3vh;
+    z-index: 2;
+    position: relative;
+}
+
+.card {
+    width: 25vw;
+    min-height: 10vh;          
+    padding: 2vh 2vw;
+    border: 0.4vw solid rgba(66, 102, 145);
+    border-radius: 10vh;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.75);
+    color: #000;
+    box-sizing: border-box;
+    transition: border-radius 0.3s ease, max-height 0.4s ease;
+}
+
+.card_expandable {
+    cursor: pointer;
+    border-radius: 3vh;       
+}
+
+.card_open {
+    justify-content: flex-start;
+}
+
+.card_header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6vw;
+    font-weight: 600;
+    user-select: none;
+}
+
+.arrow {
+    display: inline-block;
+    font-size: 1.4vh;
+    transition: transform 0.3s ease;
+}
+
+.arrow_open {
+    transform: rotate(180deg);
+}
+
+
+
+.card_body {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    width: 100%;
+    margin-top: 0;
+    text-align: left;
+    transition: max-height 0.45s ease, opacity 0.3s ease, margin-top 0.3s ease;
+}
+
+.card_body_open {
+    max-height: 60vh;
+    opacity: 1;
+    margin-top: 2vh;
+}
+
+.card_subtitle {
+    margin: 1vh 0;
+    font-weight: 600;
+    text-align: center;
+}
+
+.card_list {
+    list-style: disc;
+    padding-left: 1.5vw;
+    margin: 0 0 1vh;
+}
+
+.card_list li {
+    margin-bottom: 0.8vh;
+    line-height: 1.4;
+}
+
+.card_list a {
+    color: #1a4a7a;
+    text-decoration: underline;
+}
+
+.card_list a:hover {
+    color: #0b2c4d;
 }
