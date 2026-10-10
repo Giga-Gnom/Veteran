@@ -1,0 +1,30 @@
+.documentContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    z-index: 1000;
+}
+
+.iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.closeButton {
+    position: absolute;
+    bottom: 2vh;
+    right: 0;
+    left: 0;
+    margin: auto;
+    padding: 1vw;
+    height: 7vh;
+    width: 40vw;
+    background: rgba(168,4, 4, 0.795);
+    color: white;
+    border: none;
+    cursor: pointer;
+}
