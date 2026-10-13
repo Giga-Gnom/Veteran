@@ -55,7 +55,7 @@ import ZAOorganization from "../components/Windows/MapWindow/DistrictWindows/ZAO
 import NovAOorganization from "../components/Windows/MapWindow/DistrictWindows/NovAOWindow/NovAOorganization/NovAOorganization";
 import TrAOorganization from "../components/Windows/MapWindow/DistrictWindows/TroAOWindow/TrAOorganization/TrAOorganization";
 import AreaActivityPage from "../components/Windows/StructWindow/DependenceWindows/Metodkabinet/about_MK/AreaActivityPage";
-import ActivityPage from "../components/Windows/StructWindow/DependenceWindows/Metodkabinet/about_MK/ActivityDocuments";
+import ActivityDocuments from "../components/Windows/StructWindow/DependenceWindows/Metodkabinet/about_MK/ActivityDocuments";
 
 
 
@@ -171,7 +171,7 @@ export const router = createBrowserRouter([
     },
     {
         path: "/metodkabinet/activity/:id/documnets",
-        element: <ActivityPage/>
+        element: <ActivityDocuments/>
     },
     {
         path: "/otdelinfo",
