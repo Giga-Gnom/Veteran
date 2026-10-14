@@ -47,7 +47,7 @@ const ActivityDocuments = () => {
             </div>
 
             <div className={styles.container_button}>
-                <Link to="/metodkabinet">
+                <Link to="/metodkabinet/activity/1">
                     <BeforePageButton />
                 </Link>
             </div>
