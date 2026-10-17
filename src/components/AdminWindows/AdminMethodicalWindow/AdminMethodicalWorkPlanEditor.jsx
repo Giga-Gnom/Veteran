@@ -13,48 +13,64 @@ const COLUMN_TYPES = [
     { value: "file",    label: "Файл" }
 ]
 
+const generateColumnKey = () => `col_${Date.now()}_${Math.floor(Math.random() * 1000)}`
+
 const AdminMethodicalWorkPlanEditor = ({ table, onBack, onChange, showError }) => {
     const [showColumnModal, setShowColumnModal] = useState(false)
-    const [showRowModal, setShowRowModal] = useState(false)
     const [editingColumn, setEditingColumn] = useState(null)
-    const [editingRow, setEditingRow] = useState(null)
-    const [newColumn, setNewColumn] = useState({ key: "", label: "", type: "string" })
-    const [rowData, setRowData] = useState({})
+    const [newColumn, setNewColumn] = useState({ label: "", type: "string" })
 
+    if (!table) {
+        return (
+            <div>
+                <div className={common.section_header}>
+                    <button className={common.back_btn} onClick={onBack}>← Назад к таблицам</button>
+                </div>
+                <div className={common.empty_state}><p>Таблица не найдена</p></div>
+            </div>
+        )
+    }
+
+    // ========== Колонки ==========
     const handleOpenAddColumn = () => {
         setEditingColumn(null)
-        setNewColumn({ key: "", label: "", type: "string" })
+        setNewColumn({ label: "", type: "string" })
         setShowColumnModal(true)
     }
 
     const handleOpenEditColumn = (col) => {
         setEditingColumn(col)
-        setNewColumn({ ...col })
+        setNewColumn({ label: col.label, type: col.type })
         setShowColumnModal(true)
     }
 
     const handleCloseColumnModal = () => {
         setEditingColumn(null)
-        setNewColumn({ key: "", label: "", type: "string" })
+        setNewColumn({ label: "", type: "string" })
         setShowColumnModal(false)
     }
 
     const handleSaveColumn = () => {
-        if (!newColumn.key.trim()) return showError("Введите ключ колонки")
-        if (!newColumn.label.trim()) return showError("Введите заголовок")
-        const key = newColumn.key.trim().replace(/\s+/g, "_").toLowerCase()
+        if (!newColumn.label.trim()) return showError("Введите заголовок колонки")
 
         if (editingColumn) {
             onChange({
                 ...table,
-                columns: table.columns.map(c => c.key === editingColumn.key ? { ...newColumn, key } : c)
+                columns: table.columns.map(c =>
+                    c.key === editingColumn.key
+                        ? { ...c, label: newColumn.label.trim(), type: newColumn.type }
+                        : c
+                )
             })
             showAlert("Колонка обновлена")
         } else {
-            if (table.columns.some(c => c.key === key)) {
-                return showError("Колонка с таким ключом уже существует")
-            }
-            onChange({ ...table, columns: [...table.columns, { ...newColumn, key }] })
+            onChange({
+                ...table,
+                columns: [
+                    ...table.columns,
+                    { key: generateColumnKey(), label: newColumn.label.trim(), type: newColumn.type }
+                ]
+            })
             showAlert("Колонка добавлена")
         }
         handleCloseColumnModal()
@@ -73,36 +89,21 @@ const AdminMethodicalWorkPlanEditor = ({ table, onBack, onChange, showError }) =
         })
     }
 
-    const handleOpenAddRow = () => {
-        setEditingRow(null)
-        setRowData({})
-        setShowRowModal(true)
+    // ========== Строки и ячейки ==========
+    const handleAddEmptyRow = () => {
+        onChange({
+            ...table,
+            rows: [...table.rows, { id: `new_${Date.now()}`, data: {} }]
+        })
     }
 
-    const handleOpenEditRow = (row) => {
-        setEditingRow(row)
-        setRowData({ ...row.data })
-        setShowRowModal(true)
-    }
-
-    const handleCloseRowModal = () => {
-        setEditingRow(null)
-        setRowData({})
-        setShowRowModal(false)
-    }
-
-    const handleSaveRow = () => {
-        if (editingRow) {
-            onChange({
-                ...table,
-                rows: table.rows.map(r => r.id === editingRow.id ? { ...r, data: rowData } : r)
-            })
-            showAlert("Строка обновлена")
-        } else {
-            onChange({ ...table, rows: [...table.rows, { id: Date.now(), data: rowData }] })
-            showAlert("Строка добавлена")
-        }
-        handleCloseRowModal()
+    const handleUpdateCell = (rowId, colKey, value) => {
+        onChange({
+            ...table,
+            rows: table.rows.map(r =>
+                r.id === rowId ? { ...r, data: { ...r.data, [colKey]: value } } : r
+            )
+        })
     }
 
     const handleDeleteRow = async (row) => {
@@ -111,18 +112,34 @@ const AdminMethodicalWorkPlanEditor = ({ table, onBack, onChange, showError }) =
         onChange({ ...table, rows: table.rows.filter(r => r.id !== row.id) })
     }
 
-    const handleRowFieldChange = (key, value) => {
-        setRowData(prev => ({ ...prev, [key]: value }))
+    // Загрузка файла
+    const handleFileUpload = async (rowId, colKey, file) => {
+        if (!file) return
+        try {
+            const arrayBuffer = await file.arrayBuffer()
+            const buffer = new Uint8Array(arrayBuffer)
+            
+            // Сохраняем файл через Electron API
+            const result = await window.electronAPI.file.save(file.name, buffer)
+            
+            // Сохраняем в ячейку JSON с именем и путем к файлу
+            const fileObj = { name: result.file_name, path: result.file_path }
+            handleUpdateCell(rowId, colKey, JSON.stringify(fileObj))
+            showAlert("Файл прикреплён")
+        } catch (error) {
+            console.error("File upload error:", error)
+            showError("Ошибка при загрузке файла")
+        }
     }
 
-    const renderCell = (value, col) => {
-        if (value === null || value === undefined || value === "") {
-            return <span className={styles.empty_cell}>—</span>
+    // Парсинг данных файла для отображения
+    const getFileData = (value) => {
+        if (!value) return null
+        try {
+            return JSON.parse(value)
+        } catch {
+            return { name: value, path: value } // fallback для старых данных
         }
-        if (col.type === "url") return <a href={value} target="_blank" rel="noreferrer">{value}</a>
-        if (col.type === "boolean") return value ? "Да" : "Нет"
-        if (col.type === "file") return <span className={styles.file_cell}>📄 файл</span>
-        return String(value)
     }
 
     return (
@@ -134,6 +151,7 @@ const AdminMethodicalWorkPlanEditor = ({ table, onBack, onChange, showError }) =
                 </div>
             </div>
 
+            {/* ===== Колонки ===== */}
             <div className={styles.block}>
                 <div className={styles.block_header}>
                     <h4 className={styles.block_title}>Колонки</h4>
@@ -149,7 +167,6 @@ const AdminMethodicalWorkPlanEditor = ({ table, onBack, onChange, showError }) =
                         <table className={styles.data_table}>
                             <thead>
                                 <tr>
-                                    <th>Ключ</th>
                                     <th>Заголовок</th>
                                     <th>Тип</th>
                                     <th>Действия</th>
@@ -158,7 +175,6 @@ const AdminMethodicalWorkPlanEditor = ({ table, onBack, onChange, showError }) =
                             <tbody>
                                 {table.columns.map(col => (
                                     <tr key={col.key}>
-                                        <td><code>{col.key}</code></td>
                                         <td>{col.label}</td>
                                         <td>{COLUMN_TYPES.find(t => t.value === col.type)?.label ?? col.type}</td>
                                         <td>
@@ -175,10 +191,11 @@ const AdminMethodicalWorkPlanEditor = ({ table, onBack, onChange, showError }) =
                 )}
             </div>
 
+            {/* ===== Данные (Строки) ===== */}
             <div className={styles.block}>
                 <div className={styles.block_header}>
-                    <h4 className={styles.block_title}>Строки</h4>
-                    <button className={common.add_btn} onClick={handleOpenAddRow}>
+                    <h4 className={styles.block_title}>Данные таблицы</h4>
+                    <button className={common.add_btn} onClick={handleAddEmptyRow}>
                         + Добавить строку
                     </button>
                 </div>
@@ -193,18 +210,103 @@ const AdminMethodicalWorkPlanEditor = ({ table, onBack, onChange, showError }) =
                             <thead>
                                 <tr>
                                     {table.columns.map(col => <th key={col.key}>{col.label}</th>)}
-                                    <th>Действия</th>
+                                    <th style={{ width: '100px' }}>Действия</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {table.rows.map(row => (
                                     <tr key={row.id}>
                                         {table.columns.map(col => (
-                                            <td key={col.key}>{renderCell(row.data[col.key], col)}</td>
+                                            <td key={col.key} style={{ padding: '4px', verticalAlign: 'top' }}>
+                                                
+                                                {/* --- ЧЕКБОКС --- */}
+                                                {col.type === "boolean" ? (
+                                                    <input
+                                                        type="checkbox"
+                                                        defaultChecked={!!row.data[col.key]}
+                                                        onChange={(e) => handleUpdateCell(row.id, col.key, e.target.checked)}
+                                                    />
+                                                
+                                                /* --- МНОГОСТРОЧНЫЙ ТЕКСТ --- */
+                                                ) : col.type === "text" ? (
+                                                    <textarea
+                                                        className={styles.inline_input}
+                                                        defaultValue={row.data[col.key] ?? ""}
+                                                        onBlur={(e) => handleUpdateCell(row.id, col.key, e.target.value)}
+                                                        rows={2}
+                                                    />
+                                                
+                                                /* --- ЧИСЛО (с поддержкой запятой) --- */
+                                                ) : col.type === "number" ? (
+                                                    <input
+                                                        className={styles.inline_input}
+                                                        type="text"
+                                                        inputMode="decimal"
+                                                        defaultValue={row.data[col.key] ?? ""}
+                                                        onBlur={(e) => {
+                                                            // Меняем запятую на точку для БД
+                                                            const val = e.target.value.replace(',', '.')
+                                                            if (val && isNaN(Number(val))) {
+                                                                showError("Введите корректное число")
+                                                                e.target.value = row.data[col.key] ?? ""
+                                                                return
+                                                            }
+                                                            handleUpdateCell(row.id, col.key, val)
+                                                        }}
+                                                    />
+                                                
+                                                /* --- ФАЙЛ --- */
+                                                ) : col.type === "file" ? (
+                                                    <div className={styles.file_cell_wrapper}>
+                                                        {row.data[col.key] ? (
+                                                            <div className={styles.file_value}>
+                                                                <span 
+                                                                    className={styles.file_link} 
+                                                                    onClick={() => {
+                                                                        const fileData = getFileData(row.data[col.key])
+                                                                        if (fileData?.path) window.open(fileData.path, '_blank')
+                                                                    }}
+                                                                    title="Открыть файл"
+                                                                >
+                                                                    📄 {getFileData(row.data[col.key])?.name || "Файл"}
+                                                                </span>
+                                                                <button 
+                                                                    className={styles.file_remove_btn} 
+                                                                    onClick={() => handleUpdateCell(row.id, col.key, "")}
+                                                                    title="Удалить файл"
+                                                                >
+                                                                    ✖
+                                                                </button>
+                                                            </div>
+                                                        ) : (
+                                                            <label className={styles.file_upload_label_inline}>
+                                                                📎 Выбрать файл
+                                                                <input
+                                                                    type="file"
+                                                                    style={{ display: 'none' }}
+                                                                    onChange={(e) => handleFileUpload(row.id, col.key, e.target.files?.[0])}
+                                                                />
+                                                            </label>
+                                                        )}
+                                                    </div>
+
+                                                /* --- ОСТАЛЬНЫЕ (строка, дата, ссылка) --- */
+                                                ) : (
+                                                    <input
+                                                        className={styles.inline_input}
+                                                        type={
+                                                            col.type === "date" ? "date" :
+                                                            col.type === "url" ? "url" :
+                                                            "text"
+                                                        }
+                                                        defaultValue={row.data[col.key] ?? ""}
+                                                        onBlur={(e) => handleUpdateCell(row.id, col.key, e.target.value)}
+                                                    />
+                                                )}
+                                            </td>
                                         ))}
                                         <td>
                                             <div className={styles.row_actions}>
-                                                <button className={common.view_btn} onClick={() => handleOpenEditRow(row)}>Изменить</button>
                                                 <button className={common.delete_btn} onClick={() => handleDeleteRow(row)}>Удалить</button>
                                             </div>
                                         </td>
@@ -216,31 +318,24 @@ const AdminMethodicalWorkPlanEditor = ({ table, onBack, onChange, showError }) =
                 )}
             </div>
 
+            {/* ===== Модалка колонки ===== */}
             {showColumnModal && (
                 <div className={common.modal_overlay} onClick={handleCloseColumnModal}>
                     <div className={common.modal} onClick={(e) => e.stopPropagation()}>
                         <h3>{editingColumn ? "Редактировать колонку" : "Новая колонка"}</h3>
+                        
                         <div className={common.form_group}>
-                            <label htmlFor="colKey">Ключ *</label>
-                            <input
-                                id="colKey"
-                                type="text"
-                                value={newColumn.key}
-                                onChange={(e) => setNewColumn(prev => ({ ...prev, key: e.target.value }))}
-                                placeholder="event_name"
-                                disabled={!!editingColumn}
-                            />
-                        </div>
-                        <div className={common.form_group}>
-                            <label htmlFor="colLabel">Заголовок *</label>
+                            <label htmlFor="colLabel">Заголовок колонки *</label>
                             <input
                                 id="colLabel"
                                 type="text"
                                 value={newColumn.label}
                                 onChange={(e) => setNewColumn(prev => ({ ...prev, label: e.target.value }))}
-                                placeholder="Название мероприятия"
+                                placeholder="Например: Название мероприятия"
+                                autoFocus
                             />
                         </div>
+
                         <div className={common.form_group}>
                             <label htmlFor="colType">Тип данных *</label>
                             <select
@@ -251,48 +346,10 @@ const AdminMethodicalWorkPlanEditor = ({ table, onBack, onChange, showError }) =
                                 {COLUMN_TYPES.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
                             </select>
                         </div>
+
                         <div className={common.modal_actions}>
                             <button className={common.cancel_btn} onClick={handleCloseColumnModal}>Отмена</button>
                             <button className={common.submit_btn} onClick={handleSaveColumn}>Сохранить</button>
-                        </div>
-                    </div>
-                </div>
-            )}
-
-            {showRowModal && (
-                <div className={common.modal_overlay} onClick={handleCloseRowModal}>
-                    <div className={common.modal} onClick={(e) => e.stopPropagation()}>
-                        <h3>{editingRow ? "Редактировать строку" : "Новая строка"}</h3>
-                        {table.columns.map(col => (
-                            <div className={common.form_group} key={col.key}>
-                                <label htmlFor={`row_${col.key}`}>{col.label}</label>
-                                {col.type === "text" ? (
-                                    <textarea
-                                        id={`row_${col.key}`}
-                                        value={rowData[col.key] ?? ""}
-                                        onChange={(e) => handleRowFieldChange(col.key, e.target.value)}
-                                        rows={4}
-                                    />
-                                ) : col.type === "boolean" ? (
-                                    <input
-                                        id={`row_${col.key}`}
-                                        type="checkbox"
-                                        checked={!!rowData[col.key]}
-                                        onChange={(e) => handleRowFieldChange(col.key, e.target.checked)}
-                                    />
-                                ) : (
-                                    <input
-                                        id={`row_${col.key}`}
-                                        type={col.type === "number" ? "number" : col.type === "date" ? "date" : col.type === "url" ? "url" : "text"}
-                                        value={rowData[col.key] ?? ""}
-                                        onChange={(e) => handleRowFieldChange(col.key, e.target.value)}
-                                    />
-                                )}
-                            </div>
-                        ))}
-                        <div className={common.modal_actions}>
-                            <button className={common.cancel_btn} onClick={handleCloseRowModal}>Отмена</button>
-                            <button className={common.submit_btn} onClick={handleSaveRow}>Сохранить</button>
                         </div>
                     </div>
                 </div>

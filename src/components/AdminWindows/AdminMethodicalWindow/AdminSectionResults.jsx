@@ -1,80 +1,122 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./AdminSectionResults.module.css";
 import common from "./AdminMethodicalCommon.module.css";
 import { ErrorMassage } from "../admin_components/ErrorMassage";
 import { showAlert, showConfirm } from "../UI/ConfirmModal/ConfirmModel";
+import methodicalService from "../../../services/methodicalService";
 
-const AdminSectionResults = ({ section, onChange }) => {
+const AdminSectionResults = ({ sectionId, onChanged }) => {
+    const [results, setResults] = useState([])
+    const [loading, setLoading] = useState(false)
     const [showModal, setShowModal] = useState(false)
     const [editingResult, setEditingResult] = useState(null)
-    const [form, setForm] = useState({ title: "", external_url: "", file: null })
+    const [form, setForm] = useState({ title: "", external_url: "", file_name: null, file_path: null, new_file: null })
     const [error, setError] = useState(null)
 
-    const showError = (message) => setError(message)
+    const showError = (m) => setError(m)
     const clearError = () => setError(null)
 
-    const handleOpenAdd = () => {
+    useEffect(() => { loadResults() }, [sectionId])
+
+    const loadResults = async () => {
+        try {
+            setLoading(true)
+            setResults(await methodicalService.getResultsBySection(sectionId))
+        } catch (e) {
+            console.error(e)
+            showError("Не удалось загрузить итоги")
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const resetForm = () => {
         setEditingResult(null)
-        setForm({ title: "", external_url: "", file: null })
+        setForm({ title: "", external_url: "", file_name: null, file_path: null, new_file: null })
+    }
+
+    const handleOpenAdd = () => {
+        resetForm()
         setShowModal(true)
     }
 
     const handleOpenEdit = (result) => {
         setEditingResult(result)
-        setForm({ title: result.title, external_url: result.external_url ?? "", file: result.file })
+        setForm({
+            title: result.title,
+            external_url: result.external_url ?? "",
+            file_name: result.file_name,
+            file_path: result.file_path,
+            new_file: null
+        })
         setShowModal(true)
     }
 
     const handleCloseModal = () => {
-        setEditingResult(null)
-        setForm({ title: "", external_url: "", file: null })
+        resetForm()
         setShowModal(false)
     }
 
     const handleFileChange = (e) => {
         const file = e.target.files?.[0]
         if (!file) return
-        setForm(prev => ({
-            ...prev,
-            file: { original_name: file.name, mime_type: file.type || "application/octet-stream", url: "#" }
-        }))
+        setForm(prev => ({ ...prev, new_file: file, file_name: file.name }))
     }
 
-    const handleSave = () => {
+    const handleSave = async () => {
         if (!form.title.trim()) return showError("Введите название")
-        if (!form.file && !form.external_url.trim()) {
+        if (!form.new_file && !form.file_name && !form.external_url.trim()) {
             return showError("Прикрепите файл или укажите ссылку")
         }
-        if (editingResult) {
-            onChange({
-                ...section,
-                results: section.results.map(r => r.id === editingResult.id ? {
-                    ...r,
-                    title: form.title.trim(),
-                    external_url: form.external_url.trim() || null,
-                    file: form.file
-                } : r)
-            })
-            showAlert("Итог обновлён")
-        } else {
-            onChange({
-                ...section,
-                results: [...section.results, {
-                    id: Date.now(),
-                    title: form.title.trim(),
-                    external_url: form.external_url.trim() || null,
-                    file: form.file
-                }]
-            })
-            showAlert("Итог добавлен")
+
+        try {
+            let file_path = form.file_path
+            let file_name = form.file_name
+
+            if (form.new_file) {
+                const saved = await methodicalService.saveFileFromInput(form.new_file)
+                if (saved) {
+                    file_path = saved.file_path
+                    file_name = saved.file_name
+                }
+            }
+
+            const payload = {
+                section_id: sectionId,
+                title: form.title.trim(),
+                external_url: form.external_url.trim() || null,
+                file_path,
+                file_name
+            }
+
+            if (editingResult) {
+                await methodicalService.updateResult(editingResult.id, payload)
+                showAlert("Итог обновлён")
+            } else {
+                await methodicalService.addResult(payload)
+                showAlert("Итог добавлен")
+            }
+            handleCloseModal()
+            await loadResults()
+            onChanged?.()
+        } catch (e) {
+            console.error(e)
+            showError("Ошибка при сохранении")
         }
-        handleCloseModal()
     }
 
     const handleDelete = async (result) => {
         const confirmed = await showConfirm(`Удалить итог "${result.title}"?`)
         if (!confirmed) return
-        onChange({ ...section, results: section.results.filter(r => r.id !== result.id) })
+        try {
+            await methodicalService.deleteResult(result.id)
+            await loadResults()
+            onChanged?.()
+            showAlert("Итог удалён")
+        } catch (e) {
+            console.error(e)
+            showError("Ошибка при удалении")
+        }
     }
 
     return (
@@ -88,7 +130,9 @@ const AdminSectionResults = ({ section, onChange }) => {
                 </button>
             </div>
 
-            {section.results.length === 0 ? (
+            {loading ? (
+                <div className={common.empty_state}><p>Загрузка...</p></div>
+            ) : results.length === 0 ? (
                 <div className={common.empty_state}>
                     <div className={common.icon}>📊</div>
                     <p>Итогов пока нет</p>
@@ -98,12 +142,12 @@ const AdminSectionResults = ({ section, onChange }) => {
                 </div>
             ) : (
                 <div className={styles.results_grid}>
-                    {section.results.map(result => (
+                    {results.map(result => (
                         <div key={result.id} className={styles.result_card}>
                             <h4 className={styles.result_title}>{result.title}</h4>
                             <div className={styles.result_meta}>
-                                {result.file ? (
-                                    <span className={styles.result_file}>📄 {result.file.original_name}</span>
+                                {result.file_name ? (
+                                    <span className={styles.result_file}>📄 {result.file_name}</span>
                                 ) : (
                                     <a href={result.external_url} target="_blank" rel="noreferrer" className={styles.result_url}>
                                         🔗 внешняя ссылка
@@ -153,11 +197,14 @@ const AdminSectionResults = ({ section, onChange }) => {
                             <div className={common.file_upload_container}>
                                 <input type="file" id="resultFile" onChange={handleFileChange} className={common.file_input}/>
                                 <label htmlFor="resultFile" className={common.file_upload_label}>
-                                    {form.file ? form.file.original_name : "Выберите файл"}
+                                    {form.file_name ?? "Выберите файл"}
                                 </label>
                             </div>
-                            {form.file && (
-                                <button className={common.clear_file_btn} onClick={() => setForm(prev => ({ ...prev, file: null }))}>
+                            {form.file_name && (
+                                <button
+                                    className={common.clear_file_btn}
+                                    onClick={() => setForm(prev => ({ ...prev, file_name: null, file_path: null, new_file: null }))}
+                                >
                                     Убрать файл
                                 </button>
                             )}

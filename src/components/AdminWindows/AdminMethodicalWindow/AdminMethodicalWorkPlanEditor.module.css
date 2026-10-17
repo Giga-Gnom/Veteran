@@ -1,5 +1,6 @@
 .block {
-  margin-bottom: 3vh;
+  max-width: 80vw;
+  margin-bottom: 2vh;
 }
 
 .block_header {
@@ -19,7 +20,7 @@
 
 .table_container {
   overflow-x: auto;
-  max-height: 60vh;
+  max-height: 20vh;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -73,4 +74,70 @@
   border-radius: 0.3vw;
   font-size: 1vw;
   color: #475569;
+}
+
+
+/* Обертка для ячейки с файлом */
+.file_cell_wrapper {
+  display: flex;
+  align-items: center;
+  min-height: 3vh;
+}
+
+/* Выбранный файл */
+.file_value {
+  display: flex;
+  align-items: center;
+  gap: 0.5vw;
+  background: #f1f5f9;
+  padding: 0.4vh 0.6vw;
+  border-radius: 0.3vw;
+  max-width: 100%;
+}
+
+.file_link {
+  font-size: 1vw;
+  color: #007aff;
+  cursor: pointer;
+  text-decoration: underline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 12vw;
+}
+
+.file_link:hover {
+  color: #005bb5;
+}
+
+.file_remove_btn {
+  background: none;
+  border: none;
+  color: #dc2626;
+  font-size: 1vw;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.file_remove_btn:hover {
+  color: #991b1b;
+}
+
+/* Кнопка загрузки файла */
+.file_upload_label_inline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6vh 1vw;
+  background: #e5e7eb;
+  border-radius: 0.3vw;
+  font-size: 1vw;
+  cursor: pointer;
+  color: #1f2937;
+  transition: background 0.2s;
+}
+
+.file_upload_label_inline:hover {
+  background: #d1d5db;
 }

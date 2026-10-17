@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./AdminMethodicalSectionDetail.module.css";
 import common from "./AdminMethodicalCommon.module.css";
 import AdminSectionDocuments from "./AdminSectionDocuments";
 import AdminSectionPartners from "./AdminSectionPartners";
 import AdminSectionResults from "./AdminSectionResults";
+import methodicalService from "../../../services/methodicalService";
 
 const TABS = [
     { id: "documents", label: "Документы" },
@@ -11,13 +12,24 @@ const TABS = [
     { id: "results",   label: "Итоги работы" }
 ]
 
-const AdminMethodicalSectionDetail = ({ section, onBack, onChange }) => {
+const AdminMethodicalSectionDetail = ({ section, onBack }) => {
     const [activeTab, setActiveTab] = useState("documents")
+    const [counts, setCounts] = useState({
+        documents: section.documents_count ?? 0,
+        partners: section.partners_count ?? 0,
+        results: section.results_count ?? 0
+    })
 
-    const counts = {
-        documents: section.documents.length,
-        partners: section.partners.length,
-        results: section.results.length
+    const refreshCounts = async () => {
+        const list = await methodicalService.getSectionsWithCounts()
+        const fresh = list.find(s => s.id === section.id)
+        if (fresh) {
+            setCounts({
+                documents: fresh.documents_count,
+                partners: fresh.partners_count,
+                results: fresh.results_count
+            })
+        }
     }
 
     return (
@@ -43,9 +55,15 @@ const AdminMethodicalSectionDetail = ({ section, onBack, onChange }) => {
             </div>
 
             <div className={styles.tab_content}>
-                {activeTab === "documents" && <AdminSectionDocuments section={section} onChange={onChange}/>}
-                {activeTab === "partners" && <AdminSectionPartners section={section} onChange={onChange}/>}
-                {activeTab === "results" && <AdminSectionResults section={section} onChange={onChange}/>}
+                {activeTab === "documents" && (
+                    <AdminSectionDocuments sectionId={section.id} onChanged={refreshCounts}/>
+                )}
+                {activeTab === "partners" && (
+                    <AdminSectionPartners sectionId={section.id} onChanged={refreshCounts}/>
+                )}
+                {activeTab === "results" && (
+                    <AdminSectionResults sectionId={section.id} onChanged={refreshCounts}/>
+                )}
             </div>
         </div>
     )

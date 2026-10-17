@@ -22,6 +22,7 @@ class DatabaseService {
     
     const dbPath = path.join(app.getPath('userData'), 'kiosk.db');
     this.db = new Database(dbPath);
+    this.db.pragma('foreign_keys = ON');   // ← добавь эту строку
     this.createTables();
   }
 
@@ -171,6 +172,116 @@ class DatabaseService {
             area_num INTEGER
           )`
         )
+
+            // ========== Методический отдел ==========
+
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS methodical_sections (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        code TEXT UNIQUE NOT NULL,
+        title TEXT NOT NULL,
+        sort_order INTEGER DEFAULT 0
+      )
+    `);
+
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS methodical_document_types (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        code TEXT UNIQUE NOT NULL,
+        title TEXT NOT NULL,
+        sort_order INTEGER DEFAULT 0
+      )
+    `);
+
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS methodical_documents (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        section_id INTEGER NOT NULL,
+        doc_type_id INTEGER NOT NULL,
+        title TEXT NOT NULL,
+        file_path TEXT,
+        file_name TEXT,
+        external_url TEXT,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (section_id) REFERENCES methodical_sections(id) ON DELETE CASCADE,
+        FOREIGN KEY (doc_type_id) REFERENCES methodical_document_types(id) ON DELETE RESTRICT
+      )
+    `);
+
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS methodical_partners (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        section_id INTEGER NOT NULL,
+        name TEXT NOT NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (section_id) REFERENCES methodical_sections(id) ON DELETE CASCADE
+      )
+    `);
+
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS methodical_results (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        section_id INTEGER NOT NULL,
+        title TEXT NOT NULL,
+        file_path TEXT,
+        file_name TEXT,
+        external_url TEXT,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (section_id) REFERENCES methodical_sections(id) ON DELETE CASCADE
+      )
+    `);
+
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS methodical_lectures (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        file_path TEXT,
+        file_name TEXT,
+        external_url TEXT,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS methodical_work_plans (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        columns TEXT NOT NULL DEFAULT '[]',
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS methodical_work_plan_rows (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        plan_id INTEGER NOT NULL,
+        data TEXT NOT NULL DEFAULT '{}',
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (plan_id) REFERENCES methodical_work_plans(id) ON DELETE CASCADE
+      )
+    `);
+
+    this.db.exec(`CREATE INDEX IF NOT EXISTS idx_mp_docs_section ON methodical_documents(section_id)`);
+    this.db.exec(`CREATE INDEX IF NOT EXISTS idx_mp_partners_section ON methodical_partners(section_id)`);
+    this.db.exec(`CREATE INDEX IF NOT EXISTS idx_mp_results_section ON methodical_results(section_id)`);
+    this.db.exec(`CREATE INDEX IF NOT EXISTS idx_mp_rows_plan ON methodical_work_plan_rows(plan_id)`);
+
+    // Сиды справочников (идемпотентно)
+    this.db.exec(`
+      INSERT OR IGNORE INTO methodical_sections (code, title, sort_order) VALUES
+        ('social_protection',   'Социальная защита ветеранов и пенсионеров', 1),
+        ('patriotic_education', 'Патриотическое воспитание молодежи',        2),
+        ('org_planning',        'Организационно-плановая работа',            3),
+        ('cultural_planning',   'Культурно-плановая работа',                 4),
+        ('info_analytical',     'Информационно-аналитическая работа',        5)
+    `);
+
+    this.db.exec(`
+      INSERT OR IGNORE INTO methodical_document_types (code, title, sort_order) VALUES
+        ('normative',       'Нормативно-правовые документы', 1),
+        ('recommendations', 'Методические рекомендации',     2),
+        ('manuals',         'Пособия, памятки',              3)
+    `);
 
     console.log('✅ Таблицы созданы успешно');
   }
