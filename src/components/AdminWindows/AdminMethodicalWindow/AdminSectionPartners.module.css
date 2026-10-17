@@ -1,0 +1,30 @@
+.partners_grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18vw, 1fr));
+  gap: 1.5vw;
+}
+
+.partner_card {
+  background: #ffffff;
+  border: 0.1vw solid #eaeaea;
+  border-radius: 0.8vw;
+  padding: 1.5vh 1.2vw;
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+}
+
+.partner_name {
+  font-size: 1.2vw;
+  font-weight: 500;
+  color: #0f172a;
+  margin: 0;
+}
+
+.partner_actions {
+  display: flex;
+  gap: 0.5vw;
+  flex-wrap: wrap;
+  border-top: 0.1vw solid #f1f5f9;
+  padding-top: 1vh;
+}

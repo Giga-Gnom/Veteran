@@ -57,6 +57,7 @@ import TrAOorganization from "../components/Windows/MapWindow/DistrictWindows/Tr
 import AreaActivityPage from "../components/Windows/StructWindow/DependenceWindows/Metodkabinet/about_MK/AreaActivityPage";
 import ActivityDocuments from "../components/Windows/StructWindow/DependenceWindows/Metodkabinet/about_MK/ActivityDocuments";
 import ActivityPartners from "../components/Windows/StructWindow/DependenceWindows/Metodkabinet/about_MK/ActivityPartners";
+import LecturesMKPage from "../components/Windows/StructWindow/DependenceWindows/Metodkabinet/about_MK/LecturesMKPage";
 
 
 
@@ -165,6 +166,10 @@ export const router = createBrowserRouter([
     {
         path: "/metodkabinet",
         element: <Metodkabinet/>
+    },
+    {
+        path: "/metodkabinet/lectures",
+        element: <LecturesMKPage/>
     },
     {
         path: "/metodkabinet/activity/:id",

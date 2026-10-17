@@ -89,9 +89,9 @@ const Metodkabinet = () => {
                                 </li>
                             </ul>
 
-                            <p className={styles.card_subtitle}>
+                            <Link to="/metodkabinet/lectures" className={styles.card_subtitle}>
                                 2. Взаимодействие с лекторской группой МГСВ
-                            </p>
+                            </Link>
                         </div>
                     </div>
                 </div>

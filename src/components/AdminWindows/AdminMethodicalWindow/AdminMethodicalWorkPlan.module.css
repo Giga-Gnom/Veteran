@@ -1,0 +1,40 @@
+.tables_grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(22vw, 1fr));
+  gap: 1.5vw;
+}
+
+.table_card {
+  background: #ffffff;
+  border: 0.1vw solid #eaeaea;
+  border-radius: 0.8vw;
+  padding: 1.5vh 1.5vw;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.table_card:hover {
+  border-color: #007aff;
+}
+
+.table_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1vw;
+  margin-bottom: 1vh;
+}
+
+.table_title {
+  font-size: 1.4vw;
+  font-weight: 500;
+  color: #0f172a;
+  margin: 0;
+}
+
+.table_meta {
+  display: flex;
+  gap: 0.5vw;
+  font-size: 1.1vw;
+  color: #6b7280;
+}
