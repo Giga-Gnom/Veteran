@@ -58,6 +58,7 @@ import AreaActivityPage from "../components/Windows/StructWindow/DependenceWindo
 import ActivityDocuments from "../components/Windows/StructWindow/DependenceWindows/Metodkabinet/about_MK/ActivityDocuments";
 import ActivityPartners from "../components/Windows/StructWindow/DependenceWindows/Metodkabinet/about_MK/ActivityPartners";
 import LecturesMKPage from "../components/Windows/StructWindow/DependenceWindows/Metodkabinet/about_MK/LecturesMKPage";
+import ResultsPage from "../components/Windows/StructWindow/DependenceWindows/Metodkabinet/about_MK/ResultsPage";
 
 
 
@@ -176,7 +177,7 @@ export const router = createBrowserRouter([
         element: <AreaActivityPage/>
     },
     {
-        path: "/metodkabinet/activity/:id/documnets",
+        path: "/metodkabinet/activity/:id/documents",
         element: <ActivityDocuments/>
     },
     {
@@ -185,7 +186,7 @@ export const router = createBrowserRouter([
     },
     {
         path: "/metodkabinet/activity/:id/results",
-        element: <ActivityPartners/>
+        element: <ResultsPage/>
     },
     {
         path: "/otdelinfo",

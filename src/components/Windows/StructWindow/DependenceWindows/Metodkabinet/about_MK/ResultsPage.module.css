@@ -1,57 +1,34 @@
-.container{
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
 
-.container::before{
-    background: url(/src/components/Windows/StructWindow/srcStruct/fon_5.png) center/cover no-repeat;
-    position: absolute;
-    inset: 0;
-    opacity: 0.5;
-    content: "";
-    z-index: 0;
-    filter: blur(0.6vh);
-}
-
-.container_head{
-    height: 15vh;
-}
-
-.container_contant {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    justify-content: center;
-    margin: 0;
-    padding-bottom: 1vh;
-    padding-inline: 1vw;
-    flex: 0 0 auto; 
-    z-index: 2;
-}
-
-
-.container_button{
-    position: fixed;
-    left: 5vw;
-    bottom: 2vh;
-    z-index: 2;
-}
-
-.column_card{
-    width: 80vw;
-    height: 8vh;          
-    padding: 0.5vh 4vw;
-    border: 0.4vw solid rgba(66, 102, 145);
-    border-radius: 3vh;
-    display: flex;
-    flex-direction: column;
+.status_message {
     text-align: center;
-    justify-content: center;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.75);
-    color: #000;
-    box-sizing: border-box;
-    transition: border-radius 0.3s ease, max-height 0.4s ease;
-    margin-block: 1vh;
+    font-size: 1.5vw;
+    color: #334155;
+    margin-top: 5vh;
+    font-weight: 500;
+}
+
+.column_card {
+    transition: background 0.2s, transform 0.1s;
+}
+
+.column_card[style*="pointer"]:hover {
+    background: rgba(255, 255, 255, 0.95);
+    transform: translateY(-0.2vh);
+}
+
+.card_title {
+    font-size: 1.6vw;
+    font-weight: 600;
+    color: #0f172a;
+    margin-bottom: 0.3vh;
+    line-height: 1.2;
+}
+
+.card_file_hint {
+    font-size: 1vw;
+    color: #64748b;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 90%;
 }

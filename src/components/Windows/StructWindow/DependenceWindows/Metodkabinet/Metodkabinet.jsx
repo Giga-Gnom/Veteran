@@ -1,15 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Metodkabinet.module.css"
 import MyHat from "../../../../Hat/MyHat";
 import { Link } from "react-router-dom";
 import BeforePageButton from "../../../../UI/MyButtons/BeforePageButton";
 import miloserdova from "./miloserdova.png"
 import PDFpage from "./about_MK/PDFpage";
-import randompdf from "../../../AwardsWindow/srcAwards/Book.pdf"
+import randompdf from "../../../AwardsWindow/srcAwards/Book.pdf";
+import methodicalService from "../../../../../services/methodicalService";
 
 const Metodkabinet = () => {
     const [open, setOpen] = useState(false)
     const [PDFDoc, setPDFDoc] = useState(null);
+    
+    const [sections, setSections] = useState([]);
+    const [loadingSections, setLoadingSections] = useState(true);
+
+    useEffect(() => {
+        const loadSections = async () => {
+            try {
+                const data = await methodicalService.getSections();
+                setSections(data);
+            } catch (error) {
+                console.error("Ошибка загрузки разделов:", error);
+            } finally {
+                setLoadingSections(false);
+            }
+        };
+        loadSections();
+    }, []);
 
     const handleClosePDF = () => {
         setPDFDoc(null)
@@ -72,21 +90,19 @@ const Metodkabinet = () => {
                             </p>
 
                             <ul className={styles.card_list}>
-                                <li>
-                                    <Link to="/metodkabinet/activity/0">Социальная защита ветеранов и пенсионеров</Link>
-                                </li>
-                                <li>
-                                    <Link to="/metodkabinet/activity/1">Патриотическое воспитание молодежи</Link>
-                                </li>
-                                <li>
-                                    <Link to="/metodkabinet/activity/2">Организационно плановая работа</Link>
-                                </li>
-                                <li>
-                                    <Link to="/metodkabinet/activity/3">Культурно плановая работа</Link>
-                                </li>
-                                <li>
-                                    <Link to="/metodkabinet/activity/4">Информационно аналитическая работа</Link>
-                                </li>
+                                {loadingSections ? (
+                                    <li>Загрузка разделов...</li>
+                                ) : sections.length === 0 ? (
+                                    <li>Разделы не найдены</li>
+                                ) : (
+                                    sections.map((section) => (
+                                        <li key={section.id}>
+                                            <Link to={`/metodkabinet/activity/${section.id}`}>
+                                                {section.title}
+                                            </Link>
+                                        </li>
+                                    ))
+                                )}
                             </ul>
 
                             <Link to="/metodkabinet/lectures" className={styles.card_subtitle}>
