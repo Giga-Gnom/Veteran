@@ -68,7 +68,9 @@ const Metodkabinet = () => {
                 </div>
                 <div className={styles.about_cards}>
                     <div className={styles.card} onClick={() => handleOpenPDF(randompdf)}>Положение о методическом кабинете МГСВ</div>
-                    <div className={styles.card}>План работы МГСВ</div>
+                    <Link to="/metodkabinet/plans" className={styles.card}>
+                        План работы МГСВ
+                    </Link>
                     <div
                         className={`${styles.card} ${styles.card_expandable} ${open ? styles.card_open : ""}`}
                     >

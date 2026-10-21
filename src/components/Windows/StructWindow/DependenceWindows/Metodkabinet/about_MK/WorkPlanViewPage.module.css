@@ -1,0 +1,99 @@
+.container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Убираем глобальный скролл */
+}
+
+.container::before {
+    background: url(/src/components/Windows/StructWindow/srcStruct/fon_5.png) center/cover no-repeat;
+    position: absolute;
+    inset: 0;
+    opacity: 0.5;
+    content: "";
+    z-index: 0;
+    filter: blur(0.6vh);
+}
+
+.container_head {
+    height: 15vh;
+    flex-shrink: 0;
+}
+
+/* Обертка для самой таблицы */
+.table_wrapper {
+    flex: 1;
+    min-height: 0; /* Важно для работы flex-скролла */
+    padding-inline: 5vw;
+    z-index: 2;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10vh; /* Отступ снизу, чтобы кнопка "Назад" не закрывала контент */
+}
+
+/* Контейнер для скролла только контента */
+.table_scroll {
+    flex: 1;
+    overflow: auto;
+    background: rgba(255, 255, 255, 0.85); /* Полупрозрачный фон для читаемости */
+    border-radius: 1vw;
+    box-shadow: 0 1vh 3vw rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px); /* Размытие заднего фона (красиво смотрится на фоне) */
+}
+
+/* Сама таблица */
+.view_table {
+    width: max-content; /* Растягиваем таблицу под контент, чтобы был скролл */
+    min-width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 1.2vw;
+}
+
+/* Фиксированная шапка */
+.view_table th {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: #f1f5f9; /* Плотный фон, чтобы не просвечивало */
+    padding: 1.5vh 1vw;
+    text-align: left;
+    font-weight: 600;
+    color: #334155;
+    box-shadow: inset 0 -0.1vw 0 #cbd5e1, 0 0.2vh 0.5vw rgba(0,0,0,0.05);
+    white-space: nowrap;
+}
+
+.view_table td {
+    padding: 1.2vh 1vw;
+    border-bottom: 0.1vw solid #f1f5f9;
+    color: #0f172a;
+    vertical-align: top;
+}
+
+.view_table tr:hover td {
+    background-color: #f8fafc;
+}
+
+.empty {
+    text-align: center;
+    color: #64748b;
+    padding: 3vh !important;
+}
+
+.container_button {
+    position: fixed;
+    left: 5vw;
+    bottom: 2vh;
+    z-index: 2;
+}
+
+.status {
+    width: 100%;
+    text-align: center;
+    font-size: 1.5vw;
+    color: #334155;
+    margin-top: 5vh;
+    font-weight: 500;
+}

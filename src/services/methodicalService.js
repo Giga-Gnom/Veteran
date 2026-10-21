@@ -228,6 +228,21 @@ class MethodicalService {
         const buffer = new Uint8Array(arrayBuffer);
         return await window.electronAPI.file.save(file.name, buffer);
     }
+
+    async getWorkPlanById(id) {
+        if (!window.electronAPI) return null;
+        const rows = await window.electronAPI.database.execute(
+            `SELECT * FROM methodical_work_plans WHERE id = ?`,
+            [id]
+        );
+        if (!rows[0]) return null;
+        
+        const plan = rows[0];
+        return {
+            ...plan,
+            columns: this._safeParse(plan.columns, [])
+        };
+    }
 }
 
 export default new MethodicalService();

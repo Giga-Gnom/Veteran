@@ -1,0 +1,77 @@
+.container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container::before {
+    background: url(/src/components/Windows/StructWindow/srcStruct/fon_5.png) center/cover no-repeat;
+    position: absolute;
+    inset: 0;
+    opacity: 0.5;
+    content: "";
+    z-index: 0;
+    filter: blur(0.6vh);
+}
+
+.container_head {
+    height: 15vh;
+}
+
+.container_contant {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    margin: 0;
+    padding-bottom: 1vh;
+    padding-inline: 1vw;
+    flex: 0 0 auto; 
+    z-index: 2;
+}
+
+.container_button {
+    position: fixed;
+    left: 5vw;
+    bottom: 2vh;
+    z-index: 2;
+}
+
+.column_card {
+    width: 80vw;
+    height: 10vh;          
+    padding: 0.5vh 4vw;
+    border: 0.4vw solid rgba(66, 102, 145);
+    border-radius: 3vh;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.75);
+    color: #000;
+    box-sizing: border-box;
+    transition: background 0.2s, transform 0.2s;
+    margin-block: 1vh;
+    text-decoration: none;
+}
+
+.column_card:hover {
+    background: rgba(255, 255, 255, 0.95);
+    transform: translateY(-0.2vh);
+}
+
+.plan_title {
+    font-size: 1.6vw;
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.status {
+    width: 100%;
+    text-align: center;
+    font-size: 1.5vw;
+    color: #334155;
+    margin-top: 5vh;
+    font-weight: 500;
+    z-index: 2;
+}
