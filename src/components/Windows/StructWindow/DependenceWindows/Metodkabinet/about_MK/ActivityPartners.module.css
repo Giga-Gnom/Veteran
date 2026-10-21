@@ -1,10 +1,10 @@
-.container{
+.container {
     height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-.container::before{
+.container::before {
     background: url(/src/components/Windows/StructWindow/srcStruct/fon_5.png) center/cover no-repeat;
     position: absolute;
     inset: 0;
@@ -14,34 +14,35 @@
     filter: blur(0.6vh);
 }
 
-.container_head{
+.container_head {
     height: 15vh;
 }
 
 .container_contant {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    /* === ГЛАВНОЕ ИЗМЕНЕНИЕ: перешли с flex на grid === */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Ровно 4 колонки одинаковой ширины */
+    gap: 3vh 3vw;                           /* Отступы: 3vh по вертикали, 3vw по горизонтали */
     width: 100%;
-    margin: 0;
-    padding: 0;
-    flex: 0 0 auto; 
+    box-sizing: border-box;
+    padding: 2vh 3vw;                       /* Отступы от краёв контейнера */
+    align-content: flex-start;              /* Прижимаем контент к верху */
+    flex: 0 0 auto;
     z-index: 2;
 }
 
-
-.container_button{
+.container_button {
     position: fixed;
     left: 5vw;
     bottom: 2vh;
     z-index: 2;
 }
 
-.column_card{
-    width: 20vw;
-    height: 15vh;          
+.column_card {
+    /* В GRID ширина и высота задаются автоматически колонкой,
+       поэтому width: 20vw больше не нужен */
+    height: 15vh;
     padding: 0.5vh 0.5vw;
-    margin: 1vh 4vw;
     border: 0.4vw solid rgba(66, 102, 145);
     border-radius: 3vh;
     display: flex;
@@ -52,6 +53,38 @@
     background: rgba(255, 255, 255, 0.75);
     color: #000;
     box-sizing: border-box;
-    transition: border-radius 0.3s ease, max-height 0.4s ease;
-    margin-block: 1vh;
+    transition: border-radius 0.3s ease, background 0.2s, transform 0.2s;
+    
+    /* Убираем любые margin, чтобы они не мешали grid'у */
+    margin: 0;
+}
+
+.column_card:hover {
+    background: rgba(255, 255, 255, 0.95);
+    transform: translateY(-0.2vh);
+}
+
+.partner_name {
+    font-size: 1.4vw;
+    font-weight: 600;
+    color: #0f172a;
+    text-align: center;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: break-word;
+}
+
+.status {
+    /* В grid статус-сообщение должно занимать все 4 колонки */
+    grid-column: 1 / -1;
+    width: 100%;
+    text-align: center;
+    font-size: 1.5vw;
+    color: #334155;
+    margin-top: 5vh;
+    font-weight: 500;
+    z-index: 2;
 }

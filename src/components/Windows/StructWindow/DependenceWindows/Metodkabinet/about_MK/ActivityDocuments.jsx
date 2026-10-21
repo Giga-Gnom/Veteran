@@ -11,6 +11,7 @@ const ActivityDocuments = () => {
     
     const [types, setTypes] = useState([]);
     const [documents, setDocuments] = useState([]);
+    const [sectionTitle, setSectionTitle] = useState("МЕТОДИЧЕСКИЙ");
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     
@@ -20,12 +21,20 @@ const ActivityDocuments = () => {
         const loadData = async () => {
             try {
                 setLoading(true);
-                const [typesData, docsData] = await Promise.all([
+                // Загружаем типы, документы и разделы параллельно
+                const [typesData, docsData, sectionsData] = await Promise.all([
                     methodicalService.getDocumentTypes(),
-                    methodicalService.getDocumentsBySection(id)
+                    methodicalService.getDocumentsBySection(id),
+                    methodicalService.getSections()
                 ]);
                 setTypes(typesData);
                 setDocuments(docsData);
+
+                // Ищем текущий раздел и ставим заголовок
+                const currentSection = sectionsData.find(s => String(s.id) === String(id));
+                if (currentSection) {
+                    setSectionTitle(currentSection.title.toUpperCase());
+                }
             } catch (err) {
                 console.error("Ошибка загрузки документов:", err);
                 setError("Не удалось загрузить документы");
@@ -90,7 +99,7 @@ const ActivityDocuments = () => {
     return (
         <div className={styles.container}>
             <div className={styles.container_head}>
-                <MyHat heading="МЕТОДИЧЕСКИЙ" />
+                <MyHat heading={sectionTitle} />
             </div>
 
             <div className={styles.container_contant}>
@@ -100,9 +109,18 @@ const ActivityDocuments = () => {
                     <div className={styles.status} style={{ color: 'red' }}>{error}</div>
                 ) : (
                     <>
-                        <ActivityColumn title="Нормативно-правовые документы" typeId={1} />
-                        <ActivityColumn title="Методические рекомендации"     typeId={2} />
-                        <ActivityColumn title="Пособия, памятки"              typeId={3} />
+                        <ActivityColumn 
+                            title="Нормативно-правовые документы" 
+                            typeId={types.find(t => t.code === 'normative')?.id} 
+                        />
+                        <ActivityColumn 
+                            title="Методические рекомендации" 
+                            typeId={types.find(t => t.code === 'recommendations')?.id} 
+                        />
+                        <ActivityColumn 
+                            title="Пособия, памятки" 
+                            typeId={types.find(t => t.code === 'manuals')?.id} 
+                        />
                     </>
                 )}
             </div>

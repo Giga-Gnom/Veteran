@@ -9,17 +9,29 @@ const ResultsPage = () => {
     const { id } = useParams(); 
     
     const [results, setResults] = useState([]);
+    const [sectionTitle, setSectionTitle] = useState("МЕТОДИЧЕСКИЙ");
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const loadResults = async () => {
+        const loadData = async () => {
             try {
                 setLoading(true);
-                const data = await methodicalService.getResultsBySection(id);
-                setResults(data);
+                
+                const [resultsData, sectionsData] = await Promise.all([
+                    methodicalService.getResultsBySection(id),
+                    methodicalService.getSections()
+                ]);
+                
+                setResults(resultsData);
+                
+                const currentSection = sectionsData.find(s => String(s.id) === String(id));
+                if (currentSection) {
+                    setSectionTitle(currentSection.title.toUpperCase());
+                }
+                
             } catch (err) {
-                console.error("Ошибка загрузки итогов:", err);
+                console.error("Ошибка загрузки данных:", err);
                 setError("Не удалось загрузить данные");
             } finally {
                 setLoading(false);
@@ -27,7 +39,7 @@ const ResultsPage = () => {
         };
 
         if (id) {
-            loadResults();
+            loadData();
         }
     }, [id]);
 
@@ -44,7 +56,7 @@ const ResultsPage = () => {
     return(
         <div className={styles.container}>
             <div className={styles.container_head}>
-                <MyHat heading="МЕТОДИЧЕСКИЙ" />
+                <MyHat heading={sectionTitle} />
             </div>
         
             <div className={styles.container_contant}>

@@ -2,22 +2,34 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import MyHat from "../../../../../Hat/MyHat";
 import BeforePageButton from "../../../../../UI/MyButtons/BeforePageButton";
-import styles from "./ActivityPage.module.css";
+import styles from "./ActivityPartners.module.css";
 import methodicalService from "../../../../../../services/methodicalService";
 
 const ActivityPartners = () => {
     const { id } = useParams();
     
     const [partners, setPartners] = useState([]);
+    const [sectionTitle, setSectionTitle] = useState("МЕТОДИЧЕСКИЙ");
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const loadPartners = async () => {
+        const loadData = async () => {
             try {
                 setLoading(true);
-                const data = await methodicalService.getPartnersBySection(id);
-                setPartners(data);
+                // Загружаем партнёров и список разделов параллельно
+                const [partnersData, sectionsData] = await Promise.all([
+                    methodicalService.getPartnersBySection(id),
+                    methodicalService.getSections()
+                ]);
+                
+                setPartners(partnersData);
+
+                // Находим текущий раздел и ставим его название
+                const currentSection = sectionsData.find(s => String(s.id) === String(id));
+                if (currentSection) {
+                    setSectionTitle(currentSection.title.toUpperCase());
+                }
             } catch (err) {
                 console.error("Ошибка загрузки партнёров:", err);
                 setError("Не удалось загрузить партнёров");
@@ -26,13 +38,13 @@ const ActivityPartners = () => {
             }
         };
 
-        if (id) loadPartners();
+        if (id) loadData();
     }, [id]);
 
     return (
         <div className={styles.container}>
             <div className={styles.container_head}>
-                <MyHat heading="МЕТОДИЧЕСКИЙ" />
+                <MyHat heading={sectionTitle} />
             </div>
 
             <div className={styles.container_contant}>
