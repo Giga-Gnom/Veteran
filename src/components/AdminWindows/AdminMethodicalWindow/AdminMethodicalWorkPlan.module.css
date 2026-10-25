@@ -30,6 +30,10 @@
   font-weight: 500;
   color: #0f172a;
   margin: 0;
+  text-overflow: ellipsis;
+  min-width: 0; 
+  flex: 1 1 auto;
+  overflow: hidden;
 }
 
 .table_meta {
