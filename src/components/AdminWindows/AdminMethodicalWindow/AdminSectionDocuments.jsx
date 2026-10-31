@@ -73,6 +73,29 @@ const AdminSectionDocuments = ({ sectionId, onChanged }) => {
         setForm(prev => ({ ...prev, new_file: file, file_name: file.name }))
     }
 
+    // ========== НОВОЕ: открыть документ ==========
+    const handleOpen = async (doc) => {
+        try {
+            if (doc.file_path) {
+                if (!window.electronAPI?.file?.open) {
+                    showError("IPC-метод file.open не найден. Перезапустите приложение.")
+                    return
+                }
+                const result = await window.electronAPI.file.open(doc.file_path)
+                if (!result.success) {
+                    showError(`Не удалось открыть файл: ${result.error}`)
+                }
+            } else if (doc.external_url) {
+                window.open(doc.external_url, "_blank", "noopener,noreferrer")
+            } else {
+                showError("У документа нет ни файла, ни ссылки")
+            }
+        } catch (e) {
+            console.error(e)
+            showError("Ошибка при открытии документа")
+        }
+    }
+
     const handleSave = async () => {
         if (!form.title.trim()) return showError("Введите название")
         if (!form.new_file && !form.file_name && !form.external_url.trim()) {
@@ -165,6 +188,7 @@ const AdminSectionDocuments = ({ sectionId, onChanged }) => {
                                                     )}
                                                 </div>
                                                 <div className={styles.doc_actions}>
+                                                    <button className={common.open_btn} onClick={() => handleOpen(doc)}>Открыть</button>
                                                     <button className={common.view_btn} onClick={() => handleOpenEdit(doc)}>Изменить</button>
                                                     <button className={common.delete_btn} onClick={() => handleDelete(doc)}>Удалить</button>
                                                 </div>

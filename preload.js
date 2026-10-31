@@ -12,8 +12,11 @@ contextBridge.exposeInMainWorld('electronAPI', {
   },
 
   file: {
-    save: (file_name, buffer) => {console.log("preload: вызов file.save с file_name:", file_name)
-      return ipcRenderer.invoke('file:save', {file_name, buffer})},
-      delete: (fileUrl) => ipcRenderer.invoke('file:delete', fileUrl)
+    save: (file_name, buffer) => {
+      console.log("preload: вызов file.save с file_name:", file_name);
+      return ipcRenderer.invoke('file:save', { file_name, buffer });
+    },
+    delete: (fileUrl) => ipcRenderer.invoke('file:delete', fileUrl),
+    open: (fileUrl) => ipcRenderer.invoke('file:open', fileUrl)   // ← ДОБАВЛЕНО
   }
 });

@@ -222,3 +222,25 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.open_btn {
+    padding: 6px 12px;
+    border: 1px solid #2e7d32;
+    background: #e8f5e9;
+    color: #2e7d32;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.open_btn:hover {
+    background: #2e7d32;
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+.open_btn:active {
+    transform: translateY(0);
+}

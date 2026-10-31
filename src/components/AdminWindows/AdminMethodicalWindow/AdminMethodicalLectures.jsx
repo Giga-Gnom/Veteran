@@ -63,6 +63,29 @@ const AdminMethodicalLectures = () => {
         setForm(prev => ({ ...prev, new_file: file, file_name: file.name }))
     }
 
+    // ========== НОВОЕ: открыть документ ==========
+    const handleOpen = async (lecture) => {
+        try {
+            if (lecture.file_path) {
+                if (!window.electronAPI?.file?.open) {
+                    showError("IPC-метод file.open не найден. Перезапустите приложение.")
+                    return
+                }
+                const result = await window.electronAPI.file.open(lecture.file_path)
+                if (!result.success) {
+                    showError(`Не удалось открыть файл: ${result.error}`)
+                }
+            } else if (lecture.external_url) {
+                window.open(lecture.external_url, "_blank", "noopener,noreferrer")
+            } else {
+                showError("У лекции нет ни файла, ни ссылки")
+            }
+        } catch (e) {
+            console.error(e)
+            showError("Ошибка при открытии документа")
+        }
+    }
+
     const handleSave = async () => {
         if (!form.title.trim()) return showError("Введите название лекции")
         if (!form.new_file && !form.file_name && !form.external_url.trim()) {
@@ -167,6 +190,7 @@ const AdminMethodicalLectures = () => {
                                 )}
                             </div>
                             <div className={styles.lecture_actions}>
+                                <button className={common.open_btn} onClick={() => handleOpen(lecture)}>Открыть</button>
                                 <button className={common.view_btn} onClick={() => handleOpenEdit(lecture)}>Изменить</button>
                                 <button className={common.delete_btn} onClick={() => handleDelete(lecture)}>Удалить</button>
                             </div>

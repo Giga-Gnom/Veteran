@@ -46,12 +46,17 @@ const ActivityDocuments = () => {
         if (id) loadData();
     }, [id]);
 
-    const handleOpen = (doc) => {
+    // ========== ИЗМЕНЕНО: открытие через ОС для не-PDF файлов ==========
+    const handleOpen = async (doc) => {
         if (doc.file_path) {
             if (doc.file_name?.toLowerCase().endsWith('.pdf')) {
                 setPdfPath(doc.file_path);
             } else {
-                window.open(doc.file_path, "_blank", "noopener,noreferrer");
+                const result = await window.electronAPI.file.open(doc.file_path);
+                if (!result.success) {
+                    console.error('Не удалось открыть файл:', result.error);
+                    alert(`Не удалось открыть документ: ${result.error}`);
+                }
             }
         } else if (doc.external_url) {
             window.open(doc.external_url, "_blank", "noopener,noreferrer");

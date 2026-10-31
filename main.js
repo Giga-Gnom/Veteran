@@ -1,4 +1,4 @@
-import { app, BrowserWindow, globalShortcut, ipcMain } from 'electron';
+import { app, BrowserWindow, globalShortcut, ipcMain, shell } from 'electron';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
@@ -41,6 +41,19 @@ async function safeImport(modulePath) {
         const asarPath = path.join(__dirname, 'src', relative);
         return await import('file://' + asarPath.replace(/\\/g, '/'));
     }
+}
+
+// ========== 4.1. Хелпер: file:// URL -> обычный путь ==========
+function fileUrlToPath(fileUrl) {
+    if (!fileUrl) return null;
+    if (!fileUrl.startsWith('file://')) return fileUrl;
+    let p = fileUrl.replace(/^file:\/\//, '');
+    if (process.platform === 'win32') {
+        p = p.replace(/^\/+/, '');
+    } else if (!p.startsWith('/')) {
+        p = '/' + p;
+    }
+    return p.replace(/\//g, path.sep);
 }
 
 // ========== 5. Инициализация БД ==========
@@ -190,11 +203,30 @@ ipcMain.handle('file:save', async (event, { file_name, buffer }) => {
     return { file_name: uniqueFileName, file_path: `file://${filePath}` };
 });
 ipcMain.handle('file:delete', async (event, fileUrl) => {
-    const url = new URL(fileUrl);
-    let filePath = url.pathname;
-    if (process.platform === 'win32') filePath = filePath.substring(1);
-    await fs.promises.unlink(filePath);
-    return true;
+    const filePath = fileUrlToPath(fileUrl);
+    if (!filePath) return false;
+    try {
+        await fs.promises.unlink(filePath);
+        return true;
+    } catch (err) {
+        console.error('file:delete error:', err);
+        return false;
+    }
+});
+// ========== 8.1. НОВОЕ: открытие файла через ОС (Word / LibreOffice и т.д.) ==========
+ipcMain.handle('file:open', async (event, fileUrl) => {
+    const filePath = fileUrlToPath(fileUrl);
+    if (!filePath) {
+        return { success: false, error: 'Пустой путь к файлу' };
+    }
+    if (!fs.existsSync(filePath)) {
+        return { success: false, error: `Файл не найден: ${filePath}` };
+    }
+    const error = await shell.openPath(filePath);
+    if (error) {
+        return { success: false, error };
+    }
+    return { success: true };
 });
 ipcMain.handle('database:execute', async (event, query, params = []) => {
     const dbService = await initDatabase();
@@ -233,9 +265,8 @@ app.whenReady().then(async () => {
         console.log('✅ Database ready');
 
         logToFile('Before runAllMigrations');
-await runAllMigrations(dbService, logToFile);
-logToFile('After runAllMigrations');
-
+        await runAllMigrations(dbService, logToFile);
+        logToFile('After runAllMigrations');
 
         logToFile('Calling createMainWindow...');
         createMainWindow();
