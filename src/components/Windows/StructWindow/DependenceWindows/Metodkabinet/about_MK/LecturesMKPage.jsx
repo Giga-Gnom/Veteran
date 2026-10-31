@@ -4,13 +4,20 @@ import styles from "./LecturesMKPage.module.css";
 import MyHat from "../../../../../Hat/MyHat";
 import BeforePageButton from "../../../../../UI/MyButtons/BeforePageButton";
 import PDFpage from "../about_MK/PDFpage";
-import methodicalService from "../../../../../../services/methodicalService"; 
+import DocxViewer from "./DocxViewer";
+import ImageViewer from "./ImageViewer";
+import methodicalService from "../../../../../../services/methodicalService";
+
+const IMAGE_EXTENSIONS = [".png", ".jpg", ".jpeg", ".gif", ".webp", ".bmp", ".svg"];
 
 const LecturesMKPage = () => {
     const [lectures, setLectures] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
     const [pdfPath, setPdfPath] = useState(null);
+    const [docxPath, setDocxPath] = useState(null);
+    const [imagePath, setImagePath] = useState(null);
 
     useEffect(() => {
         const loadLectures = async () => {
@@ -29,20 +36,38 @@ const LecturesMKPage = () => {
         loadLectures();
     }, []);
 
+    // ========== Открытие на клиенте (только для чтения) ==========
     const handleOpen = (lecture) => {
-        if (lecture.file_path) {
-            if (lecture.file_name?.toLowerCase().endsWith('.pdf')) {
-                setPdfPath(lecture.file_path);
-            } else {
-                window.open(lecture.file_path, "_blank", "noopener,noreferrer");
+        if (!lecture.file_path) {
+            if (lecture.external_url) {
+                window.open(lecture.external_url, "_blank", "noopener,noreferrer");
             }
-        } else if (lecture.external_url) {
-            window.open(lecture.external_url, "_blank", "noopener,noreferrer");
+            return;
+        }
+
+        const fileName = (lecture.file_name || "").toLowerCase();
+
+        if (fileName.endsWith(".pdf")) {
+            setPdfPath(lecture.file_path);
+        } else if (fileName.endsWith(".docx")) {
+            setDocxPath(lecture.file_path);
+        } else if (IMAGE_EXTENSIONS.some(ext => fileName.endsWith(ext))) {
+            setImagePath(lecture.file_path);
+        } else {
+            alert("Этот формат документа пока нельзя открыть для просмотра. Обратитесь к администратору.");
         }
     };
 
     if (pdfPath) {
         return <PDFpage path={pdfPath} onClose={() => setPdfPath(null)} />;
+    }
+
+    if (docxPath) {
+        return <DocxViewer filePath={docxPath} onClose={() => setDocxPath(null)} />;
+    }
+
+    if (imagePath) {
+        return <ImageViewer filePath={imagePath} onClose={() => setImagePath(null)} />;
     }
 
     return (

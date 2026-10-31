@@ -31,13 +31,10 @@ async function safeImport(modulePath) {
     if (isDev) {
         return import(modulePath);
     } else {
-        // Убираем './src/' из начала, если есть
         let relative = modulePath;
         if (relative.startsWith('./src/')) {
             relative = relative.substring(6);
         }
-        
-        // Добавляем src обратно в путь
         const asarPath = path.join(__dirname, 'src', relative);
         return await import('file://' + asarPath.replace(/\\/g, '/'));
     }
@@ -213,7 +210,7 @@ ipcMain.handle('file:delete', async (event, fileUrl) => {
         return false;
     }
 });
-// ========== 8.1. НОВОЕ: открытие файла через ОС (Word / LibreOffice и т.д.) ==========
+// ========== 8.1. Открытие файла через ОС (Word / LibreOffice и т.д.) ==========
 ipcMain.handle('file:open', async (event, fileUrl) => {
     const filePath = fileUrlToPath(fileUrl);
     if (!filePath) {
@@ -227,6 +224,27 @@ ipcMain.handle('file:open', async (event, fileUrl) => {
         return { success: false, error };
     }
     return { success: true };
+});
+// ========== 8.2. Чтение файла для рендеринга на клиенте (только для чтения) ==========
+ipcMain.handle('file:read', async (event, fileUrl) => {
+    const filePath = fileUrlToPath(fileUrl);
+    if (!filePath) {
+        return { success: false, error: 'Пустой путь к файлу' };
+    }
+    try {
+        if (!fs.existsSync(filePath)) {
+            return { success: false, error: `Файл не найден: ${filePath}` };
+        }
+        const buffer = await fs.promises.readFile(filePath);
+        // Возвращаем ArrayBuffer для передачи в рендерер
+        return {
+            success: true,
+            data: buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength)
+        };
+    } catch (err) {
+        console.error('file:read error:', err);
+        return { success: false, error: err.message };
+    }
 });
 ipcMain.handle('database:execute', async (event, query, params = []) => {
     const dbService = await initDatabase();

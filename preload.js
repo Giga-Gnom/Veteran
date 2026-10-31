@@ -17,6 +17,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
       return ipcRenderer.invoke('file:save', { file_name, buffer });
     },
     delete: (fileUrl) => ipcRenderer.invoke('file:delete', fileUrl),
-    open: (fileUrl) => ipcRenderer.invoke('file:open', fileUrl)   // ← ДОБАВЛЕНО
+    open: (fileUrl) => ipcRenderer.invoke('file:open', fileUrl),
+    read: (fileUrl) => ipcRenderer.invoke('file:read', fileUrl)   // ← НОВОЕ
   }
 });

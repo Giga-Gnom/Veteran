@@ -3,7 +3,12 @@ import { Link, useParams } from "react-router-dom";
 import styles from "./ResultsPage.module.css"
 import MyHat from "../../../../../Hat/MyHat";
 import BeforePageButton from "../../../../../UI/MyButtons/BeforePageButton";
+import PDFpage from "../about_MK/PDFpage";
+import DocxViewer from "./DocxViewer";
+import ImageViewer from "./ImageViewer";
 import methodicalService from "../../../../../../services/methodicalService";
+
+const IMAGE_EXTENSIONS = [".png", ".jpg", ".jpeg", ".gif", ".webp", ".bmp", ".svg"];
 
 const ResultsPage = () => {
     const { id } = useParams(); 
@@ -12,6 +17,10 @@ const ResultsPage = () => {
     const [sectionTitle, setSectionTitle] = useState("МЕТОДИЧЕСКИЙ");
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    const [pdfPath, setPdfPath] = useState(null);
+    const [docxPath, setDocxPath] = useState(null);
+    const [imagePath, setImagePath] = useState(null);
 
     useEffect(() => {
         const loadData = async () => {
@@ -43,15 +52,39 @@ const ResultsPage = () => {
         }
     }, [id]);
 
+    // ========== Открытие на клиенте (только для чтения) ==========
     const handleOpen = (item) => {
-        if (item.external_url) {
-            window.open(item.external_url, "_blank", "noopener,noreferrer");
+        if (!item.file_path) {
+            if (item.external_url) {
+                window.open(item.external_url, "_blank", "noopener,noreferrer");
+            }
             return;
         }
-        if (item.file_path) {
-            window.open(item.file_path, "_blank", "noopener,noreferrer");
+
+        const fileName = (item.file_name || "").toLowerCase();
+
+        if (fileName.endsWith(".pdf")) {
+            setPdfPath(item.file_path);
+        } else if (fileName.endsWith(".docx")) {
+            setDocxPath(item.file_path);
+        } else if (IMAGE_EXTENSIONS.some(ext => fileName.endsWith(ext))) {
+            setImagePath(item.file_path);
+        } else {
+            alert("Этот формат документа пока нельзя открыть для просмотра. Обратитесь к администратору.");
         }
     };
+
+    if (pdfPath) {
+        return <PDFpage path={pdfPath} onClose={() => setPdfPath(null)} />;
+    }
+
+    if (docxPath) {
+        return <DocxViewer filePath={docxPath} onClose={() => setDocxPath(null)} />;
+    }
+
+    if (imagePath) {
+        return <ImageViewer filePath={imagePath} onClose={() => setImagePath(null)} />;
+    }
 
     return(
         <div className={styles.container}>

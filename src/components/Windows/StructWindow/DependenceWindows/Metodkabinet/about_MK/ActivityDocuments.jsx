@@ -3,8 +3,12 @@ import { Link, useParams } from "react-router-dom";
 import MyHat from "../../../../../Hat/MyHat";
 import BeforePageButton from "../../../../../UI/MyButtons/BeforePageButton";
 import PDFpage from "../about_MK/PDFpage";
+import DocxViewer from "./DocxViewer";
+import ImageViewer from "./ImageViewer";
 import styles from "./ActivityDocuments.module.css";
 import methodicalService from "../../../../../../services/methodicalService";
+
+const IMAGE_EXTENSIONS = [".png", ".jpg", ".jpeg", ".gif", ".webp", ".bmp", ".svg"];
 
 const ActivityDocuments = () => {
     const { id } = useParams();
@@ -16,12 +20,13 @@ const ActivityDocuments = () => {
     const [error, setError] = useState(null);
     
     const [pdfPath, setPdfPath] = useState(null);
+    const [docxPath, setDocxPath] = useState(null);
+    const [imagePath, setImagePath] = useState(null);
 
     useEffect(() => {
         const loadData = async () => {
             try {
                 setLoading(true);
-                // Загружаем типы, документы и разделы параллельно
                 const [typesData, docsData, sectionsData] = await Promise.all([
                     methodicalService.getDocumentTypes(),
                     methodicalService.getDocumentsBySection(id),
@@ -30,7 +35,6 @@ const ActivityDocuments = () => {
                 setTypes(typesData);
                 setDocuments(docsData);
 
-                // Ищем текущий раздел и ставим заголовок
                 const currentSection = sectionsData.find(s => String(s.id) === String(id));
                 if (currentSection) {
                     setSectionTitle(currentSection.title.toUpperCase());
@@ -46,20 +50,25 @@ const ActivityDocuments = () => {
         if (id) loadData();
     }, [id]);
 
-    // ========== ИЗМЕНЕНО: открытие через ОС для не-PDF файлов ==========
-    const handleOpen = async (doc) => {
-        if (doc.file_path) {
-            if (doc.file_name?.toLowerCase().endsWith('.pdf')) {
-                setPdfPath(doc.file_path);
-            } else {
-                const result = await window.electronAPI.file.open(doc.file_path);
-                if (!result.success) {
-                    console.error('Не удалось открыть файл:', result.error);
-                    alert(`Не удалось открыть документ: ${result.error}`);
-                }
+    // ========== Открытие на клиенте (только для чтения) ==========
+    const handleOpen = (doc) => {
+        if (!doc.file_path) {
+            if (doc.external_url) {
+                window.open(doc.external_url, "_blank", "noopener,noreferrer");
             }
-        } else if (doc.external_url) {
-            window.open(doc.external_url, "_blank", "noopener,noreferrer");
+            return;
+        }
+
+        const fileName = (doc.file_name || "").toLowerCase();
+
+        if (fileName.endsWith(".pdf")) {
+            setPdfPath(doc.file_path);
+        } else if (fileName.endsWith(".docx")) {
+            setDocxPath(doc.file_path);
+        } else if (IMAGE_EXTENSIONS.some(ext => fileName.endsWith(ext))) {
+            setImagePath(doc.file_path);
+        } else {
+            alert("Этот формат документа пока нельзя открыть для просмотра. Обратитесь к администратору.");
         }
     };
 
@@ -99,6 +108,14 @@ const ActivityDocuments = () => {
 
     if (pdfPath) {
         return <PDFpage path={pdfPath} onClose={() => setPdfPath(null)} />;
+    }
+
+    if (docxPath) {
+        return <DocxViewer filePath={docxPath} onClose={() => setDocxPath(null)} />;
+    }
+
+    if (imagePath) {
+        return <ImageViewer filePath={imagePath} onClose={() => setImagePath(null)} />;
     }
 
     return (
