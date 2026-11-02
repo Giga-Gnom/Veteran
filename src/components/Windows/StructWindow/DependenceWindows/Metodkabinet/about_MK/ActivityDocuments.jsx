@@ -5,6 +5,7 @@ import BeforePageButton from "../../../../../UI/MyButtons/BeforePageButton";
 import PDFpage from "../about_MK/PDFpage";
 import DocxViewer from "./DocxViewer";
 import ImageViewer from "./ImageViewer";
+import WebviewViewer from "./WebviewViewer";
 import styles from "./ActivityDocuments.module.css";
 import methodicalService from "../../../../../../services/methodicalService";
 
@@ -22,6 +23,7 @@ const ActivityDocuments = () => {
     const [pdfPath, setPdfPath] = useState(null);
     const [docxPath, setDocxPath] = useState(null);
     const [imagePath, setImagePath] = useState(null);
+    const [webviewUrl, setWebviewUrl] = useState(null);
 
     useEffect(() => {
         const loadData = async () => {
@@ -54,7 +56,7 @@ const ActivityDocuments = () => {
     const handleOpen = (doc) => {
         if (!doc.file_path) {
             if (doc.external_url) {
-                window.open(doc.external_url, "_blank", "noopener,noreferrer");
+                setWebviewUrl(doc.external_url);   // ← было window.open
             }
             return;
         }
@@ -116,6 +118,10 @@ const ActivityDocuments = () => {
 
     if (imagePath) {
         return <ImageViewer filePath={imagePath} onClose={() => setImagePath(null)} />;
+    }
+
+    if (webviewUrl) {
+        return <WebviewViewer url={webviewUrl} onClose={() => setWebviewUrl(null)} />;
     }
 
     return (

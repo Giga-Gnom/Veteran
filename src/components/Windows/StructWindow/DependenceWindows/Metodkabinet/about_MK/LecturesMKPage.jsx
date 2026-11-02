@@ -6,6 +6,7 @@ import BeforePageButton from "../../../../../UI/MyButtons/BeforePageButton";
 import PDFpage from "../about_MK/PDFpage";
 import DocxViewer from "./DocxViewer";
 import ImageViewer from "./ImageViewer";
+import WebviewViewer from "./WebviewViewer";
 import methodicalService from "../../../../../../services/methodicalService";
 
 const IMAGE_EXTENSIONS = [".png", ".jpg", ".jpeg", ".gif", ".webp", ".bmp", ".svg"];
@@ -18,6 +19,7 @@ const LecturesMKPage = () => {
     const [pdfPath, setPdfPath] = useState(null);
     const [docxPath, setDocxPath] = useState(null);
     const [imagePath, setImagePath] = useState(null);
+    const [webviewUrl, setWebviewUrl] = useState(null);
 
     useEffect(() => {
         const loadLectures = async () => {
@@ -40,7 +42,7 @@ const LecturesMKPage = () => {
     const handleOpen = (lecture) => {
         if (!lecture.file_path) {
             if (lecture.external_url) {
-                window.open(lecture.external_url, "_blank", "noopener,noreferrer");
+                setWebviewUrl(lecture.external_url);   // ← было window.open
             }
             return;
         }
@@ -68,6 +70,10 @@ const LecturesMKPage = () => {
 
     if (imagePath) {
         return <ImageViewer filePath={imagePath} onClose={() => setImagePath(null)} />;
+    }
+
+    if (webviewUrl) {
+        return <WebviewViewer url={webviewUrl} onClose={() => setWebviewUrl(null)} />;
     }
 
     return (
