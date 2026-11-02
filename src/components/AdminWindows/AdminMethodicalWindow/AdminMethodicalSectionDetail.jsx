@@ -10,27 +10,37 @@ const TABS = [
     { id: "documents", label: "Документы" },
     { id: "partners",  label: "Партнёры" },
     { id: "results",   label: "Итоги работы" }
-]
+];
 
-const AdminMethodicalSectionDetail = ({ section, onBack }) => {
-    const [activeTab, setActiveTab] = useState("documents")
+const AdminMethodicalSectionDetail = ({ section, onBack, onChanged }) => {
+    const [activeTab, setActiveTab] = useState("documents");
     const [counts, setCounts] = useState({
         documents: section.documents_count ?? 0,
         partners: section.partners_count ?? 0,
         results: section.results_count ?? 0
-    })
+    });
+
+    // Если родитель прислал новую section — синхронизируем счётчики
+    useEffect(() => {
+        setCounts({
+            documents: section.documents_count ?? 0,
+            partners: section.partners_count ?? 0,
+            results: section.results_count ?? 0
+        });
+    }, [section.id, section.documents_count, section.partners_count, section.results_count]);
 
     const refreshCounts = async () => {
-        const list = await methodicalService.getSectionsWithCounts()
-        const fresh = list.find(s => s.id === section.id)
+        const list = await methodicalService.getSectionsWithCounts();
+        const fresh = list.find(s => s.id === section.id);
         if (fresh) {
             setCounts({
                 documents: fresh.documents_count,
                 partners: fresh.partners_count,
                 results: fresh.results_count
-            })
+            });
+            onChanged?.(fresh);   // ← уведомляем родителя
         }
-    }
+    };
 
     return (
         <div>
@@ -66,7 +76,7 @@ const AdminMethodicalSectionDetail = ({ section, onBack }) => {
                 )}
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default AdminMethodicalSectionDetail
+export default AdminMethodicalSectionDetail;
