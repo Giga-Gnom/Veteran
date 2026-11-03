@@ -45,3 +45,95 @@
   font-size: 1.1vw;
   color: #6b7280;
 }
+
+/* Обёртка для двух кнопок в шапке */
+.header_actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.empty_actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
+
+/* Модалка импорта */
+.import_modal {
+    min-width: 600px;
+    max-width: 90vw;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+.import_status {
+    padding: 12px;
+    color: #555;
+    font-style: italic;
+    text-align: center;
+}
+
+.import_preview {
+    margin: 12px 0;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 10px;
+    background: #fafafa;
+}
+
+.import_preview_header {
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.import_preview_scroll {
+    max-height: 200px;
+    overflow: auto;
+    border: 1px solid #e0e0e0;
+    background: #fff;
+    border-radius: 4px;
+}
+
+.import_preview_table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.import_preview_table th,
+.import_preview_table td {
+    border: 1px solid #e0e0e0;
+    padding: 6px 8px;
+    text-align: left;
+    vertical-align: top;
+    white-space: nowrap;
+    max-width: 240px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.import_preview_table th {
+    background: #f0f0f0;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+}
+
+.import_more {
+    text-align: center;
+    color: #777;
+    font-size: 12px;
+    margin-top: 6px;
+}
+
+/* Кнопка в disabled-состоянии */
+.submit_btn:disabled,
+.cancel_btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
