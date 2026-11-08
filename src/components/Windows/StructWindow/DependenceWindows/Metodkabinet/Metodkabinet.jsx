@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import BeforePageButton from "../../../../UI/MyButtons/BeforePageButton";
 import miloserdova from "./miloserdova.png"
 import PDFpage from "./about_MK/PDFpage";
-import randompdf from "../../../AwardsWindow/srcAwards/Book.pdf";
+import randompdf from "./srcMK/PMK.pdf";
 import methodicalService from "../../../../../services/methodicalService";
 
 const Metodkabinet = () => {

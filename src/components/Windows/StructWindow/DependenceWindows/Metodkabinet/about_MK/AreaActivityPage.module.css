@@ -103,3 +103,95 @@
     transform: translateY(-0.3vh);
     box-shadow: 0 1vh 2vw rgba(0, 0, 0, 0.1);
 }
+
+/* --- Оставляем ваши старые стили (container, head, buttons) без изменений --- */
+/* ... */
+
+/* --- НОВЫЕ СТИЛИ ДЛЯ ГАЛЕРЕИ --- */
+
+.images {
+    flex: 1; /* Занимает всё оставшееся пространство снизу */
+    min-height: 0;
+    padding: 2vw;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
+    position: relative;
+}
+
+.no_images {
+    text-align: center;
+    color: rgba(0, 0, 0, 0.5);
+    font-style: italic;
+    margin-top: 2vh;
+    font-size: 1.8vh;
+}
+
+.gallery_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2vh;
+    width: 100%;
+    height: 100%;
+    align-content: start;
+}
+
+.image_wrapper {
+    position: relative;
+    border-radius: 2vh;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 0.5vh 1.5vh rgba(0, 0, 0, 0.2);
+    background: #000;
+    aspect-ratio: 16 / 9; /* Красивые пропорции */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.image_wrapper:hover {
+    transform: translateY(-0.5vh) scale(1.02);
+    box-shadow: 0 1vh 3vh rgba(66, 102, 145, 0.4);
+}
+
+.gallery_img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Картинка заполняет блок без искажений */
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.image_wrapper:hover .gallery_img {
+    transform: scale(1.05);
+}
+
+.image_overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.image_overlay span {
+    color: #fff;
+    font-size: 1.8vh;
+    font-weight: 600;
+    background: rgba(66, 102, 145, 0.8);
+    padding: 1vh 2vw;
+    border-radius: 3vh;
+    backdrop-filter: blur(4px);
+    transform: translateY(1vh);
+    transition: transform 0.3s ease;
+}
+
+.image_wrapper:hover .image_overlay {
+    opacity: 1;
+}
+
+.image_wrapper:hover .image_overlay span {
+    transform: translateY(0);
+}
