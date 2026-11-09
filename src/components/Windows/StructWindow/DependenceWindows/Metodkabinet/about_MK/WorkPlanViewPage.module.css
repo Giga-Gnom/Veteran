@@ -56,13 +56,17 @@
     position: sticky;
     top: 0;
     z-index: 10;
-    background: #f1f5f9; /* Плотный фон, чтобы не просвечивало */
+    background: #f1f5f9; 
     padding: 1.5vh 1vw;
     text-align: left;
     font-weight: 600;
     color: #334155;
     box-shadow: inset 0 -0.1vw 0 #cbd5e1, 0 0.2vh 0.5vw rgba(0,0,0,0.05);
-    white-space: nowrap;
+    
+    /* --- ИЗМЕНИТЬ ЭТИ СТРОКИ --- */
+    white-space: normal;      /* Было nowrap. Разрешаем перенос заголовков */
+    max-width: 50vw;          /* Ограничиваем ширину */
+    word-wrap: break-word;
 }
 
 .view_table td {
@@ -70,6 +74,12 @@
     border-bottom: 0.1vw solid #f1f5f9;
     color: #0f172a;
     vertical-align: top;
+    
+    /* --- ДОБАВИТЬ ЭТО --- */
+    max-width: 50vw;          /* Максимальная ширина столбца */
+    white-space: normal;      /* Разрешаем перенос текста на новые строки */
+    word-wrap: break-word;    /* Разрываем длинные слова, если они не влезают */
+    overflow-wrap: break-word;/* Современный аналог word-wrap */
 }
 
 .view_table tr:hover td {
