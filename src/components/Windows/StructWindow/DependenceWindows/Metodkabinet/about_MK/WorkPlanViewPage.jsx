@@ -5,6 +5,14 @@ import MyHat from "../../../../../Hat/MyHat";
 import BeforePageButton from "../../../../../UI/MyButtons/BeforePageButton";
 import methodicalService from "../../../../../../services/methodicalService";
 
+// Подключаем вьюеры (проверьте правильность путей до них в вашей структуре папок)
+import PDFpage from "../about_MK/PDFpage"; 
+import DocxViewer from "./DocxViewer"; // Если они лежат в другой папке, поправьте путь (например, ../../DocxViewer)
+import ImageViewer from "./ImageViewer";
+import WebviewViewer from "./WebviewViewer";
+
+const IMAGE_EXTENSIONS = [".png", ".jpg", ".jpeg", ".gif", ".webp", ".bmp", ".svg"];
+
 const WorkPlanViewPage = () => {
     const { id } = useParams();
     
@@ -12,6 +20,12 @@ const WorkPlanViewPage = () => {
     const [rows, setRows] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    // Состояния для вьюеров
+    const [pdfPath, setPdfPath] = useState(null);
+    const [docxPath, setDocxPath] = useState(null);
+    const [imagePath, setImagePath] = useState(null);
+    const [webviewUrl, setWebviewUrl] = useState(null);
 
     useEffect(() => {
         const loadData = async () => {
@@ -36,6 +50,52 @@ const WorkPlanViewPage = () => {
         if (id) loadData();
     }, [id]);
 
+    // Открытие файла (только для чтения)
+    const handleOpenFile = (fileData) => {
+        if (!fileData || !fileData.path) return;
+        const path = fileData.path;
+        const fileName = (fileData.name || "").toLowerCase();
+
+        if (fileName.endsWith(".pdf")) {
+            setPdfPath(path);
+        } else if (fileName.endsWith(".docx")) {
+            setDocxPath(path);
+        } else if (IMAGE_EXTENSIONS.some(ext => fileName.endsWith(ext))) {
+            setImagePath(path);
+        } else {
+            // Для txt и других форматов используем webview
+            setWebviewUrl(path);
+        }
+    };
+
+    // Рендер ячейки с файлом
+    const renderFileCell = (value) => {
+        if (!value) return "—";
+        try {
+            const fileData = JSON.parse(value);
+            return (
+                <span 
+                    className={styles.file_link} 
+                    onClick={() => handleOpenFile(fileData)}
+                    title="Открыть файл (только чтение)"
+                >
+                    📄 {fileData.name || "Файл"}
+                </span>
+            );
+        } catch {
+            // Если данные в старом формате (просто строка)
+            return (
+                <span 
+                    className={styles.file_link} 
+                    onClick={() => handleOpenFile({ name: value, path: value })}
+                >
+                    📄 {value}
+                </span>
+            );
+        }
+    };
+
+    // Рендер остальных ячеек
     const renderCell = (value, colType) => {
         if (value === null || value === undefined || value === "") {
             return "—";
@@ -45,6 +105,12 @@ const WorkPlanViewPage = () => {
         }
         return String(value);
     };
+
+    // ===== Отрисовка вьюеров =====
+    if (pdfPath) return <PDFpage path={pdfPath} onClose={() => setPdfPath(null)} />;
+    if (docxPath) return <DocxViewer filePath={docxPath} onClose={() => setDocxPath(null)} />;
+    if (imagePath) return <ImageViewer filePath={imagePath} onClose={() => setImagePath(null)} />;
+    if (webviewUrl) return <WebviewViewer url={webviewUrl} onClose={() => setWebviewUrl(null)} />;
 
     return (
         <div className={styles.container}>
@@ -82,7 +148,10 @@ const WorkPlanViewPage = () => {
                                             <tr key={row.id}>
                                                 {plan.columns.map((col) => (
                                                     <td key={col.key}>
-                                                        {renderCell(row.data[col.key], col.type)}
+                                                        {col.type === "file" 
+                                                            ? renderFileCell(row.data[col.key])
+                                                            : renderCell(row.data[col.key], col.type)
+                                                        }
                                                     </td>
                                                 ))}
                                             </tr>

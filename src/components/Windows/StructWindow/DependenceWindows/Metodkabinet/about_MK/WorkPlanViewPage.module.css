@@ -107,3 +107,20 @@
     margin-top: 5vh;
     font-weight: 500;
 }
+
+/* Ссылка на файл в таблице */
+.file_link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5vw;
+    color: #007aff;
+    cursor: pointer;
+    font-weight: 500;
+    text-decoration: underline;
+    transition: color 0.2s ease;
+    word-break: break-all;
+}
+
+.file_link:hover {
+    color: #005bb5;
+}
