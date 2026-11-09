@@ -141,3 +141,90 @@
 .file_upload_label_inline:hover {
   background: #d1d5db;
 }
+
+
+/* ===== Превью ячейки для текста ===== */
+.cell_preview {
+  cursor: pointer;
+  padding: 8px 10px;
+  border: 1px dashed #cbd5e1;
+  border-radius: 6px;
+  min-height: 4vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: #f8fafc;
+  transition: all 0.2s ease;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.cell_preview:hover {
+  border-color: #3b82f6;
+  background: #eff6ff;
+}
+
+.preview_text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Ограничиваем превью двумя строками */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 1.1vw;
+  line-height: 1.4;
+  word-break: break-word;
+  width: 100%;
+}
+
+.empty_cell {
+  color: #94a3b8;
+  font-style: italic;
+  font-size: 1vw;
+}
+
+.edit_icon {
+  opacity: 0.4;
+  margin-left: 10px;
+  font-size: 1.2vw;
+  color: #64748b;
+  transition: all 0.2s ease;
+}
+
+.cell_preview:hover .edit_icon {
+  opacity: 1;
+  color: #3b82f6;
+}
+
+/* ===== Модалка текста ===== */
+.text_modal {
+  width: 60vw;
+  max-width: 900px;
+}
+
+.modal_subtitle {
+  margin-top: -10px;
+  margin-bottom: 15px;
+  color: #64748b;
+  font-size: 1.1vw;
+}
+
+.large_textarea {
+  width: 100%;
+  min-height: 40vh; /* Высокое поле для удобства */
+  padding: 15px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 1.2vw;
+  line-height: 1.5;
+  resize: vertical;
+  box-sizing: border-box;
+  background: #f8fafc;
+  transition: border-color 0.2s ease;
+}
+
+.large_textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background: #ffffff;
+}

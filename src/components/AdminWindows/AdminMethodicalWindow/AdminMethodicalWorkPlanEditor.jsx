@@ -20,6 +20,10 @@ const AdminMethodicalWorkPlanEditor = ({ table, onBack, onChange, showError }) =
     const [editingColumn, setEditingColumn] = useState(null)
     const [newColumn, setNewColumn] = useState({ label: "", type: "string" })
 
+    // Состояние для модалки редактирования длинного текста
+    const [showTextModal, setShowTextModal] = useState(false)
+    const [editingTextData, setEditingTextData] = useState({ rowId: null, colKey: null, value: "", label: "" })
+
     if (!table) {
         return (
             <div>
@@ -119,10 +123,8 @@ const AdminMethodicalWorkPlanEditor = ({ table, onBack, onChange, showError }) =
             const arrayBuffer = await file.arrayBuffer()
             const buffer = new Uint8Array(arrayBuffer)
             
-            // Сохраняем файл через Electron API
             const result = await window.electronAPI.file.save(file.name, buffer)
             
-            // Сохраняем в ячейку JSON с именем и путем к файлу
             const fileObj = { name: result.file_name, path: result.file_path }
             handleUpdateCell(rowId, colKey, JSON.stringify(fileObj))
             showAlert("Файл прикреплён")
@@ -132,14 +134,25 @@ const AdminMethodicalWorkPlanEditor = ({ table, onBack, onChange, showError }) =
         }
     }
 
-    // Парсинг данных файла для отображения
     const getFileData = (value) => {
         if (!value) return null
         try {
             return JSON.parse(value)
         } catch {
-            return { name: value, path: value } // fallback для старых данных
+            return { name: value, path: value }
         }
+    }
+
+    // ========== Модалка текста ==========
+    const handleOpenTextModal = (rowId, col, currentValue) => {
+        setEditingTextData({ rowId, colKey: col.key, value: currentValue || "", label: col.label })
+        setShowTextModal(true)
+    }
+
+    const handleSaveText = () => {
+        handleUpdateCell(editingTextData.rowId, editingTextData.colKey, editingTextData.value)
+        setShowTextModal(false)
+        showAlert("Текст сохранён")
     }
 
     return (
@@ -227,14 +240,20 @@ const AdminMethodicalWorkPlanEditor = ({ table, onBack, onChange, showError }) =
                                                         onChange={(e) => handleUpdateCell(row.id, col.key, e.target.checked)}
                                                     />
                                                 
-                                                /* --- МНОГОСТРОЧНЫЙ ТЕКСТ --- */
-                                                ) : col.type === "text" ? (
-                                                    <textarea
-                                                        className={styles.inline_input}
-                                                        defaultValue={row.data[col.key] ?? ""}
-                                                        onBlur={(e) => handleUpdateCell(row.id, col.key, e.target.value)}
-                                                        rows={2}
-                                                    />
+                                                /* --- МНОГОСТРОЧНЫЙ ТЕКСТ И СТРОКА (ЧЕРЕЗ МОДАЛКУ) --- */
+                                                ) : col.type === "text" || col.type === "string" ? (
+                                                    <div 
+                                                        className={styles.cell_preview}
+                                                        onClick={() => handleOpenTextModal(row.id, col, row.data[col.key])}
+                                                        title="Нажмите, чтобы отредактировать"
+                                                    >
+                                                        {row.data[col.key] ? (
+                                                            <span className={styles.preview_text}>{row.data[col.key]}</span>
+                                                        ) : (
+                                                            <span className={styles.empty_cell}>— Нажмите, чтобы ввести —</span>
+                                                        )}
+                                                        <span className={styles.edit_icon}>✎</span>
+                                                    </div>
                                                 
                                                 /* --- ЧИСЛО (с поддержкой запятой) --- */
                                                 ) : col.type === "number" ? (
@@ -244,7 +263,6 @@ const AdminMethodicalWorkPlanEditor = ({ table, onBack, onChange, showError }) =
                                                         inputMode="decimal"
                                                         defaultValue={row.data[col.key] ?? ""}
                                                         onBlur={(e) => {
-                                                            // Меняем запятую на точку для БД
                                                             const val = e.target.value.replace(',', '.')
                                                             if (val && isNaN(Number(val))) {
                                                                 showError("Введите корректное число")
@@ -290,7 +308,7 @@ const AdminMethodicalWorkPlanEditor = ({ table, onBack, onChange, showError }) =
                                                         )}
                                                     </div>
 
-                                                /* --- ОСТАЛЬНЫЕ (строка, дата, ссылка) --- */
+                                                /* --- ОСТАЛЬНЫЕ (дата, ссылка) --- */
                                                 ) : (
                                                     <input
                                                         className={styles.inline_input}
@@ -350,6 +368,31 @@ const AdminMethodicalWorkPlanEditor = ({ table, onBack, onChange, showError }) =
                         <div className={common.modal_actions}>
                             <button className={common.cancel_btn} onClick={handleCloseColumnModal}>Отмена</button>
                             <button className={common.submit_btn} onClick={handleSaveColumn}>Сохранить</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* ===== Модалка редактирования текста ===== */}
+            {showTextModal && (
+                <div className={common.modal_overlay} onClick={() => setShowTextModal(false)}>
+                    <div className={`${common.modal} ${styles.text_modal}`} onClick={(e) => e.stopPropagation()}>
+                        <h3>Редактирование ячейки</h3>
+                        <p className={styles.modal_subtitle}>Колонка: <strong>{editingTextData.label}</strong></p>
+                        
+                        <div className={common.form_group}>
+                            <textarea
+                                className={styles.large_textarea}
+                                value={editingTextData.value}
+                                onChange={(e) => setEditingTextData(prev => ({ ...prev, value: e.target.value }))}
+                                placeholder="Введите текст..."
+                                autoFocus
+                            />
+                        </div>
+
+                        <div className={common.modal_actions}>
+                            <button className={common.cancel_btn} onClick={() => setShowTextModal(false)}>Отмена</button>
+                            <button className={common.submit_btn} onClick={handleSaveText}>Сохранить</button>
                         </div>
                     </div>
                 </div>
