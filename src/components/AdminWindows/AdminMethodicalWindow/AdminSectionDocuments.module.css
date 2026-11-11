@@ -84,3 +84,37 @@
   gap: 0.5vw;
   flex-wrap: wrap;
 }
+
+/* Остальные ваши стили (columns, column, column_list и т.д.) оставляем без изменений */
+
+/* Контейнер для кнопок в шапке колонки */
+.column_actions {
+  display: flex;
+  gap: 0.5vw;
+  margin-top: 0.5vh;
+  flex-wrap: wrap;
+}
+
+/* Стилизация кнопки-лейбла для массовой загрузки */
+.bulk_btn {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f1f5f9; /* Чуть светлее, чем основная кнопка, чтобы визуально разделить */
+  color: #334155;
+  border: 1px solid #cbd5e1;
+  transition: all 0.2s ease;
+}
+
+.bulk_btn:hover {
+  background-color: #e2e8f0;
+  border-color: #94a3b8;
+}
+
+/* Если кнопка disabled во время загрузки */
+.bulk_btn:has(input:disabled) {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #e2e8f0;
+}
