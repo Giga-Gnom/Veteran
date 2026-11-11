@@ -1,11 +1,11 @@
-.container{
+.container {
     height: 100vh;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
 }
 
-.container::before{
+.container::before {
     background: url(/src/components/Windows/StructWindow/srcStruct/fon_5.png) center/cover no-repeat;
     position: absolute;
     inset: 0;
@@ -15,13 +15,11 @@
     filter: blur(0.6vh);
 }
 
-.container_head{
+.container_head {
     height: 15vh;
+    flex-shrink: 0;
 }
 
-.container_bottom{
-    height: 15vh;
-}
 .container_contant {
     display: flex;
     flex-direction: row;
@@ -32,24 +30,15 @@
     z-index: 2;
 }
 
-.contant_column{
-    flex:1;
+.contant_column {
+    flex: 1;
     margin-inline: 2vw;
-    overflow-y: auto;
     min-height: 0;
     display: flex;
     align-items: center;
 }
 
-
-.container_button{
-    position: fixed;
-    left: 5vw;
-    bottom: 2vh;
-    z-index: 2;
-}
-
-.column_card{
+.column_card {
     width: 25vw;
     min-height: 10vh;          
     padding: 2vh 2vw;
@@ -63,14 +52,15 @@
     background: rgba(255, 255, 255, 0.75);
     color: #000;
     box-sizing: border-box;
-    transition: border-radius 0.3s ease, max-height 0.4s ease;
+    transition: all 0.3s ease;
+    text-decoration: none;
 }
 
-.images {
-    flex: 1;
-    min-height: 0;
-    z-index: 2;
-    position: relative;
+.column_card:hover {
+    background: rgba(255, 255, 255, 0.95);
+    transform: translateY(-0.3vh);
+    box-shadow: 0 1vh 2vw rgba(0, 0, 0, 0.1);
+    border-radius: 3vh;
 }
 
 .card_title {
@@ -90,29 +80,14 @@
     margin-top: 0.5vh;
 }
 
-.status {
-    text-align: center;
-    font-size: 1.5vw;
-    color: #334155;
-    margin-top: 5vh;
-    z-index: 2;
-}
-
-.column_card:hover {
-    background: rgba(255, 255, 255, 0.95);
-    transform: translateY(-0.3vh);
-    box-shadow: 0 1vh 2vw rgba(0, 0, 0, 0.1);
-}
-
-/* --- Оставляем ваши старые стили (container, head, buttons) без изменений --- */
-/* ... */
-
-/* --- НОВЫЕ СТИЛИ ДЛЯ ГАЛЕРЕИ --- */
+/* =========================================
+   СТИЛИ ДЛЯ ГАЛЕРЕИ
+   ========================================= */
 
 .images {
-    flex: 1; /* Занимает всё оставшееся пространство снизу */
+    flex: 1;
     min-height: 0;
-    padding: 2vw;
+    padding: 0 2vw 2vw 2vw;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -124,63 +99,74 @@
     text-align: center;
     color: rgba(0, 0, 0, 0.5);
     font-style: italic;
-    margin-top: 2vh;
+    margin-top: 5vh;
     font-size: 1.8vh;
 }
 
-.gallery_grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2vh;
+/* Контейнер галереи на Flexbox */
+.gallery_container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Центрируем картинки по горизонтали */
+    align-content: flex-start; /* Прижимаем к верху */
+    gap: 2vw;
     width: 100%;
     height: 100%;
-    align-content: start;
+    padding-top: 2vh;
 }
 
+/* Карточка с картинкой */
 .image_wrapper {
     position: relative;
-    border-radius: 2vh;
+    border-radius: 1.5vh;
     overflow: hidden;
     cursor: pointer;
-    box-shadow: 0 0.5vh 1.5vh rgba(0, 0, 0, 0.2);
-    background: #000;
-    aspect-ratio: 16 / 9; /* Красивые пропорции */
+    flex: 0 1 400px; /* Карточка гибкая, но не больше 400px в ширину */
+    height: 35vh; /* Фиксированная высота для аккуратности */
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 0.5vh 1.5vh rgba(0, 0, 0, 0.15);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 1vh;
+    box-sizing: border-box;
 }
 
 .image_wrapper:hover {
-    transform: translateY(-0.5vh) scale(1.02);
+    transform: translateY(-0.5vh);
     box-shadow: 0 1vh 3vh rgba(66, 102, 145, 0.4);
 }
 
+/* Картинка без обрезания */
 .gallery_img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Картинка заполняет блок без искажений */
+    object-fit: contain; /* Показывает фото целиком */
     display: block;
+    border-radius: 1vh;
     transition: transform 0.4s ease;
 }
 
 .image_wrapper:hover .gallery_img {
-    transform: scale(1.05);
+    transform: scale(1.03);
 }
 
+/* Оверлей при наведении */
 .image_overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.3);
     display: flex;
     justify-content: center;
     align-items: center;
     opacity: 0;
     transition: opacity 0.3s ease;
+    border-radius: 1.5vh;
 }
 
 .image_overlay span {
     color: #fff;
     font-size: 1.8vh;
     font-weight: 600;
-    background: rgba(66, 102, 145, 0.8);
+    background: rgba(66, 102, 145, 0.85);
     padding: 1vh 2vw;
     border-radius: 3vh;
     backdrop-filter: blur(4px);
@@ -194,4 +180,20 @@
 
 .image_wrapper:hover .image_overlay span {
     transform: translateY(0);
+}
+
+/* Кнопка и статусы */
+.container_button {
+    position: fixed;
+    left: 5vw;
+    bottom: 2vh;
+    z-index: 2;
+}
+
+.status {
+    text-align: center;
+    font-size: 1.5vw;
+    color: #334155;
+    margin-top: 5vh;
+    z-index: 2;
 }

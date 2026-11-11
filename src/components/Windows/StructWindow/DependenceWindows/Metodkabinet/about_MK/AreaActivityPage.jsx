@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import MyHat from "../../../../../Hat/MyHat";
 import BeforePageButton from "../../../../../UI/MyButtons/BeforePageButton";
-import ImageViewer from "./ImageViewer"; // Подключаем ваш просмотрщик картинок
-import { imgsarr } from "../srcMK/imgsarray"; // Путь к файлу с картинками
+import ImageViewer from "./ImageViewer";
+import { imgsarr } from "../srcMK/imgsarray";
 import styles from "./AreaActivityPage.module.css";
 import methodicalService from "../../../../../../services/methodicalService";
 
@@ -81,7 +81,7 @@ const AreaActivityPage = () => {
                 <MyHat heading={section.title.toUpperCase()} />
             </div>
 
-            {/* ТРИ КНОПКИ (оставили без изменений) */}
+            {/* ТРИ КНОПКИ */}
             <div className={styles.container_contant}>
                 <div className={styles.contant_column}>
                     <Link
@@ -127,7 +127,7 @@ const AreaActivityPage = () => {
                 {currentImages.length === 0 ? (
                     <div className={styles.no_images}>Фотографий пока нет</div>
                 ) : (
-                    <div className={styles.gallery_grid}>
+                    <div className={styles.gallery_container}>
                         {currentImages.map((img, index) => (
                             <div 
                                 key={index} 
