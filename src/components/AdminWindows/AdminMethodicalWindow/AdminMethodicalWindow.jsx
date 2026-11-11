@@ -16,7 +16,7 @@ const AdminMethodicalWindow = () => {
     return (
         <div className={styles.container}>
             <div className={styles.container_head}>
-                <h2 className={styles.window_title}>Методический отдел</h2>
+                <h2 className={styles.window_title}>Методический кабинет</h2>
                 <p className={styles.window_subtitle}>
                     Управление планом работы, лекциями и методическим сопровождением
                 </p>

@@ -29,6 +29,8 @@
     align-content: flex-start;              /* Прижимаем контент к верху */
     flex: 0 0 auto;
     z-index: 2;
+    max-height: 85vh;
+    overflow-y: auto;
 }
 
 .container_button {

@@ -12,7 +12,7 @@ import i10 from "./KP/IMG_20261102_104358_994.jpg";
 export const imgsarr = [
     {
         id: 1, // СЗВ
-        arr: [i6, i7]
+        arr: [i7, i6]
     },
     {
         id: 2, // ПВМ
