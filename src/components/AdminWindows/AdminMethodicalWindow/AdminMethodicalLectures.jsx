@@ -12,6 +12,9 @@ const AdminMethodicalLectures = () => {
     const [editingLecture, setEditingLecture] = useState(null)
     const [form, setForm] = useState({ title: "", external_url: "", file_name: null, file_path: null, new_file: null })
     const [error, setError] = useState(null)
+    
+    // Состояние для массовой загрузки
+    const [bulkLoading, setBulkLoading] = useState(false)
 
     const showError = (message) => setError(message)
     const clearError = () => setError(null)
@@ -63,7 +66,7 @@ const AdminMethodicalLectures = () => {
         setForm(prev => ({ ...prev, new_file: file, file_name: file.name }))
     }
 
-    // ========== НОВОЕ: открыть документ ==========
+    // ========== Открыть документ ==========
     const handleOpen = async (lecture) => {
         try {
             if (lecture.file_path) {
@@ -86,6 +89,7 @@ const AdminMethodicalLectures = () => {
         }
     }
 
+    // ========== Сохранение одной лекции ==========
     const handleSave = async () => {
         if (!form.title.trim()) return showError("Введите название лекции")
         if (!form.new_file && !form.file_name && !form.external_url.trim()) {
@@ -127,6 +131,49 @@ const AdminMethodicalLectures = () => {
         }
     }
 
+    // ========== НОВОЕ: Массовая загрузка файлов ==========
+    const handleBulkUpload = async (e) => {
+        const files = Array.from(e.target.files || [])
+        if (files.length === 0) return
+
+        setBulkLoading(true)
+        let successCount = 0
+
+        try {
+            for (const file of files) {
+                // 1. Сохраняем файл физически
+                const saved = await methodicalService.saveFileFromInput(file)
+                if (!saved) continue
+
+                // 2. Имя файла без расширения
+                const title = file.name.replace(/\.[^/.]+$/, "")
+
+                // 3. Данные для БД
+                const payload = {
+                    title: title,
+                    external_url: null, // Ссылка пустая
+                    file_name: saved.file_name,
+                    file_path: saved.file_path
+                }
+
+                // 4. Запись в БД
+                await methodicalService.addLecture(payload)
+                successCount++
+            }
+
+            if (successCount > 0) {
+                showAlert(`Успешно загружено лекций: ${successCount}`)
+                await loadLectures()
+            }
+        } catch (err) {
+            console.error("Bulk upload error:", err)
+            showError("Произошла ошибка при массовой загрузке файлов")
+        } finally {
+            setBulkLoading(false)
+            e.target.value = "" // Сброс инпута
+        }
+    }
+
     const handleDelete = async (lecture) => {
         const confirmed = await showConfirm(`Удалить лекцию "${lecture.title}"?`)
         if (!confirmed) return
@@ -151,9 +198,27 @@ const AdminMethodicalLectures = () => {
 
             <div className={common.section_header}>
                 <h3 className={common.section_title}>Лекторская группа</h3>
-                <button className={common.add_btn} onClick={handleOpenAdd}>
-                    + Добавить лекцию
-                </button>
+                
+                {/* Обертка для кнопок добавления */}
+                <div className={styles.header_actions}>
+                    <button className={common.add_btn} onClick={handleOpenAdd}>
+                        + Добавить лекцию
+                    </button>
+                    
+                    <label 
+                        className={`${common.add_btn} ${styles.bulk_btn}`} 
+                        title="Выберите сразу несколько файлов (Ctrl/Shift)"
+                    >
+                        {bulkLoading ? "Загрузка..." : "📁 Массово"}
+                        <input
+                            type="file"
+                            multiple
+                            style={{ display: "none" }}
+                            onChange={handleBulkUpload}
+                            disabled={bulkLoading}
+                        />
+                    </label>
+                </div>
             </div>
 
             {loading ? (
