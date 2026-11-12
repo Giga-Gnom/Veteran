@@ -45,3 +45,36 @@
   border-top: 0.1vw solid #f1f5f9;
   padding-top: 1vh;
 }
+
+
+/* Обертка для кнопок в шапке */
+.header_actions {
+  display: flex;
+  gap: 1vw;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Стилизация кнопки-лейбла для массовой загрузки */
+.bulk_btn {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f1f5f9;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+  transition: all 0.2s ease;
+}
+
+.bulk_btn:hover {
+  background-color: #e2e8f0;
+  border-color: #94a3b8;
+}
+
+/* Если кнопка заблокирована во время загрузки */
+.bulk_btn:has(input:disabled) {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #e2e8f0;
+}

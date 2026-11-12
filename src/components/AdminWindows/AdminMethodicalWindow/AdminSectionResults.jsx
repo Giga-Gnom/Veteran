@@ -12,6 +12,9 @@ const AdminSectionResults = ({ sectionId, onChanged }) => {
     const [editingResult, setEditingResult] = useState(null)
     const [form, setForm] = useState({ title: "", external_url: "", file_name: null, file_path: null, new_file: null })
     const [error, setError] = useState(null)
+    
+    // Состояние для массовой загрузки
+    const [bulkLoading, setBulkLoading] = useState(false)
 
     const showError = (m) => setError(m)
     const clearError = () => setError(null)
@@ -63,7 +66,7 @@ const AdminSectionResults = ({ sectionId, onChanged }) => {
         setForm(prev => ({ ...prev, new_file: file, file_name: file.name }))
     }
 
-    // ========== НОВОЕ: открыть документ ==========
+    // ========== Открыть документ ==========
     const handleOpen = async (result) => {
         try {
             if (result.file_path) {
@@ -86,6 +89,7 @@ const AdminSectionResults = ({ sectionId, onChanged }) => {
         }
     }
 
+    // ========== Сохранение одного итога ==========
     const handleSave = async () => {
         if (!form.title.trim()) return showError("Введите название")
         if (!form.new_file && !form.file_name && !form.external_url.trim()) {
@@ -128,6 +132,51 @@ const AdminSectionResults = ({ sectionId, onChanged }) => {
         }
     }
 
+    // ========== НОВОЕ: Массовая загрузка файлов ==========
+    const handleBulkUpload = async (e) => {
+        const files = Array.from(e.target.files || [])
+        if (files.length === 0) return
+
+        setBulkLoading(true)
+        let successCount = 0
+
+        try {
+            for (const file of files) {
+                // 1. Сохраняем файл физически
+                const saved = await methodicalService.saveFileFromInput(file)
+                if (!saved) continue
+
+                // 2. Имя файла без расширения
+                const title = file.name.replace(/\.[^/.]+$/, "")
+
+                // 3. Данные для БД
+                const payload = {
+                    section_id: sectionId,
+                    title: title,
+                    external_url: null, // Ссылка пустая
+                    file_name: saved.file_name,
+                    file_path: saved.file_path
+                }
+
+                // 4. Запись в БД
+                await methodicalService.addResult(payload)
+                successCount++
+            }
+
+            if (successCount > 0) {
+                showAlert(`Успешно загружено итогов: ${successCount}`)
+                await loadResults()
+                onChanged?.()
+            }
+        } catch (err) {
+            console.error("Bulk upload error:", err)
+            showError("Произошла ошибка при массовой загрузке файлов")
+        } finally {
+            setBulkLoading(false)
+            e.target.value = "" // Сброс инпута
+        }
+    }
+
     const handleDelete = async (result) => {
         const confirmed = await showConfirm(`Удалить итог "${result.title}"?`)
         if (!confirmed) return
@@ -148,9 +197,27 @@ const AdminSectionResults = ({ sectionId, onChanged }) => {
 
             <div className={common.section_header}>
                 <h3 className={common.section_title}>Итоги работы, результаты</h3>
-                <button className={common.add_btn} onClick={handleOpenAdd}>
-                    + Добавить итог
-                </button>
+                
+                {/* Обертка для кнопок добавления */}
+                <div className={styles.header_actions}>
+                    <button className={common.add_btn} onClick={handleOpenAdd}>
+                        + Добавить итог
+                    </button>
+                    
+                    <label 
+                        className={`${common.add_btn} ${styles.bulk_btn}`} 
+                        title="Выберите сразу несколько файлов (Ctrl/Shift)"
+                    >
+                        {bulkLoading ? "Загрузка..." : "📁 Массово"}
+                        <input
+                            type="file"
+                            multiple
+                            style={{ display: "none" }}
+                            onChange={handleBulkUpload}
+                            disabled={bulkLoading}
+                        />
+                    </label>
+                </div>
             </div>
 
             {loading ? (
@@ -187,6 +254,7 @@ const AdminSectionResults = ({ sectionId, onChanged }) => {
                 </div>
             )}
 
+            {/* Модалка одиночного добавления/редактирования */}
             {showModal && (
                 <div className={common.modal_overlay} onClick={handleCloseModal}>
                     <div className={common.modal} onClick={(e) => e.stopPropagation()}>
