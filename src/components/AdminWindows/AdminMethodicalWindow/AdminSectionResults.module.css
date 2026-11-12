@@ -2,6 +2,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(20vw, 1fr));
   gap: 1.5vw;
+  max-height: 42vh;
+  overflow-y: auto;
 }
 
 .result_card {
