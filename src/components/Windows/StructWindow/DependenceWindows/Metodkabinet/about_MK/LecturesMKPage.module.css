@@ -1,10 +1,11 @@
-.container{
+.container {
     height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow: hidden; /* Убираем двойной скролл страницы */
 }
 
-.container::before{
+.container::before {
     background: url(/src/components/Windows/StructWindow/srcStruct/fon_5.png) center/cover no-repeat;
     position: absolute;
     inset: 0;
@@ -14,35 +15,56 @@
     filter: blur(0.6vh);
 }
 
-.container_head{
+/* --- ШАПКА --- */
+.container_head {
     height: 15vh;
+    flex-shrink: 0; /* Запрещаем шапке сжиматься */
+    position: relative;
+    z-index: 10; /* Шапка всегда поверх скроллящегося контента */
 }
 
+/* --- КОНТЕЙНЕР С КАРТОЧКАМИ --- */
 .container_contant {
     display: flex;
     flex-direction: column;
     width: 100%;
-    justify-content: center;
-    align-items: center;
+    align-items: center; /* Центрируем карточки по горизонтали */
     margin: 0;
-    padding-bottom: 1vh;
-    padding-inline: 1vw;
-    flex: 0 0 auto; 
+    /* Нижний padding 15vh, чтобы кнопка "Назад" не перекрывала последнюю карточку */
+    padding: 2vh 1vw 15vh 1vw; 
+    
+    flex: 1; /* Занимает всё оставшееся пространство */
+    min-height: 0; /* КРИТИЧНО: разрешает контейнеру сжиматься и включать скролл */
+    overflow-y: auto; /* Включаем вертикальный скролл */
     z-index: 2;
 }
 
-
-.container_button{
-    position: fixed;
-    left: 5vw;
-    bottom: 2vh;
-    z-index: 2;
+/* Красивый скроллбар (опционально) */
+.container_contant::-webkit-scrollbar {
+    width: 0.5vw;
+}
+.container_contant::-webkit-scrollbar-track {
+    background: transparent;
+}
+.container_contant::-webkit-scrollbar-thumb {
+    background: rgba(66, 102, 145, 0.4);
+    border-radius: 1vh;
+}
+.container_contant::-webkit-scrollbar-thumb:hover {
+    background: rgba(66, 102, 145, 0.7);
 }
 
-.column_card{
-    width: 80vw;
-    height: 8vh;          
-    padding: 0.5vh 4vw;
+/* --- КАРТОЧКА --- */
+.column_card {
+    width: 85vw; /* Сделали чуть шире (было 80vw) */
+    max-width: 1400px; /* Ограничитель для очень широких мониторов */
+    
+    /* ВАЖНО: Заменили height на min-height. Теперь если текста много, карточка вырастет, а не сожмется */
+    min-height: 9vh; 
+    
+    /* Увеличили вертикальные отступы (2vh), чтобы текст не прилипал к краям */
+    padding: 2vh 4vw; 
+    
     border: 0.4vw solid rgba(66, 102, 145);
     border-radius: 3vh;
     display: flex;
@@ -53,10 +75,68 @@
     background: rgba(255, 255, 255, 0.75);
     color: #000;
     box-sizing: border-box;
-    transition: border-radius 0.3s ease, max-height 0.4s ease;
+    transition: border-radius 0.3s ease, background 0.3s ease, transform 0.2s ease;
     margin-block: 1vh;
+    flex-shrink: 0; /* Запрещаем карточкам сжиматься, если их много */
 }
 
+/* Эффект при наведении (работает, если в style передан cursor: pointer) */
+.column_card[style*="pointer"]:hover {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 0.5vh 1.5vw rgba(0, 0, 0, 0.1);
+    transform: translateY(-0.2vh);
+}
+
+/* --- ТЕКСТ ВНУТРИ КАРТОЧКИ --- */
+.card_content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 0.8vh; /* Чуть увеличили отступ между названием и файлом */
+    overflow: hidden;
+}
+
+.lecture_title {
+    font-size: 1.6vw;
+    font-weight: 600;
+    color: #0f172a;
+    
+    /* Обрезка длинного текста с троеточием */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    
+    /* Убираем возможные дефолтные отступы браузера, которые могут вызвать наезд */
+    margin: 0; 
+    line-height: 1.3;
+}
+
+.lecture_meta {
+    font-size: 1.1vw;
+    color: #64748b;
+    
+    /* Обрезка длинного текста с троеточием */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    
+    margin: 0;
+    line-height: 1.2;
+}
+
+/* --- КНОПКА НАЗАД --- */
+.container_button {
+    position: fixed;
+    left: 5vw;
+    bottom: 2vh;
+    z-index: 10;
+}
+
+/* --- СТАТУС (Загрузка / Ошибка) --- */
 .status {
     width: 100%;
     text-align: center;
@@ -65,38 +145,4 @@
     margin-top: 5vh;
     font-weight: 500;
     z-index: 2;
-}
-
-.card_content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    gap: 0.5vh;
-    overflow: hidden;
-}
-
-.lecture_title {
-    font-size: 1.6vw;
-    font-weight: 600;
-    color: #0f172a;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 95%;
-}
-
-.lecture_meta {
-    font-size: 1vw;
-    color: #64748b;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 95%;
-}
-
-.column_card[style*="pointer"]:hover {
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 0.5vh 1vw rgba(0, 0, 0, 0.08);
 }
