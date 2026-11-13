@@ -216,6 +216,7 @@ class DatabaseService {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         section_id INTEGER NOT NULL,
         name TEXT NOT NULL,
+        external_url TEXT,          -- <-- НОВОЕ ПОЛЕ (необязательное)
         sort_order INTEGER DEFAULT 0,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (section_id) REFERENCES methodical_sections(id) ON DELETE CASCADE

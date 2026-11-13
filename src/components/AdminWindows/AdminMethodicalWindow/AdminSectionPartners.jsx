@@ -10,7 +10,11 @@ const AdminSectionPartners = ({ sectionId, onChanged }) => {
     const [loading, setLoading] = useState(false)
     const [showModal, setShowModal] = useState(false)
     const [editingPartner, setEditingPartner] = useState(null)
+    
+    // Состояния формы
     const [partnerName, setPartnerName] = useState("")
+    const [partnerUrl, setPartnerUrl] = useState("") 
+    
     const [error, setError] = useState(null)
 
     const showError = (m) => setError(m)
@@ -32,14 +36,10 @@ const AdminSectionPartners = ({ sectionId, onChanged }) => {
 
     // ========== ПЕРЕМЕЩЕНИЕ СТРЕЛОЧКАМИ ==========
     const handleMoveUp = async (index) => {
-        if (index === 0) return; // Уже наверху
-        
+        if (index === 0) return; 
         const newPartners = [...partners];
-        // Меняем местами текущий и предыдущий элементы
         [newPartners[index - 1], newPartners[index]] = [newPartners[index], newPartners[index - 1]];
-        
         setPartners(newPartners);
-        
         try {
             const orderedIds = newPartners.map(p => p.id);
             await methodicalService.updatePartnerOrder(orderedIds);
@@ -50,14 +50,10 @@ const AdminSectionPartners = ({ sectionId, onChanged }) => {
     }
 
     const handleMoveDown = async (index) => {
-        if (index === partners.length - 1) return; // Уже внизу
-        
+        if (index === partners.length - 1) return; 
         const newPartners = [...partners];
-        // Меняем местами текущий и следующий элементы
         [newPartners[index + 1], newPartners[index]] = [newPartners[index], newPartners[index + 1]];
-        
         setPartners(newPartners);
-        
         try {
             const orderedIds = newPartners.map(p => p.id);
             await methodicalService.updatePartnerOrder(orderedIds);
@@ -71,31 +67,39 @@ const AdminSectionPartners = ({ sectionId, onChanged }) => {
     const handleOpenAdd = () => {
         setEditingPartner(null)
         setPartnerName("")
+        setPartnerUrl("")
         setShowModal(true)
     }
 
     const handleOpenEdit = (partner) => {
         setEditingPartner(partner)
         setPartnerName(partner.name)
+        setPartnerUrl(partner.external_url ?? "")
         setShowModal(true)
     }
 
     const handleCloseModal = () => {
         setEditingPartner(null)
         setPartnerName("")
+        setPartnerUrl("")
         setShowModal(false)
     }
 
     const handleSave = async () => {
         if (!partnerName.trim()) return showError("Введите название партнёра")
         try {
+            const payload = {
+                name: partnerName.trim(),
+                external_url: partnerUrl.trim() || null
+            }
+
             if (editingPartner) {
-                await methodicalService.updatePartner(editingPartner.id, { name: partnerName.trim() })
+                await methodicalService.updatePartner(editingPartner.id, payload)
                 showAlert("Партнёр обновлён")
             } else {
                 await methodicalService.addPartner({
                     section_id: sectionId,
-                    name: partnerName.trim()
+                    ...payload
                 })
                 showAlert("Партнёр добавлен")
             }
@@ -148,27 +152,17 @@ const AdminSectionPartners = ({ sectionId, onChanged }) => {
                     {partners.map((partner, index) => (
                         <div key={partner.id} className={styles.partner_card}>
                             
-                            {/* Шапка карточки со стрелочками */}
                             <div className={styles.card_top_row}>
-                                <h4 className={styles.partner_name}>{partner.name}</h4>
+                                <div>
+                                    <h4 className={styles.partner_name}>{partner.name}</h4>
+                                    {partner.external_url && (
+                                        <span style={{fontSize: '0.9vw', color: '#007aff', display: 'block', marginTop: '0.5vh'}}>🔗 Сайт прикреплен</span>
+                                    )}
+                                </div>
                                 
                                 <div className={styles.sort_controls}>
-                                    <button 
-                                        className={styles.sort_btn} 
-                                        onClick={() => handleMoveUp(index)} 
-                                        disabled={index === 0}
-                                        title="Переместить вверх"
-                                    >
-                                        ⬆️
-                                    </button>
-                                    <button 
-                                        className={styles.sort_btn} 
-                                        onClick={() => handleMoveDown(index)} 
-                                        disabled={index === partners.length - 1}
-                                        title="Переместить вниз"
-                                    >
-                                        ⬇️
-                                    </button>
+                                    <button className={styles.sort_btn} onClick={() => handleMoveUp(index)} disabled={index === 0}>⬆️</button>
+                                    <button className={styles.sort_btn} onClick={() => handleMoveDown(index)} disabled={index === partners.length - 1}>⬇️</button>
                                 </div>
                             </div>
 
@@ -185,6 +179,7 @@ const AdminSectionPartners = ({ sectionId, onChanged }) => {
                 <div className={common.modal_overlay} onClick={handleCloseModal}>
                     <div className={common.modal} onClick={(e) => e.stopPropagation()}>
                         <h3>{editingPartner ? "Редактировать партнёра" : "Новый партнёр"}</h3>
+                        
                         <div className={common.form_group}>
                             <label htmlFor="partnerName">Название организации *</label>
                             <input
@@ -196,6 +191,19 @@ const AdminSectionPartners = ({ sectionId, onChanged }) => {
                                 autoFocus
                             />
                         </div>
+
+                        <div className={common.form_group}>
+                            <label htmlFor="partnerUrl">Ссылка на сайт (необязательно)</label>
+                            <input
+                                id="partnerUrl"
+                                type="url"
+                                value={partnerUrl}
+                                onChange={(e) => setPartnerUrl(e.target.value)}
+                                placeholder="https://..."
+                            />
+                            <small className={common.hint}>При клике на карточку у клиента откроется этот сайт</small>
+                        </div>
+
                         <div className={common.modal_actions}>
                             <button className={common.cancel_btn} onClick={handleCloseModal}>Отмена</button>
                             <button className={common.submit_btn} onClick={handleSave}>Сохранить</button>

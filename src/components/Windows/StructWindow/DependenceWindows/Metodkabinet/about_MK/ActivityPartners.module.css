@@ -19,14 +19,13 @@
 }
 
 .container_contant {
-    /* === ГЛАВНОЕ ИЗМЕНЕНИЕ: перешли с flex на grid === */
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* Ровно 4 колонки одинаковой ширины */
-    gap: 3vh 3vw;                           /* Отступы: 3vh по вертикали, 3vw по горизонтали */
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3vh 3vw;
     width: 100%;
     box-sizing: border-box;
-    padding: 2vh 3vw;                       /* Отступы от краёв контейнера */
-    align-content: flex-start;              /* Прижимаем контент к верху */
+    padding: 2vh 3vw;
+    align-content: flex-start;
     flex: 0 0 auto;
     z-index: 2;
     max-height: 85vh;
@@ -41,8 +40,6 @@
 }
 
 .column_card {
-    /* В GRID ширина и высота задаются автоматически колонкой,
-       поэтому width: 20vw больше не нужен */
     height: 15vh;
     padding: 0.5vh 0.5vw;
     border: 0.4vw solid rgba(66, 102, 145);
@@ -56,14 +53,14 @@
     color: #000;
     box-sizing: border-box;
     transition: border-radius 0.3s ease, background 0.2s, transform 0.2s;
-    
-    /* Убираем любые margin, чтобы они не мешали grid'у */
     margin: 0;
 }
 
-.column_card:hover {
+/* Эффект при наведении (работает, если в style передан cursor: pointer) */
+.column_card[style*="pointer"]:hover {
     background: rgba(255, 255, 255, 0.95);
     transform: translateY(-0.2vh);
+    box-shadow: 0 0.5vh 1.5vw rgba(0, 0, 0, 0.1);
 }
 
 .partner_name {
@@ -80,8 +77,14 @@
     word-break: break-word;
 }
 
+/* Новая подсказка */
+.partner_link_hint {
+    font-size: 1vw;
+    color: #007aff;
+    margin-top: 0.5vh;
+}
+
 .status {
-    /* В grid статус-сообщение должно занимать все 4 колонки */
     grid-column: 1 / -1;
     width: 100%;
     text-align: center;
