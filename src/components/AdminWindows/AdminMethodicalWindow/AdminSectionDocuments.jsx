@@ -15,7 +15,6 @@ const AdminSectionDocuments = ({ sectionId, onChanged }) => {
     const [form, setForm] = useState({ title: "", external_url: "", file_name: null, file_path: null, new_file: null })
     const [error, setError] = useState(null)
     
-    // Состояние для массовой загрузки
     const [bulkLoading, setBulkLoading] = useState(false)
 
     const showError = (m) => setError(m)
@@ -39,6 +38,53 @@ const AdminSectionDocuments = ({ sectionId, onChanged }) => {
             setLoading(false)
         }
     }
+
+    // ========== ПЕРЕМЕЩЕНИЕ СТРЕЛОЧКАМИ (ВНУТРИ КОЛОНКИ) ==========
+    const handleMoveUp = async (typeId, docId) => {
+        // Берем документы только текущей колонки
+        const typeDocs = documents.filter(d => d.doc_type_id === typeId);
+        const index = typeDocs.findIndex(d => d.id === docId);
+        
+        if (index <= 0) return; // Уже наверху
+
+        // Меняем местами
+        const newTypeDocs = [...typeDocs];
+        [newTypeDocs[index - 1], newTypeDocs[index]] = [newTypeDocs[index], newTypeDocs[index - 1]];
+
+        // Собираем общий массив (документы других колонок не трогаем)
+        const otherDocs = documents.filter(d => d.doc_type_id !== typeId);
+        setDocuments([...otherDocs, ...newTypeDocs]);
+
+        try {
+            const orderedIds = newTypeDocs.map(d => d.id);
+            await methodicalService.updateDocumentOrder(orderedIds);
+        } catch (e) {
+            console.error(e);
+            showError("Ошибка при сохранении порядка");
+        }
+    }
+
+    const handleMoveDown = async (typeId, docId) => {
+        const typeDocs = documents.filter(d => d.doc_type_id === typeId);
+        const index = typeDocs.findIndex(d => d.id === docId);
+        
+        if (index === -1 || index === typeDocs.length - 1) return; // Уже внизу
+
+        const newTypeDocs = [...typeDocs];
+        [newTypeDocs[index + 1], newTypeDocs[index]] = [newTypeDocs[index], newTypeDocs[index + 1]];
+
+        const otherDocs = documents.filter(d => d.doc_type_id !== typeId);
+        setDocuments([...otherDocs, ...newTypeDocs]);
+
+        try {
+            const orderedIds = newTypeDocs.map(d => d.id);
+            await methodicalService.updateDocumentOrder(orderedIds);
+        } catch (e) {
+            console.error(e);
+            showError("Ошибка при сохранении порядка");
+        }
+    }
+    // =========================================================
 
     const resetForm = () => {
         setEditingDoc(null)
@@ -76,7 +122,6 @@ const AdminSectionDocuments = ({ sectionId, onChanged }) => {
         setForm(prev => ({ ...prev, new_file: file, file_name: file.name }))
     }
 
-    // ========== Открыть документ ==========
     const handleOpen = async (doc) => {
         try {
             if (doc.file_path) {
@@ -99,7 +144,6 @@ const AdminSectionDocuments = ({ sectionId, onChanged }) => {
         }
     }
 
-    // ========== Сохранение одного документа (из модалки) ==========
     const handleSave = async () => {
         if (!form.title.trim()) return showError("Введите название")
         if (!form.new_file && !form.file_name && !form.external_url.trim()) {
@@ -143,7 +187,6 @@ const AdminSectionDocuments = ({ sectionId, onChanged }) => {
         }
     }
 
-    // ========== НОВОЕ: Массовая загрузка файлов ==========
     const handleBulkUpload = async (e, typeId) => {
         const files = Array.from(e.target.files || [])
         if (files.length === 0) return
@@ -153,24 +196,20 @@ const AdminSectionDocuments = ({ sectionId, onChanged }) => {
 
         try {
             for (const file of files) {
-                // 1. Сохраняем файл физически на диск
                 const saved = await methodicalService.saveFileFromInput(file)
                 if (!saved) continue
 
-                // 2. Формируем название (убираем расширение файла)
                 const title = file.name.replace(/\.[^/.]+$/, "")
 
-                // 3. Данные для БД
                 const payload = {
                     section_id: sectionId,
                     doc_type_id: typeId,
                     title: title,
-                    external_url: null, // Ссылка пустая
+                    external_url: null,
                     file_name: saved.file_name,
                     file_path: saved.file_path
                 }
 
-                // 4. Записываем в БД
                 await methodicalService.addDocument(payload)
                 successCount++
             }
@@ -185,7 +224,7 @@ const AdminSectionDocuments = ({ sectionId, onChanged }) => {
             showError("Произошла ошибка при массовой загрузке файлов")
         } finally {
             setBulkLoading(false)
-            e.target.value = "" // Очищаем инпут, чтобы можно было выбрать те же файлы снова
+            e.target.value = ""
         }
     }
 
@@ -218,16 +257,12 @@ const AdminSectionDocuments = ({ sectionId, onChanged }) => {
                                 <div className={styles.column_header}>
                                     <h4 className={styles.column_title}>{type.title}</h4>
                                     
-                                    {/* Кнопки добавления */}
                                     <div className={styles.column_actions}>
                                         <button className={common.add_btn} onClick={() => handleOpenAdd(type.id)}>
                                             + Один
                                         </button>
                                         
-                                        <label 
-                                            className={`${common.add_btn} ${styles.bulk_btn}`} 
-                                            title="Выберите сразу несколько файлов (Ctrl/Shift)"
-                                        >
+                                        <label className={`${common.add_btn} ${styles.bulk_btn}`}>
                                             {bulkLoading ? "Загрузка..." : "📁 Массово"}
                                             <input
                                                 type="file"
@@ -244,9 +279,30 @@ const AdminSectionDocuments = ({ sectionId, onChanged }) => {
                                     {items.length === 0 ? (
                                         <div className={styles.column_empty}>Документов нет</div>
                                     ) : (
-                                        items.map(doc => (
+                                        items.map((doc, index) => (
                                             <div key={doc.id} className={styles.doc_card}>
-                                                <div className={styles.doc_name}>{doc.title}</div>
+                                                
+                                                {/* Шапка карточки со стрелочками */}
+                                                <div className={styles.doc_top_row}>
+                                                    <div className={styles.doc_name}>{doc.title}</div>
+                                                    <div className={styles.sort_controls}>
+                                                        <button 
+                                                            className={styles.sort_btn} 
+                                                            onClick={() => handleMoveUp(type.id, doc.id)} 
+                                                            disabled={index === 0}
+                                                        >
+                                                            ⬆️
+                                                        </button>
+                                                        <button 
+                                                            className={styles.sort_btn} 
+                                                            onClick={() => handleMoveDown(type.id, doc.id)} 
+                                                            disabled={index === items.length - 1}
+                                                        >
+                                                            ⬇️
+                                                        </button>
+                                                    </div>
+                                                </div>
+
                                                 <div className={styles.doc_meta}>
                                                     {doc.file_name ? (
                                                         <span className={styles.doc_file}>📄 {doc.file_name}</span>
@@ -271,7 +327,7 @@ const AdminSectionDocuments = ({ sectionId, onChanged }) => {
                 </div>
             )}
 
-            {/* Модалка одиночного добавления/редактирования */}
+            {/* Модалка остается без изменений */}
             {showModal && (
                 <div className={common.modal_overlay} onClick={handleCloseModal}>
                     <div className={common.modal} onClick={(e) => e.stopPropagation()}>

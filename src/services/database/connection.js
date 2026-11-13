@@ -22,7 +22,7 @@ class DatabaseService {
     
     const dbPath = path.join(app.getPath('userData'), 'kiosk.db');
     this.db = new Database(dbPath);
-    this.db.pragma('foreign_keys = ON');   // ← добавь эту строку
+    this.db.pragma('foreign_keys = ON');
     this.createTables();
   }
 
@@ -42,8 +42,9 @@ class DatabaseService {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         year INTEGER UNIQUE NOT NULL,
         title TEXT NOT NULL
-        )`
-      );
+      )
+    `);
+    
     this.db.exec(`
       CREATE TABLE IF NOT EXISTS newspapers_quarters(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -52,8 +53,9 @@ class DatabaseService {
         title TEXT,
         UNIQUE (year_id, quarter),
         FOREIGN KEY (year_id) REFERENCES newspapers_years(id) ON DELETE CASCADE
-        )`
-      );
+      )
+    `);
+    
     this.db.exec(`
       CREATE TABLE IF NOT EXISTS newspapers (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -65,115 +67,115 @@ class DatabaseService {
         issue_number TEXT,
         upload_date DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (quarter_id) REFERENCES newspapers_quarters(id) ON DELETE SET NULL
-        )`
-      );
+      )
+    `);
 
-      this.db.exec(`
-        CREATE TABLE IF NOT EXISTS awards (
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
-          title TEXT NOT NULL,
-          file_path TEXT NOT NULL,
-          file_name TEXT NOT NULL,
-          description TEXT,
-          upload_date DATETIME DEFAULT CURRENT_TIME,
-          image_path TEXT
-          )`
-        );
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS awards (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        file_path TEXT NOT NULL,
+        file_name TEXT NOT NULL,
+        description TEXT,
+        upload_date DATETIME DEFAULT CURRENT_TIME,
+        image_path TEXT
+      )
+    `);
 
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS gallery_folders (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL
+      )
+    `);
+    
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS gallery_images (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        image_path TEXT NOT NULL,
+        image_name TEXT NOT NULL,
+        folder_id INTEGER,
+        FOREIGN KEY (folder_id) REFERENCES gallery_folders(id) ON DELETE CASCADE
+      )
+    `);
+    
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS slider_images (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT,
+        image_path TEXT NOT NULL,
+        image_name TEXT NOT NULL
+      )
+    `);
 
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS regions(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        region_name TEXT NOT NULL,
+        document_name TEXT NOT NULL,
+        document_path TEXT NOT NULL,
+        logo_path TEXT NOT NULL,
+        upload_date DATETIME DEFAULT CURRENT_TIME
+      )
+    `);
 
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS statistic_charts (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        chart_name TEXT NOT NULL,
+        sort_order INTEGER DEFAULT 0,
+        chart_type TEXT DEFAULT 'bar',
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+    
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS chart_categories (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        chart_id INTEGER NOT NULL,
+        category_name TEXT NOT NULL,
+        sort_order INTEGER DEFAULT 0,
+        FOREIGN KEY (chart_id) REFERENCES statistic_charts(id) ON DELETE CASCADE
+      )
+    `);
+    
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS chart_datasets (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        chart_id INTEGER NOT NULL,
+        dataset_label TEXT NOT NULL,
+        dataset_color TEXT NOT NULL,
+        border_color TEXT NOT NULL,
+        sort_order INTEGER DEFAULT 0,
+        FOREIGN KEY (chart_id) REFERENCES statistic_charts(id) ON DELETE CASCADE
+      )
+    `);
+    
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS chart_data_points (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        dataset_id INTEGER NOT NULL,
+        category_id INTEGER NOT NULL,
+        data_value DECIMAL(10, 2) NOT NULL,
+        FOREIGN KEY (dataset_id) REFERENCES chart_datasets(id) ON DELETE CASCADE,
+        FOREIGN KEY (category_id) REFERENCES chart_categories(id) ON DELETE CASCADE
+      )
+    `);
 
-        this.db.exec(`
-          CREATE TABLE IF NOT EXISTS gallery_folders (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            title TEXT NOT NULL
-          )`
-        );
-        this.db.exec(`
-          CREATE TABLE IF NOT EXISTS gallery_images (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            image_path TEXT NOT NULL,
-            image_name TEXT NOT NULL,
-            folder_id INTEGER,
-            FOREIGN KEY (folder_id) REFERENCES gallery_folders(id) ON DELETE CASCADE
-          )`
-        );
-        this.db.exec(`
-          CREATE TABLE IF NOT EXISTS slider_images (
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
-          title TEXT,
-          image_path TEXT NOT NULL,
-          image_name TEXT NOT NULL
-          )`
-        );
+    this.db.exec(`          
+      CREATE TABLE IF NOT EXISTS area_organizations (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        head_text TEXT NOT NULL,
+        is_head boolean NOT NULL DEFAULT FALSE,
+        director TEXT,
+        phone TEXT,
+        address TEXT NOT NULL,
+        district_name TEXT,
+        area_num INTEGER
+      )
+    `);
 
-        this.db.exec(`
-          CREATE TABLE IF NOT EXISTS regions(
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            region_name TEXT NOT NULL,
-            document_name TEXT NOT NULL,
-            document_path TEXT NOT NULL,
-            logo_path TEXT NOT NULL,
-            upload_date DATETIME DEFAULT CURRENT_TIME
-          )`
-        );
-
-
-
-        this.db.exec(`
-          CREATE TABLE IF NOT EXISTS statistic_charts (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            chart_name TEXT NOT NULL,
-            sort_order INTEGER DEFAULT 0,
-            chart_type TEXT DEFAULT 'bar',
-            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-          )`
-        );
-        this.db.exec(`
-          CREATE TABLE IF NOT EXISTS chart_categories (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            chart_id INTEGER NOT NULL,
-            category_name TEXT NOT NULL,
-            sort_order INTEGER DEFAULT 0,
-            FOREIGN KEY (chart_id) REFERENCES statistic_charts(id) ON DELETE CASCADE
-          )`
-        );
-        this.db.exec(`
-          CREATE TABLE IF NOT EXISTS chart_datasets (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            chart_id INTEGER NOT NULL,
-            dataset_label TEXT NOT NULL,
-            dataset_color TEXT NOT NULL,
-            border_color TEXT NOT NULL,
-            sort_order INTEGER DEFAULT 0,
-            FOREIGN KEY (chart_id) REFERENCES statistic_charts(id) ON DELETE CASCADE
-          )`
-        );
-        this.db.exec(`
-          CREATE TABLE IF NOT EXISTS chart_data_points (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            dataset_id INTEGER NOT NULL,
-            category_id INTEGER NOT NULL,
-            data_value DECIMAL(10, 2) NOT NULL,
-            FOREIGN KEY (dataset_id) REFERENCES chart_datasets(id) ON DELETE CASCADE,
-            FOREIGN KEY (category_id) REFERENCES chart_categories(id) ON DELETE CASCADE
-          )`
-        );
-
-        this.db.exec(`          
-          CREATE TABLE IF NOT EXISTS area_organizations (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            head_text TEXT NOT NULL,
-            is_head boolean NOT NULL DEFAULT FALSE,
-            director TEXT,
-            phone TEXT,
-            address TEXT NOT NULL,
-            district_name TEXT,
-            area_num INTEGER
-          )`
-        )
-
-            // ========== Методический отдел ==========
+    // ========== Методический отдел ==========
 
     this.db.exec(`
       CREATE TABLE IF NOT EXISTS methodical_sections (
@@ -202,6 +204,7 @@ class DatabaseService {
         file_path TEXT,
         file_name TEXT,
         external_url TEXT,
+        sort_order INTEGER DEFAULT 0,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (section_id) REFERENCES methodical_sections(id) ON DELETE CASCADE,
         FOREIGN KEY (doc_type_id) REFERENCES methodical_document_types(id) ON DELETE RESTRICT
@@ -213,6 +216,7 @@ class DatabaseService {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         section_id INTEGER NOT NULL,
         name TEXT NOT NULL,
+        sort_order INTEGER DEFAULT 0,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (section_id) REFERENCES methodical_sections(id) ON DELETE CASCADE
       )
@@ -226,6 +230,7 @@ class DatabaseService {
         file_path TEXT,
         file_name TEXT,
         external_url TEXT,
+        sort_order INTEGER DEFAULT 0,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (section_id) REFERENCES methodical_sections(id) ON DELETE CASCADE
       )
@@ -238,6 +243,7 @@ class DatabaseService {
         file_path TEXT,
         file_name TEXT,
         external_url TEXT,
+        sort_order INTEGER DEFAULT 0,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )
     `);
@@ -247,6 +253,7 @@ class DatabaseService {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
         columns TEXT NOT NULL DEFAULT '[]',
+        sort_order INTEGER DEFAULT 0,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )
     `);
@@ -287,7 +294,7 @@ class DatabaseService {
   }
 
   async getAll(table) {
-    await this.init(); // Гарантируем инициализацию
+    await this.init();
     console.log(`📋 Getting all from ${table}`);
     const stmt = this.db.prepare(`SELECT * FROM ${table}`);
     const result = stmt.all();
@@ -296,23 +303,21 @@ class DatabaseService {
   }
 
   async insert(table, data) {
-    await this.init(); // Гарантируем инициализацию
+    await this.init();
     const keys = Object.keys(data);
     const values = Object.values(data);
     const placeholders = keys.map(() => '?').join(', ');
     const query = `INSERT INTO ${table} (${keys.join(', ')}) VALUES (${placeholders})`;
     const stmt = this.db.prepare(query);
     const result = stmt.run(...values);
-
     return result.lastInsertRowid;
   }
 
   async delete(table, id) {
-    await this.init(); // Гарантируем инициализацию
+    await this.init();
     const stmt = this.db.prepare(`DELETE FROM ${table} WHERE id = ?`);
     return stmt.run(id);
   }
 }
 
-// Экспортируем класс, а не экземпляр
 export default new DatabaseService();

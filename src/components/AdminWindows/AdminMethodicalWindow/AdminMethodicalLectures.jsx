@@ -33,6 +33,44 @@ const AdminMethodicalLectures = () => {
         }
     }
 
+    // ========== ПЕРЕМЕЩЕНИЕ СТРЕЛОЧКАМИ ==========
+    const handleMoveUp = async (index) => {
+        if (index === 0) return; // Уже наверху
+        
+        const newLectures = [...lectures];
+        // Меняем местами текущий и предыдущий элементы
+        [newLectures[index - 1], newLectures[index]] = [newLectures[index], newLectures[index - 1]];
+        
+        setLectures(newLectures);
+        
+        try {
+            const orderedIds = newLectures.map(l => l.id);
+            await methodicalService.updateLectureOrder(orderedIds);
+        } catch (e) {
+            console.error(e);
+            showError("Ошибка при сохранении порядка");
+        }
+    }
+
+    const handleMoveDown = async (index) => {
+        if (index === lectures.length - 1) return; // Уже внизу
+        
+        const newLectures = [...lectures];
+        // Меняем местами текущий и следующий элементы
+        [newLectures[index + 1], newLectures[index]] = [newLectures[index], newLectures[index + 1]];
+        
+        setLectures(newLectures);
+        
+        try {
+            const orderedIds = newLectures.map(l => l.id);
+            await methodicalService.updateLectureOrder(orderedIds);
+        } catch (e) {
+            console.error(e);
+            showError("Ошибка при сохранении порядка");
+        }
+    }
+
+    // ========== ОСТАЛЬНЫЕ ФУНКЦИИ ==========
     const resetForm = () => {
         setEditingLecture(null)
         setForm({ title: "", external_url: "", file_name: null, file_path: null, new_file: null })
@@ -66,7 +104,6 @@ const AdminMethodicalLectures = () => {
         setForm(prev => ({ ...prev, new_file: file, file_name: file.name }))
     }
 
-    // ========== Открыть документ ==========
     const handleOpen = async (lecture) => {
         try {
             if (lecture.file_path) {
@@ -89,7 +126,6 @@ const AdminMethodicalLectures = () => {
         }
     }
 
-    // ========== Сохранение одной лекции ==========
     const handleSave = async () => {
         if (!form.title.trim()) return showError("Введите название лекции")
         if (!form.new_file && !form.file_name && !form.external_url.trim()) {
@@ -131,7 +167,6 @@ const AdminMethodicalLectures = () => {
         }
     }
 
-    // ========== НОВОЕ: Массовая загрузка файлов ==========
     const handleBulkUpload = async (e) => {
         const files = Array.from(e.target.files || [])
         if (files.length === 0) return
@@ -141,22 +176,18 @@ const AdminMethodicalLectures = () => {
 
         try {
             for (const file of files) {
-                // 1. Сохраняем файл физически
                 const saved = await methodicalService.saveFileFromInput(file)
                 if (!saved) continue
 
-                // 2. Имя файла без расширения
                 const title = file.name.replace(/\.[^/.]+$/, "")
 
-                // 3. Данные для БД
                 const payload = {
                     title: title,
-                    external_url: null, // Ссылка пустая
+                    external_url: null,
                     file_name: saved.file_name,
                     file_path: saved.file_path
                 }
 
-                // 4. Запись в БД
                 await methodicalService.addLecture(payload)
                 successCount++
             }
@@ -170,7 +201,7 @@ const AdminMethodicalLectures = () => {
             showError("Произошла ошибка при массовой загрузке файлов")
         } finally {
             setBulkLoading(false)
-            e.target.value = "" // Сброс инпута
+            e.target.value = ""
         }
     }
 
@@ -199,7 +230,6 @@ const AdminMethodicalLectures = () => {
             <div className={common.section_header}>
                 <h3 className={common.section_title}>Лекторская группа</h3>
                 
-                {/* Обертка для кнопок добавления */}
                 <div className={styles.header_actions}>
                     <button className={common.add_btn} onClick={handleOpenAdd}>
                         + Добавить лекцию
@@ -233,10 +263,34 @@ const AdminMethodicalLectures = () => {
                 </div>
             ) : (
                 <div className={styles.lectures_grid}>
-                    {lectures.map(lecture => (
+                    {lectures.map((lecture, index) => (
                         <div key={lecture.id} className={styles.lecture_card}>
                             <div className={styles.lecture_header}>
-                                <span className={styles.lecture_type}>{formatFileType(lecture.file_name)}</span>
+                                
+                                {/* Верхняя строка с типом и стрелочками */}
+                                <div className={styles.card_top_row}>
+                                    <span className={styles.lecture_type}>{formatFileType(lecture.file_name)}</span>
+                                    
+                                    <div className={styles.sort_controls}>
+                                        <button 
+                                            className={styles.sort_btn} 
+                                            onClick={() => handleMoveUp(index)} 
+                                            disabled={index === 0}
+                                            title="Переместить вверх"
+                                        >
+                                            ⬆️
+                                        </button>
+                                        <button 
+                                            className={styles.sort_btn} 
+                                            onClick={() => handleMoveDown(index)} 
+                                            disabled={index === lectures.length - 1}
+                                            title="Переместить вниз"
+                                        >
+                                            ⬇️
+                                        </button>
+                                    </div>
+                                </div>
+
                                 <h4 className={styles.lecture_title}>{lecture.title}</h4>
                             </div>
                             <div className={styles.lecture_body}>
@@ -264,6 +318,7 @@ const AdminMethodicalLectures = () => {
                 </div>
             )}
 
+            {/* Модалка без изменений */}
             {showModal && (
                 <div className={common.modal_overlay} onClick={handleCloseModal}>
                     <div className={common.modal} onClick={(e) => e.stopPropagation()}>

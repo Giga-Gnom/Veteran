@@ -35,7 +35,7 @@ class MethodicalService {
         return await window.electronAPI.database.execute(
             `SELECT * FROM methodical_documents
              WHERE section_id = ?
-             ORDER BY created_at DESC`,
+             ORDER BY sort_order ASC, created_at DESC`,
             [sectionId]
         );
     }
@@ -59,11 +59,21 @@ class MethodicalService {
         return await window.electronAPI.database.delete('methodical_documents', id);
     }
 
+    async updateDocumentOrder(orderedIds) {
+        if (!window.electronAPI) return;
+        for (let i = 0; i < orderedIds.length; i++) {
+            await window.electronAPI.database.execute(
+                `UPDATE methodical_documents SET sort_order = ? WHERE id = ?`,
+                [i, orderedIds[i]]
+            );
+        }
+    }
+
     // ========== Партнёры ==========
     async getPartnersBySection(sectionId) {
         if (!window.electronAPI) return [];
         return await window.electronAPI.database.execute(
-            `SELECT * FROM methodical_partners WHERE section_id = ? ORDER BY created_at DESC`,
+            `SELECT * FROM methodical_partners WHERE section_id = ? ORDER BY sort_order ASC, created_at DESC`,
             [sectionId]
         );
     }
@@ -87,11 +97,21 @@ class MethodicalService {
         return await window.electronAPI.database.delete('methodical_partners', id);
     }
 
+    async updatePartnerOrder(orderedIds) {
+        if (!window.electronAPI) return;
+        for (let i = 0; i < orderedIds.length; i++) {
+            await window.electronAPI.database.execute(
+                `UPDATE methodical_partners SET sort_order = ? WHERE id = ?`,
+                [i, orderedIds[i]]
+            );
+        }
+    }
+
     // ========== Итоги ==========
     async getResultsBySection(sectionId) {
         if (!window.electronAPI) return [];
         return await window.electronAPI.database.execute(
-            `SELECT * FROM methodical_results WHERE section_id = ? ORDER BY created_at DESC`,
+            `SELECT * FROM methodical_results WHERE section_id = ? ORDER BY sort_order ASC, created_at DESC`,
             [sectionId]
         );
     }
@@ -115,11 +135,21 @@ class MethodicalService {
         return await window.electronAPI.database.delete('methodical_results', id);
     }
 
+    async updateResultOrder(orderedIds) {
+        if (!window.electronAPI) return;
+        for (let i = 0; i < orderedIds.length; i++) {
+            await window.electronAPI.database.execute(
+                `UPDATE methodical_results SET sort_order = ? WHERE id = ?`,
+                [i, orderedIds[i]]
+            );
+        }
+    }
+
     // ========== Лекции ==========
     async getLectures() {
         if (!window.electronAPI) return [];
         return await window.electronAPI.database.execute(
-            `SELECT * FROM methodical_lectures ORDER BY created_at DESC`,
+            `SELECT * FROM methodical_lectures ORDER BY sort_order ASC, created_at DESC`,
             []
         );
     }
@@ -143,11 +173,21 @@ class MethodicalService {
         return await window.electronAPI.database.delete('methodical_lectures', id);
     }
 
+    async updateLectureOrder(orderedIds) {
+        if (!window.electronAPI) return;
+        for (let i = 0; i < orderedIds.length; i++) {
+            await window.electronAPI.database.execute(
+                `UPDATE methodical_lectures SET sort_order = ? WHERE id = ?`,
+                [i, orderedIds[i]]
+            );
+        }
+    }
+
     // ========== План работы — таблицы ==========
     async getWorkPlans() {
         if (!window.electronAPI) return [];
         const rows = await window.electronAPI.database.execute(
-            `SELECT * FROM methodical_work_plans ORDER BY created_at DESC`,
+            `SELECT * FROM methodical_work_plans ORDER BY sort_order ASC, created_at DESC`,
             []
         );
         return rows.map(r => ({
@@ -181,6 +221,16 @@ class MethodicalService {
     async deleteWorkPlan(id) {
         if (!window.electronAPI) return false;
         return await window.electronAPI.database.delete('methodical_work_plans', id);
+    }
+
+    async updateWorkPlanOrder(orderedIds) {
+        if (!window.electronAPI) return;
+        for (let i = 0; i < orderedIds.length; i++) {
+            await window.electronAPI.database.execute(
+                `UPDATE methodical_work_plans SET sort_order = ? WHERE id = ?`,
+                [i, orderedIds[i]]
+            );
+        }
     }
 
     // ========== План работы — строки ==========

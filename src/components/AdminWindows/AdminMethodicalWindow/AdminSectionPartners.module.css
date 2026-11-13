@@ -30,3 +30,80 @@
   border-top: 0.1vw solid #f1f5f9;
   padding-top: 1vh;
 }
+
+.partners_grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18vw, 1fr));
+  gap: 1.5vw;
+  max-height: 42vh;
+  overflow-y: auto;
+}
+
+.partner_card {
+  background: #ffffff;
+  border: 0.1vw solid #eaeaea;
+  border-radius: 0.8vw;
+  padding: 1.5vh 1.2vw;
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+}
+
+/* --- НОВОЕ: Шапка карточки со стрелочками --- */
+.card_top_row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5vw;
+  width: 100%;
+}
+
+.partner_name {
+  font-size: 1.2vw;
+  font-weight: 500;
+  color: #0f172a;
+  margin: 0;
+  word-break: break-word; /* Чтобы длинные названия переносились */
+}
+
+.sort_controls {
+  display: flex;
+  gap: 0.2vw;
+  flex-shrink: 0; /* Запрещаем стрелкам сжиматься */
+}
+
+.sort_btn {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.3vw;
+  width: 1.8vw;
+  height: 1.8vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9vw;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.sort_btn:hover:not(:disabled) {
+  background: #e2e8f0;
+  border-color: #cbd5e1;
+  transform: scale(1.05);
+}
+
+.sort_btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  background: #f8fafc;
+}
+/* ------------------------------------------- */
+
+.partner_actions {
+  display: flex;
+  gap: 0.5vw;
+  flex-wrap: wrap;
+  border-top: 0.1vw solid #f1f5f9;
+  padding-top: 1vh;
+}

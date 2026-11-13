@@ -19,12 +19,53 @@
 .lecture_header {
   display: flex;
   flex-direction: column;
-  gap: 0.4vh;
+  gap: 0.8vh; /* Чуть увеличили отступ между верхней строкой и названием */
 }
+
+/* --- НОВОЕ: Строка с типом и стрелками --- */
+.card_top_row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.sort_controls {
+  display: flex;
+  gap: 0.4vw;
+}
+
+.sort_btn {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.4vw;
+  width: 2.2vw;
+  height: 2.2vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1vw;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.sort_btn:hover:not(:disabled) {
+  background: #e2e8f0;
+  border-color: #cbd5e1;
+  transform: scale(1.05);
+}
+
+/* Стили для заблокированных стрелок (первая/последняя карточка) */
+.sort_btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  background: #f8fafc;
+}
+/* ---------------------------------------- */
 
 .lecture_type {
   display: inline-block;
-  align-self: flex-start;
   background: #e5e7eb;
   color: #1f2937;
   padding: 0.2vh 0.6vw;
@@ -98,9 +139,6 @@
     transform: translateY(0);
 }
 
-/* Остальные ваши стили (lectures_grid, lecture_card и т.д.) оставляем без изменений */
-
-/* Обертка для кнопок в шапке */
 .header_actions {
   display: flex;
   gap: 1vw;
@@ -108,7 +146,6 @@
   flex-wrap: wrap;
 }
 
-/* Стилизация кнопки-лейбла для массовой загрузки */
 .bulk_btn {
   cursor: pointer;
   display: inline-flex;
@@ -125,7 +162,6 @@
   border-color: #94a3b8;
 }
 
-/* Если кнопка заблокирована во время загрузки */
 .bulk_btn:has(input:disabled) {
   opacity: 0.6;
   cursor: not-allowed;

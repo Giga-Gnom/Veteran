@@ -30,6 +30,44 @@ const AdminSectionPartners = ({ sectionId, onChanged }) => {
         }
     }
 
+    // ========== ПЕРЕМЕЩЕНИЕ СТРЕЛОЧКАМИ ==========
+    const handleMoveUp = async (index) => {
+        if (index === 0) return; // Уже наверху
+        
+        const newPartners = [...partners];
+        // Меняем местами текущий и предыдущий элементы
+        [newPartners[index - 1], newPartners[index]] = [newPartners[index], newPartners[index - 1]];
+        
+        setPartners(newPartners);
+        
+        try {
+            const orderedIds = newPartners.map(p => p.id);
+            await methodicalService.updatePartnerOrder(orderedIds);
+        } catch (e) {
+            console.error(e);
+            showError("Ошибка при сохранении порядка");
+        }
+    }
+
+    const handleMoveDown = async (index) => {
+        if (index === partners.length - 1) return; // Уже внизу
+        
+        const newPartners = [...partners];
+        // Меняем местами текущий и следующий элементы
+        [newPartners[index + 1], newPartners[index]] = [newPartners[index], newPartners[index + 1]];
+        
+        setPartners(newPartners);
+        
+        try {
+            const orderedIds = newPartners.map(p => p.id);
+            await methodicalService.updatePartnerOrder(orderedIds);
+        } catch (e) {
+            console.error(e);
+            showError("Ошибка при сохранении порядка");
+        }
+    }
+    // ===========================================
+
     const handleOpenAdd = () => {
         setEditingPartner(null)
         setPartnerName("")
@@ -107,9 +145,33 @@ const AdminSectionPartners = ({ sectionId, onChanged }) => {
                 </div>
             ) : (
                 <div className={styles.partners_grid}>
-                    {partners.map(partner => (
+                    {partners.map((partner, index) => (
                         <div key={partner.id} className={styles.partner_card}>
-                            <h4 className={styles.partner_name}>{partner.name}</h4>
+                            
+                            {/* Шапка карточки со стрелочками */}
+                            <div className={styles.card_top_row}>
+                                <h4 className={styles.partner_name}>{partner.name}</h4>
+                                
+                                <div className={styles.sort_controls}>
+                                    <button 
+                                        className={styles.sort_btn} 
+                                        onClick={() => handleMoveUp(index)} 
+                                        disabled={index === 0}
+                                        title="Переместить вверх"
+                                    >
+                                        ⬆️
+                                    </button>
+                                    <button 
+                                        className={styles.sort_btn} 
+                                        onClick={() => handleMoveDown(index)} 
+                                        disabled={index === partners.length - 1}
+                                        title="Переместить вниз"
+                                    >
+                                        ⬇️
+                                    </button>
+                                </div>
+                            </div>
+
                             <div className={styles.partner_actions}>
                                 <button className={common.view_btn} onClick={() => handleOpenEdit(partner)}>Изменить</button>
                                 <button className={common.delete_btn} onClick={() => handleDelete(partner)}>Удалить</button>

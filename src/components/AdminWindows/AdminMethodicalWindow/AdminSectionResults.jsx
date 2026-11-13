@@ -33,6 +33,44 @@ const AdminSectionResults = ({ sectionId, onChanged }) => {
         }
     }
 
+    // ========== ПЕРЕМЕЩЕНИЕ СТРЕЛОЧКАМИ ==========
+    const handleMoveUp = async (index) => {
+        if (index === 0) return; // Уже наверху
+        
+        const newResults = [...results];
+        // Меняем местами текущий и предыдущий элементы
+        [newResults[index - 1], newResults[index]] = [newResults[index], newResults[index - 1]];
+        
+        setResults(newResults);
+        
+        try {
+            const orderedIds = newResults.map(r => r.id);
+            await methodicalService.updateResultOrder(orderedIds);
+        } catch (e) {
+            console.error(e);
+            showError("Ошибка при сохранении порядка");
+        }
+    }
+
+    const handleMoveDown = async (index) => {
+        if (index === results.length - 1) return; // Уже внизу
+        
+        const newResults = [...results];
+        // Меняем местами текущий и следующий элементы
+        [newResults[index + 1], newResults[index]] = [newResults[index], newResults[index + 1]];
+        
+        setResults(newResults);
+        
+        try {
+            const orderedIds = newResults.map(r => r.id);
+            await methodicalService.updateResultOrder(orderedIds);
+        } catch (e) {
+            console.error(e);
+            showError("Ошибка при сохранении порядка");
+        }
+    }
+    // ===========================================
+
     const resetForm = () => {
         setEditingResult(null)
         setForm({ title: "", external_url: "", file_name: null, file_path: null, new_file: null })
@@ -132,7 +170,7 @@ const AdminSectionResults = ({ sectionId, onChanged }) => {
         }
     }
 
-    // ========== НОВОЕ: Массовая загрузка файлов ==========
+    // ========== Массовая загрузка файлов ==========
     const handleBulkUpload = async (e) => {
         const files = Array.from(e.target.files || [])
         if (files.length === 0) return
@@ -142,23 +180,19 @@ const AdminSectionResults = ({ sectionId, onChanged }) => {
 
         try {
             for (const file of files) {
-                // 1. Сохраняем файл физически
                 const saved = await methodicalService.saveFileFromInput(file)
                 if (!saved) continue
 
-                // 2. Имя файла без расширения
                 const title = file.name.replace(/\.[^/.]+$/, "")
 
-                // 3. Данные для БД
                 const payload = {
                     section_id: sectionId,
                     title: title,
-                    external_url: null, // Ссылка пустая
+                    external_url: null,
                     file_name: saved.file_name,
                     file_path: saved.file_path
                 }
 
-                // 4. Запись в БД
                 await methodicalService.addResult(payload)
                 successCount++
             }
@@ -173,7 +207,7 @@ const AdminSectionResults = ({ sectionId, onChanged }) => {
             showError("Произошла ошибка при массовой загрузке файлов")
         } finally {
             setBulkLoading(false)
-            e.target.value = "" // Сброс инпута
+            e.target.value = "" 
         }
     }
 
@@ -198,7 +232,6 @@ const AdminSectionResults = ({ sectionId, onChanged }) => {
             <div className={common.section_header}>
                 <h3 className={common.section_title}>Итоги работы, результаты</h3>
                 
-                {/* Обертка для кнопок добавления */}
                 <div className={styles.header_actions}>
                     <button className={common.add_btn} onClick={handleOpenAdd}>
                         + Добавить итог
@@ -232,9 +265,33 @@ const AdminSectionResults = ({ sectionId, onChanged }) => {
                 </div>
             ) : (
                 <div className={styles.results_grid}>
-                    {results.map(result => (
+                    {results.map((result, index) => (
                         <div key={result.id} className={styles.result_card}>
-                            <h4 className={styles.result_title}>{result.title}</h4>
+                            
+                            {/* Шапка карточки со стрелочками */}
+                            <div className={styles.card_top_row}>
+                                <h4 className={styles.result_title}>{result.title}</h4>
+                                
+                                <div className={styles.sort_controls}>
+                                    <button 
+                                        className={styles.sort_btn} 
+                                        onClick={() => handleMoveUp(index)} 
+                                        disabled={index === 0}
+                                        title="Переместить вверх"
+                                    >
+                                        ⬆️
+                                    </button>
+                                    <button 
+                                        className={styles.sort_btn} 
+                                        onClick={() => handleMoveDown(index)} 
+                                        disabled={index === results.length - 1}
+                                        title="Переместить вниз"
+                                    >
+                                        ⬇️
+                                    </button>
+                                </div>
+                            </div>
+
                             <div className={styles.result_meta}>
                                 {result.file_name ? (
                                     <span className={styles.result_file}>📄 {result.file_name}</span>

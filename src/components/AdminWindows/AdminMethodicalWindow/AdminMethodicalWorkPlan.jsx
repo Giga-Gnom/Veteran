@@ -19,7 +19,7 @@ const AdminMethodicalWorkPlan = () => {
     const [showImportModal, setShowImportModal] = useState(false)
     const [importFile, setImportFile] = useState(null)
     const [importTitle, setImportTitle] = useState("")
-    const [parsedTable, setParsedTable] = useState(null) // { headers: [], rows: [[], ...] }
+    const [parsedTable, setParsedTable] = useState(null) 
     const [parsing, setParsing] = useState(false)
     const [importing, setImporting] = useState(false)
 
@@ -48,6 +48,42 @@ const AdminMethodicalWorkPlan = () => {
             setLoading(false)
         }
     }
+
+    // ========== ПЕРЕМЕЩЕНИЕ СТРЕЛОЧКАМИ ==========
+    const handleMoveUp = async (index) => {
+        if (index === 0) return;
+        
+        const newTables = [...tables];
+        [newTables[index - 1], newTables[index]] = [newTables[index], newTables[index - 1]];
+        
+        setTables(newTables);
+        
+        try {
+            const orderedIds = newTables.map(t => t.id);
+            await methodicalService.updateWorkPlanOrder(orderedIds);
+        } catch (e) {
+            console.error(e);
+            showError("Ошибка при сохранении порядка");
+        }
+    }
+
+    const handleMoveDown = async (index) => {
+        if (index === tables.length - 1) return;
+        
+        const newTables = [...tables];
+        [newTables[index + 1], newTables[index]] = [newTables[index], newTables[index + 1]];
+        
+        setTables(newTables);
+        
+        try {
+            const orderedIds = newTables.map(t => t.id);
+            await methodicalService.updateWorkPlanOrder(orderedIds);
+        } catch (e) {
+            console.error(e);
+            showError("Ошибка при сохранении порядка");
+        }
+    }
+    // ===========================================
 
     const handleOpenAdd = () => {
         setNewTitle("")
@@ -140,7 +176,6 @@ const AdminMethodicalWorkPlan = () => {
     }
 
     // ========== Импорт из Word ==========
-
     const handleOpenImport = () => {
         setImportFile(null)
         setParsedTable(null)
@@ -210,8 +245,6 @@ const AdminMethodicalWorkPlan = () => {
 
         setImporting(true)
         try {
-            // 1. Колонки — из первой строки. Всё делаем type: "string",
-            //    потом в редакторе можно поменять тип.
             const baseTime = Date.now()
             const columns = parsedTable.headers.map((label, i) => ({
                 key: `col_${baseTime}_${i}`,
@@ -219,13 +252,11 @@ const AdminMethodicalWorkPlan = () => {
                 type: "string"
             }))
 
-            // 2. Создаём план
             const planId = await methodicalService.addWorkPlan({
                 title: importTitle.trim(),
                 columns
             })
 
-            // 3. Строки
             for (const row of parsedTable.rows) {
                 const data = {}
                 columns.forEach((col, i) => {
@@ -246,7 +277,6 @@ const AdminMethodicalWorkPlan = () => {
     }
 
     // ==== Редактор ====
-
     if (selectedTable && selectedTable.id) {
         return (
             <>
@@ -262,7 +292,6 @@ const AdminMethodicalWorkPlan = () => {
     }
 
     // ==== Список таблиц ====
-
     return (
         <div>
             {error && <ErrorMassage message={error} onClose={clearError}/>}
@@ -296,7 +325,7 @@ const AdminMethodicalWorkPlan = () => {
                 </div>
             ) : (
                 <div className={styles.tables_grid}>
-                    {tables.map((table) => (
+                    {tables.map((table, index) => (
                         <div
                             key={table.id}
                             className={styles.table_card}
@@ -304,12 +333,35 @@ const AdminMethodicalWorkPlan = () => {
                         >
                             <div className={styles.table_header}>
                                 <h4 className={styles.table_title}>{table.title}</h4>
-                                <button
-                                    className={common.delete_btn}
-                                    onClick={(e) => { e.stopPropagation(); handleDeleteTable(table) }}
-                                >
-                                    Удалить
-                                </button>
+                                
+                                {/* Блок с кнопками */}
+                                <div className={styles.card_actions}>
+                                    <div className={styles.sort_controls}>
+                                        <button 
+                                            className={styles.sort_btn} 
+                                            onClick={(e) => { e.stopPropagation(); handleMoveUp(index); }} 
+                                            disabled={index === 0}
+                                            title="Переместить вверх"
+                                        >
+                                            ⬆️
+                                        </button>
+                                        <button 
+                                            className={styles.sort_btn} 
+                                            onClick={(e) => { e.stopPropagation(); handleMoveDown(index); }} 
+                                            disabled={index === tables.length - 1}
+                                            title="Переместить вниз"
+                                        >
+                                            ⬇️
+                                        </button>
+                                    </div>
+                                    
+                                    <button
+                                        className={common.delete_btn}
+                                        onClick={(e) => { e.stopPropagation(); handleDeleteTable(table) }}
+                                    >
+                                        Удалить
+                                    </button>
+                                </div>
                             </div>
                             <div className={styles.table_meta}>
                                 <span>{table.columns.length} колонок</span>
@@ -321,6 +373,7 @@ const AdminMethodicalWorkPlan = () => {
                 </div>
             )}
 
+            {/* Модалки остаются без изменений */}
             {showAddModal && (
                 <div className={common.modal_overlay} onClick={handleCloseAdd}>
                     <div className={common.modal} onClick={(e) => e.stopPropagation()}>
@@ -344,7 +397,6 @@ const AdminMethodicalWorkPlan = () => {
                 </div>
             )}
 
-            {/* ===== Модалка импорта ===== */}
             {showImportModal && (
                 <div className={common.modal_overlay} onClick={handleCloseImport}>
                     <div className={`${common.modal} ${styles.import_modal}`} onClick={(e) => e.stopPropagation()}>
