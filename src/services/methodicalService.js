@@ -196,11 +196,14 @@ class MethodicalService {
         }));
     }
 
-    async addWorkPlan(data) {
+        async addWorkPlan(data) {
         if (!window.electronAPI) return null;
         const payload = {
             title: data.title,
-            columns: JSON.stringify(data.columns ?? [])
+            plan_type: data.plan_type || 'table',
+            columns: JSON.stringify(data.columns ?? []),
+            file_path: data.file_path || null,
+            file_name: data.file_name || null
         };
         return await window.electronAPI.database.insert('methodical_work_plans', payload);
     }

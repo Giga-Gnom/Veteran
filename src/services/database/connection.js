@@ -253,7 +253,10 @@ class DatabaseService {
       CREATE TABLE IF NOT EXISTS methodical_work_plans (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
+        plan_type TEXT DEFAULT 'table', -- 'table' (таблица) или 'file' (файл)
         columns TEXT NOT NULL DEFAULT '[]',
+        file_path TEXT,                 -- Путь к файлу, если это файл
+        file_name TEXT,                 -- Имя файла
         sort_order INTEGER DEFAULT 0,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )

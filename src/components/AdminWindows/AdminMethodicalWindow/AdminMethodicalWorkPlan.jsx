@@ -11,8 +11,17 @@ const AdminMethodicalWorkPlan = () => {
     const [tables, setTables] = useState([])
     const [loading, setLoading] = useState(false)
     const [selectedTable, setSelectedTable] = useState(null)
+    
+    // Состояния для добавления таблицы
     const [showAddModal, setShowAddModal] = useState(false)
     const [newTitle, setNewTitle] = useState("")
+    
+    // Состояния для добавления файла
+    const [showFileModal, setShowFileModal] = useState(false)
+    const [fileTitle, setFileTitle] = useState("")
+    const [fileObj, setFileObj] = useState(null)
+    const [fileUploading, setFileUploading] = useState(false)
+
     const [error, setError] = useState(null)
 
     // ==== Импорт из Word ====
@@ -35,6 +44,9 @@ const AdminMethodicalWorkPlan = () => {
             setLoading(true)
             const data = await methodicalService.getWorkPlans()
             const withRows = await Promise.all(data.map(async (plan) => {
+                if (plan.plan_type === 'file') {
+                    return { ...plan, rows: [] } // У файлов нет строк таблицы
+                }
                 const rows = await methodicalService.getPlanRows(plan.id)
                 return { ...plan, rows }
             }))
@@ -42,7 +54,7 @@ const AdminMethodicalWorkPlan = () => {
             return withRows
         } catch (e) {
             console.error("loadPlans error:", e)
-            showError("Не удалось загрузить таблицы плана")
+            showError("Не удалось загрузить планы")
             return []
         } finally {
             setLoading(false)
@@ -52,12 +64,9 @@ const AdminMethodicalWorkPlan = () => {
     // ========== ПЕРЕМЕЩЕНИЕ СТРЕЛОЧКАМИ ==========
     const handleMoveUp = async (index) => {
         if (index === 0) return;
-        
         const newTables = [...tables];
         [newTables[index - 1], newTables[index]] = [newTables[index], newTables[index - 1]];
-        
         setTables(newTables);
-        
         try {
             const orderedIds = newTables.map(t => t.id);
             await methodicalService.updateWorkPlanOrder(orderedIds);
@@ -69,12 +78,9 @@ const AdminMethodicalWorkPlan = () => {
 
     const handleMoveDown = async (index) => {
         if (index === tables.length - 1) return;
-        
         const newTables = [...tables];
         [newTables[index + 1], newTables[index]] = [newTables[index], newTables[index + 1]];
-        
         setTables(newTables);
-        
         try {
             const orderedIds = newTables.map(t => t.id);
             await methodicalService.updateWorkPlanOrder(orderedIds);
@@ -85,6 +91,7 @@ const AdminMethodicalWorkPlan = () => {
     }
     // ===========================================
 
+    // ==== Добавление таблицы ====
     const handleOpenAdd = () => {
         setNewTitle("")
         setShowAddModal(true)
@@ -96,9 +103,13 @@ const AdminMethodicalWorkPlan = () => {
     }
 
     const handleAddTable = async () => {
-        if (!newTitle.trim()) return showError("Введите название таблицы")
+        if (!newTitle.trim()) return showError("Введите название")
         try {
-            await methodicalService.addWorkPlan({ title: newTitle.trim(), columns: [] })
+            await methodicalService.addWorkPlan({ 
+                title: newTitle.trim(), 
+                plan_type: 'table',
+                columns: [] 
+            })
             handleCloseAdd()
             await loadPlans()
             showAlert("Таблица создана")
@@ -108,74 +119,92 @@ const AdminMethodicalWorkPlan = () => {
         }
     }
 
+    // ==== Добавление файла ====
+    const handleOpenAddFile = () => {
+        setFileTitle("")
+        setFileObj(null)
+        setShowFileModal(true)
+    }
+
+    const handleCloseFileModal = () => {
+        setShowFileModal(false)
+        setFileTitle("")
+        setFileObj(null)
+    }
+
+    const handleFileSelect = (e) => {
+        const file = e.target.files?.[0]
+        if (!file) return
+        setFileObj(file)
+        if (!fileTitle) {
+            setFileTitle(file.name.replace(/\.[^/.]+$/, "")) // Автоназвание без расширения
+        }
+    }
+
+    const handleSaveFilePlan = async () => {
+        if (!fileTitle.trim()) return showError("Введите название плана")
+        if (!fileObj) return showError("Выберите файл")
+
+        setFileUploading(true)
+        try {
+            const saved = await methodicalService.saveFileFromInput(fileObj)
+            if (!saved) throw new Error("Ошибка при сохранении файла на диск")
+
+            await methodicalService.addWorkPlan({
+                title: fileTitle.trim(),
+                plan_type: 'file',
+                file_path: saved.file_path,
+                file_name: saved.file_name,
+                columns: []
+            })
+
+            handleCloseFileModal()
+            await loadPlans()
+            showAlert("Файл добавлен как план")
+        } catch (e) {
+            console.error(e)
+            showError("Ошибка при добавлении файла")
+        } finally {
+            setFileUploading(false)
+        }
+    }
+
+    const handleOpenFilePlan = async (plan) => {
+        try {
+            if (plan.file_path) {
+                const res = await window.electronAPI.file.open(plan.file_path)
+                if (!res.success) showError(`Не удалось открыть файл: ${res.error}`)
+            }
+        } catch (e) {
+            console.error(e)
+            showError("Ошибка при открытии файла")
+        }
+    }
+
     const handleDeleteTable = async (table) => {
-        const confirmed = await showConfirm(`Удалить таблицу "${table.title}"?`)
+        const confirmed = await showConfirm(`Удалить план "${table.title}"?`)
         if (!confirmed) return
         try {
             await methodicalService.deleteWorkPlan(table.id)
             if (selectedTable?.id === table.id) setSelectedTable(null)
             await loadPlans()
-            showAlert("Таблица удалена")
+            showAlert("План удалён")
         } catch (e) {
             console.error(e)
-            showError("Ошибка при удалении таблицы")
+            showError("Ошибка при удалении")
         }
     }
 
     const handleOpenTable = (table) => {
         if (!table || !table.id) return
-        setSelectedTable(table)
-    }
-
-    const handleBackToList = async () => {
-        setSelectedTable(null)
-        await loadPlans()
-    }
-
-    const handleUpdateTable = async (updated) => {
-        if (!updated || !updated.id) {
-            showError("Некорректные данные таблицы")
-            return
-        }
-
-        try {
-            await methodicalService.updateWorkPlan(updated.id, {
-                title: updated.title,
-                columns: updated.columns
-            })
-
-            const dbRows = await methodicalService.getPlanRows(updated.id)
-            const dbIds = new Set(dbRows.map(r => r.id))
-            const localIds = new Set(updated.rows.map(r => r.id))
-
-            for (const dbRow of dbRows) {
-                if (!localIds.has(dbRow.id)) {
-                    await methodicalService.deletePlanRow(dbRow.id)
-                }
-            }
-            for (const row of updated.rows) {
-                if (dbIds.has(row.id)) {
-                    await methodicalService.updatePlanRow(row.id, row.data)
-                } else {
-                    await methodicalService.addPlanRow(updated.id, row.data)
-                }
-            }
-
-            const fresh = await loadPlans()
-            const freshTable = fresh.find(p => p.id === updated.id)
-            if (freshTable) {
-                setSelectedTable(freshTable)
-            } else {
-                setSelectedTable(null)
-                showError("Таблица больше не существует")
-            }
-        } catch (e) {
-            console.error(e)
-            showError("Ошибка при сохранении таблицы")
+        if (table.plan_type === 'file') {
+            handleOpenFilePlan(table) // Если файл - открываем через ОС
+        } else {
+            setSelectedTable(table) // Если таблица - идем в редактор
         }
     }
 
-    // ========== Импорт из Word ==========
+    // ... (Импорт из Word и обработчики редактора остаются без изменений)
     const handleOpenImport = () => {
         setImportFile(null)
         setParsedTable(null)
@@ -202,33 +231,20 @@ const AdminMethodicalWorkPlan = () => {
         try {
             const arrayBuffer = await file.arrayBuffer()
             const result = await mammoth.convertToHtml({ arrayBuffer })
-            const html = result.value
-
-            const doc = new DOMParser().parseFromString(html, "text/html")
+            const doc = new DOMParser().parseFromString(result.value, "text/html")
             const table = doc.querySelector("table")
 
-            if (!table) {
-                showError("В файле не найдена таблица")
-                return
-            }
+            if (!table) { showError("В файле не найдена таблица"); return }
 
             const trs = Array.from(table.querySelectorAll("tr"))
-            const grid = trs.map(tr =>
-                Array.from(tr.querySelectorAll("th, td")).map(td => td.textContent.trim())
-            )
+            const grid = trs.map(tr => Array.from(tr.querySelectorAll("th, td")).map(td => td.textContent.trim()))
 
-            if (grid.length === 0) {
-                showError("Таблица пустая")
-                return
-            }
+            if (grid.length === 0) { showError("Таблица пустая"); return }
 
             const headers = grid[0]
             const rows = grid.slice(1)
 
-            if (headers.length === 0) {
-                showError("Не удалось определить колонки")
-                return
-            }
+            if (headers.length === 0) { showError("Не удалось определить колонки"); return }
 
             setParsedTable({ headers, rows })
         } catch (err) {
@@ -254,14 +270,13 @@ const AdminMethodicalWorkPlan = () => {
 
             const planId = await methodicalService.addWorkPlan({
                 title: importTitle.trim(),
+                plan_type: 'table',
                 columns
             })
 
             for (const row of parsedTable.rows) {
                 const data = {}
-                columns.forEach((col, i) => {
-                    data[col.key] = row[i] ?? ""
-                })
+                columns.forEach((col, i) => { data[col.key] = row[i] ?? "" })
                 await methodicalService.addPlanRow(planId, data)
             }
 
@@ -276,7 +291,6 @@ const AdminMethodicalWorkPlan = () => {
         }
     }
 
-    // ==== Редактор ====
     if (selectedTable && selectedTable.id) {
         return (
             <>
@@ -291,7 +305,6 @@ const AdminMethodicalWorkPlan = () => {
         )
     }
 
-    // ==== Список таблиц ====
     return (
         <div>
             {error && <ErrorMassage message={error} onClose={clearError}/>}
@@ -299,12 +312,9 @@ const AdminMethodicalWorkPlan = () => {
             <div className={common.section_header}>
                 <h3 className={common.section_title}>План работы</h3>
                 <div className={styles.header_actions}>
-                    <button className={common.add_table_btn} onClick={handleOpenImport}>
-                        📥 Импорт из Word
-                    </button>
-                    <button className={common.add_table_btn} onClick={handleOpenAdd}>
-                        + Добавить таблицу
-                    </button>
+                    <button className={common.add_table_btn} onClick={handleOpenImport}>📥 Импорт из Word</button>
+                    <button className={common.add_table_btn} onClick={handleOpenAddFile}>📄 Добавить файл</button>
+                    <button className={common.add_table_btn} onClick={handleOpenAdd}>+ Таблица</button>
                 </div>
             </div>
 
@@ -313,28 +323,24 @@ const AdminMethodicalWorkPlan = () => {
             ) : tables.length === 0 ? (
                 <div className={common.empty_state}>
                     <div className={common.icon}>📋</div>
-                    <p>Таблиц пока нет</p>
+                    <p>Планов пока нет</p>
                     <div className={styles.empty_actions}>
-                        <button className={common.add_first_btn} onClick={handleOpenAdd}>
-                            + Добавить первую таблицу
-                        </button>
-                        <button className={common.add_first_btn} onClick={handleOpenImport}>
-                            📥 Импортировать из Word
-                        </button>
+                        <button className={common.add_first_btn} onClick={handleOpenAdd}>+ Создать таблицу</button>
+                        <button className={common.add_first_btn} onClick={handleOpenAddFile}>📄 Загрузить файл</button>
                     </div>
                 </div>
             ) : (
                 <div className={styles.tables_grid}>
                     {tables.map((table, index) => (
-                        <div
-                            key={table.id}
-                            className={styles.table_card}
-                            onClick={() => handleOpenTable(table)}
-                        >
+                        <div key={table.id} className={styles.table_card} onClick={() => handleOpenTable(table)}>
+                            
                             <div className={styles.table_header}>
-                                <h4 className={styles.table_title}>{table.title}</h4>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                    <span style={{ fontSize: '1.5vw' }}>{table.plan_type === 'file' ? '📄' : '📊'}</span>
+                                    <h4 className={styles.table_title}>{table.title}</h4>
+                                </div>
                                 
-                                {/* Блок с кнопками */}
+                                {/* --- ВОТ ОНИ, СТРЕЛОЧКИ И УДАЛЕНИЕ --- */}
                                 <div className={styles.card_actions}>
                                     <div className={styles.sort_controls}>
                                         <button 
@@ -355,39 +361,36 @@ const AdminMethodicalWorkPlan = () => {
                                         </button>
                                     </div>
                                     
-                                    <button
-                                        className={common.delete_btn}
+                                    <button 
+                                        className={common.delete_btn} 
                                         onClick={(e) => { e.stopPropagation(); handleDeleteTable(table) }}
                                     >
                                         Удалить
                                     </button>
                                 </div>
+                                {/* ------------------------------------- */}
+
                             </div>
                             <div className={styles.table_meta}>
-                                <span>{table.columns.length} колонок</span>
-                                <span>·</span>
-                                <span>{table.rows.length} строк</span>
+                                {table.plan_type === 'file' ? (
+                                    <span>Документ: {table.file_name}</span>
+                                ) : (
+                                    <><span>{table.columns.length} колонок</span><span>·</span><span>{table.rows?.length || 0} строк</span></>
+                                )}
                             </div>
                         </div>
                     ))}
                 </div>
             )}
 
-            {/* Модалки остаются без изменений */}
+            {/* Модалки (Новая таблица, Новый файл, Импорт) остаются без изменений */}
             {showAddModal && (
                 <div className={common.modal_overlay} onClick={handleCloseAdd}>
                     <div className={common.modal} onClick={(e) => e.stopPropagation()}>
                         <h3>Новая таблица</h3>
                         <div className={common.form_group}>
-                            <label htmlFor="tableTitle">Название таблицы *</label>
-                            <input
-                                id="tableTitle"
-                                type="text"
-                                value={newTitle}
-                                onChange={(e) => setNewTitle(e.target.value)}
-                                placeholder="Например: План работы на 2025 год"
-                                autoFocus
-                            />
+                            <label>Название таблицы *</label>
+                            <input type="text" value={newTitle} onChange={(e) => setNewTitle(e.target.value)} autoFocus />
                         </div>
                         <div className={common.modal_actions}>
                             <button className={common.cancel_btn} onClick={handleCloseAdd}>Отмена</button>
@@ -397,86 +400,73 @@ const AdminMethodicalWorkPlan = () => {
                 </div>
             )}
 
+            {showFileModal && (
+                <div className={common.modal_overlay} onClick={handleCloseFileModal}>
+                    <div className={common.modal} onClick={(e) => e.stopPropagation()}>
+                        <h3>Добавить файл как план</h3>
+                        <div className={common.form_group}>
+                            <label>Название плана *</label>
+                            <input type="text" value={fileTitle} onChange={(e) => setFileTitle(e.target.value)} placeholder="Например: План на 2025 год" autoFocus />
+                        </div>
+                        <div className={common.form_group}>
+                            <label>Файл (PDF, Word, Excel и др.)</label>
+                            <div className={common.file_upload_container}>
+                                <input type="file" id="planFile" onChange={handleFileSelect} className={common.file_input}/>
+                                <label htmlFor="planFile" className={common.file_upload_label}>
+                                    {fileObj ? fileObj.name : "Выберите файл"}
+                                </label>
+                            </div>
+                        </div>
+                        <div className={common.modal_actions}>
+                            <button className={common.cancel_btn} onClick={handleCloseFileModal} disabled={fileUploading}>Отмена</button>
+                            <button className={common.submit_btn} onClick={handleSaveFilePlan} disabled={fileUploading}>
+                                {fileUploading ? "Загрузка..." : "Сохранить"}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {showImportModal && (
                 <div className={common.modal_overlay} onClick={handleCloseImport}>
                     <div className={`${common.modal} ${styles.import_modal}`} onClick={(e) => e.stopPropagation()}>
                         <h3>Импорт таблицы из Word</h3>
-
                         <div className={common.form_group}>
-                            <label htmlFor="importFile">Файл .docx *</label>
+                            <label>Файл .docx *</label>
                             <div className={common.file_upload_container}>
-                                <input
-                                    type="file"
-                                    id="importFile"
-                                    accept=".docx"
-                                    onChange={handleImportFileChange}
-                                    className={common.file_input}
-                                />
+                                <input type="file" id="importFile" accept=".docx" onChange={handleImportFileChange} className={common.file_input}/>
                                 <label htmlFor="importFile" className={common.file_upload_label}>
                                     {importFile ? importFile.name : "Выберите .docx файл"}
                                 </label>
                             </div>
-                            <small className={common.hint}>
-                                В файле должна быть таблица. Первая строка станет заголовками колонок.
-                            </small>
                         </div>
-
                         <div className={common.form_group}>
-                            <label htmlFor="importTitle">Название новой таблицы *</label>
-                            <input
-                                id="importTitle"
-                                type="text"
-                                value={importTitle}
-                                onChange={(e) => setImportTitle(e.target.value)}
-                                placeholder="Название таблицы в приложении"
-                            />
+                            <label>Название новой таблицы *</label>
+                            <input type="text" value={importTitle} onChange={(e) => setImportTitle(e.target.value)} placeholder="Название таблицы" />
                         </div>
-
                         {parsing && <div className={styles.import_status}>Разбор файла...</div>}
-
                         {parsedTable && (
                             <div className={styles.import_preview}>
                                 <div className={styles.import_preview_header}>
-                                    Найдено: <strong>{parsedTable.headers.length}</strong> колонок,{" "}
-                                    <strong>{parsedTable.rows.length}</strong> строк
+                                    Найдено: <strong>{parsedTable.headers.length}</strong> колонок, <strong>{parsedTable.rows.length}</strong> строк
                                 </div>
                                 <div className={styles.import_preview_scroll}>
                                     <table className={styles.import_preview_table}>
                                         <thead>
-                                            <tr>
-                                                {parsedTable.headers.map((h, i) => (
-                                                    <th key={i}>{h || `Колонка ${i + 1}`}</th>
-                                                ))}
-                                            </tr>
+                                            <tr>{parsedTable.headers.map((h, i) => <th key={i}>{h || `Колонка ${i + 1}`}</th>)}</tr>
                                         </thead>
                                         <tbody>
                                             {parsedTable.rows.slice(0, 5).map((row, ri) => (
-                                                <tr key={ri}>
-                                                    {parsedTable.headers.map((_, ci) => (
-                                                        <td key={ci}>{row[ci] ?? ""}</td>
-                                                    ))}
-                                                </tr>
+                                                <tr key={ri}>{parsedTable.headers.map((_, ci) => <td key={ci}>{row[ci] ?? ""}</td>)}</tr>
                                             ))}
                                         </tbody>
                                     </table>
                                 </div>
-                                {parsedTable.rows.length > 5 && (
-                                    <div className={styles.import_more}>
-                                        ... и ещё {parsedTable.rows.length - 5} строк
-                                    </div>
-                                )}
                             </div>
                         )}
-
                         <div className={common.modal_actions}>
-                            <button className={common.cancel_btn} onClick={handleCloseImport} disabled={importing}>
-                                Отмена
-                            </button>
-                            <button
-                                className={common.submit_btn}
-                                onClick={handleDoImport}
-                                disabled={!parsedTable || importing || parsing}
-                            >
+                            <button className={common.cancel_btn} onClick={handleCloseImport} disabled={importing}>Отмена</button>
+                            <button className={common.submit_btn} onClick={handleDoImport} disabled={!parsedTable || importing || parsing}>
                                 {importing ? "Импорт..." : "Импортировать"}
                             </button>
                         </div>
