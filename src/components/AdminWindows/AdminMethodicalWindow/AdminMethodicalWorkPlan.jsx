@@ -204,7 +204,53 @@ const AdminMethodicalWorkPlan = () => {
         }
     }
 
-    // ... (Импорт из Word и обработчики редактора остаются без изменений)
+    // ==== РЕДАКТОР: Кнопка Назад и Сохранение ====
+    const handleBackToList = async () => {
+        setSelectedTable(null)
+        await loadPlans()
+    }
+
+    const handleUpdateTable = async (updated) => {
+        if (!updated || !updated.id) return showError("Некорректные данные таблицы")
+
+        try {
+            await methodicalService.updateWorkPlan(updated.id, {
+                title: updated.title,
+                columns: updated.columns
+            })
+
+            const dbRows = await methodicalService.getPlanRows(updated.id)
+            const dbIds = new Set(dbRows.map(r => r.id))
+            const localIds = new Set(updated.rows.map(r => r.id))
+
+            for (const dbRow of dbRows) {
+                if (!localIds.has(dbRow.id)) {
+                    await methodicalService.deletePlanRow(dbRow.id)
+                }
+            }
+            for (const row of updated.rows) {
+                if (dbIds.has(row.id)) {
+                    await methodicalService.updatePlanRow(row.id, row.data)
+                } else {
+                    await methodicalService.addPlanRow(updated.id, row.data)
+                }
+            }
+
+            const fresh = await loadPlans()
+            const freshTable = fresh.find(p => p.id === updated.id)
+            if (freshTable) {
+                setSelectedTable(freshTable)
+            } else {
+                setSelectedTable(null)
+                showError("Таблица больше не существует")
+            }
+        } catch (e) {
+            console.error(e)
+            showError("Ошибка при сохранении таблицы")
+        }
+    }
+
+    // ==== Импорт из Word ====
     const handleOpenImport = () => {
         setImportFile(null)
         setParsedTable(null)
@@ -340,7 +386,6 @@ const AdminMethodicalWorkPlan = () => {
                                     <h4 className={styles.table_title}>{table.title}</h4>
                                 </div>
                                 
-                                {/* --- ВОТ ОНИ, СТРЕЛОЧКИ И УДАЛЕНИЕ --- */}
                                 <div className={styles.card_actions}>
                                     <div className={styles.sort_controls}>
                                         <button 
@@ -368,7 +413,6 @@ const AdminMethodicalWorkPlan = () => {
                                         Удалить
                                     </button>
                                 </div>
-                                {/* ------------------------------------- */}
 
                             </div>
                             <div className={styles.table_meta}>
@@ -383,7 +427,7 @@ const AdminMethodicalWorkPlan = () => {
                 </div>
             )}
 
-            {/* Модалки (Новая таблица, Новый файл, Импорт) остаются без изменений */}
+            {/* Модалки (Новая таблица, Новый файл, Импорт) */}
             {showAddModal && (
                 <div className={common.modal_overlay} onClick={handleCloseAdd}>
                     <div className={common.modal} onClick={(e) => e.stopPropagation()}>
