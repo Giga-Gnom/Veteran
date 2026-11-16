@@ -3,7 +3,7 @@ import styles from "./Metodkabinet.module.css"
 import MyHat from "../../../../Hat/MyHat";
 import { Link } from "react-router-dom";
 import BeforePageButton from "../../../../UI/MyButtons/BeforePageButton";
-import miloserdova from "./miloserdova.png"
+import miloserdova from "./miloserdova.jpg"
 import PDFpage from "./about_MK/PDFpage";
 import randompdf from "./srcMK/PMK.pdf";
 import methodicalService from "../../../../../services/methodicalService";
