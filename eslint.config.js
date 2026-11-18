@@ -17,7 +17,24 @@ export default [
         sourceType: 'module',
       },
     },
-    settings: { react: { version: '18.3' } },
+    settings: { 
+      react: { version: '18.3' },
+      'import/resolver':{
+        alias:{
+          map:[
+            ['@', './src'],
+            ['@app', './src/app'],
+            ['@pages', './src/pages'],
+            ['@widgets', './src/widgets'],
+            ['@features', './src/features'],
+            ['@entities', './src/entities'],
+            ['@shared', './src/shared'],
+          ],
+          extensions: ['.js', '.jsx'],
+        }
+      }
+    
+    },
     plugins: {
       react,
       'react-hooks': reactHooks,

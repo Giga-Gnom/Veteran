@@ -5,6 +5,9 @@ import { router } from './app/router'
 import AdminApp from './AdminApp'
 import { useEffect, useState } from 'react'
 
+import { hello } from '@shared/lib/test';
+console.log(hello);
+
 function App() { 
   const [isAdmin, setIsAdmin] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
