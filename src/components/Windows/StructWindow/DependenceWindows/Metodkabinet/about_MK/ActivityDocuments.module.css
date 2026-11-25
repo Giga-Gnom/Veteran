@@ -14,13 +14,9 @@
     filter: blur(0.6vh);
 }
 
-.container_head{
-    height: 15vh;
-}
+.container_head{ height: 15vh; }
+.container_bottom{ height: 15vh; }
 
-.container_bottom{
-    height: 15vh;
-}
 .container_contant {
     display: flex;
     flex-direction: row;
@@ -40,7 +36,6 @@
     display: flex;
     align-items: center;
 }
-
 
 .container_button{
     position: fixed;
@@ -63,8 +58,16 @@
     background: rgba(255, 255, 255, 0.75);
     color: #000;
     box-sizing: border-box;
-    transition: border-radius 0.3s ease, max-height 0.4s ease;
+    transition: background 0.2s, transform 0.2s;
     margin-block: 1vh;
+    overflow: hidden;
+    position: relative;
+}
+
+.column_card:hover {
+    background: rgba(255, 255, 255, 0.95);
+    transform: translateY(-0.2vh);
+    box-shadow: 0 0.5vh 1.5vw rgba(0, 0, 0, 0.1);
 }
 
 .column_title {
@@ -91,11 +94,12 @@
     font-weight: 600;
     color: #0f172a;
     margin-bottom: 0.5vh;
-    /* Обрезаем длинные названия, если не влезают */
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    word-break: break-word;
+    line-height: 1.3;
 }
 
 .card_url {
@@ -106,4 +110,58 @@
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 90%;
+}
+/* =========================================
+   ГЛОБАЛЬНЫЙ ТУЛТИП
+   ========================================= */
+.global_tooltip {
+    position: fixed;
+    /* Базовое состояние — чуть уменьшен и невидим */
+    transform: translate(-50%, -90%) scale(0.95);
+    background: rgba(30, 41, 59, 0.95);
+    color: #f8fafc;
+    padding: 1vh 1.5vw;
+    border-radius: 1.5vh;
+    font-size: 1.1vw;
+    font-weight: 500;
+    z-index: 9999;
+    pointer-events: none; /* Не мешает скроллу и кликам */
+    
+    /* Ограничения ширины */
+    min-width: 10vw;
+    max-width: 35vw;
+    
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+    
+    /* Перенос длинных слов */
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: normal;
+    white-space: pre-wrap;
+    
+    opacity: 0;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    will-change: opacity, transform;
+}
+
+/* --- Стрелочка вниз (когда тултип НАД карточкой) --- */
+.global_tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -1vh;
+    border-width: 1vh;
+    border-style: solid;
+    border-color: rgba(30, 41, 59, 0.95) transparent transparent transparent;
+}
+
+/* --- Стрелочка вверх (когда тултип ПОД карточкой) --- */
+.global_tooltip.tooltip_below::after {
+    top: auto;
+    bottom: 100%;
+    border-color: transparent transparent rgba(30, 41, 59, 0.95) transparent;
 }

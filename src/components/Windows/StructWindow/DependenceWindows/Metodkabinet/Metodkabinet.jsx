@@ -51,7 +51,7 @@ const Metodkabinet = () => {
                 <div className={styles.flex_row}>
                     <img className={styles.image} src={miloserdova} alt="" />
                     <div className={styles.container_content}>
-                        <h2>телефон – 8 (495) 699 – 42 – 62</h2>
+                        <h2>телефон – 8 (499) 699 – 09 – 55</h2>
                         <br />
                         <h3>Заведующая методическим  кабинетом МГСВ  -  Милосердова Галина Васильевна</h3>
                         <br />

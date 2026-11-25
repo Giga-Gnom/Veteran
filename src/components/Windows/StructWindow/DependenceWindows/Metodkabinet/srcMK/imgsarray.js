@@ -3,7 +3,7 @@ import i2 from "./IA/8 слайд.jpg";
 import i3 from "./IA/IMG_20260318_164409.jpg";
 import i4 from "./PVM/возложение цветов.jpg";
 import i5 from "./PVM/Увековечение МИТИНГ.jpg";
-import i6 from "./SZV/image.png";
+import i6 from "./SZV/13.4.26.jpg";
 import i7 from "./SZV/IMG-20250317-WA0013.jpg";
 import i8 from "./OP/im2.png";
 import i9 from "./OP/image.png";
